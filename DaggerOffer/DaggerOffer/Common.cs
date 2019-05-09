@@ -9,6 +9,14 @@ namespace DaggerOffer
     class Common
     {
         /*
+         * 最长上升子序列
+         */
+        public void LIS(int[] a, int start, int end)
+        {
+
+        }
+
+        /*
          * 插入排序
          */
         public void Insert_Sort(int[] a, int start, int end)
@@ -17,7 +25,23 @@ namespace DaggerOffer
             {
                 return;
             }
-
+            for (int i = start; i <= end; i++)
+            {
+                int index = i, mi = a[i];
+                for (int j = i; j <= end; j++)
+                {
+                    if (a[j] < mi)
+                    {
+                        index = j;
+                        mi = a[j];
+                    }
+                }
+                for (int j = index - 1; j >= i; j--)
+                {
+                    a[j + 1] = a[j];
+                }
+                a[i] = mi;
+            }
         }
 
         /*
@@ -29,7 +53,7 @@ namespace DaggerOffer
             {
                 return;
             }
-            for (int i = 0; i < end - start + 1; i++)
+            for (int i = start; i < end - start + 1; i++)
             {
                 for (int j = start; j < end - i; j++)
                 {

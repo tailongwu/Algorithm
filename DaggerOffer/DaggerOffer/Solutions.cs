@@ -3,15 +3,232 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static DaggerOffer.Node;
 
 namespace DaggerOffer
 {
     class Solutions
     {
         /*
-         * 快排
+         * 字符流中第一次出现的字符
          */
+        private int[] bitwise_FirstAppearingOnce = new int[256];
+        private int index_FirstAppearingOnce = 1;
+        public char FirstAppearingOnce()
+        {
+            int mi = index_FirstAppearingOnce;
+            char ans = ' ';
+            for (int i = 0; i < 256; i++)
+            {
+                if (bitwise_FirstAppearingOnce[i] > 0 && mi > bitwise_FirstAppearingOnce[i])
+                {
+                    mi = bitwise_FirstAppearingOnce[i];
+                    ans = (char)i;
+                }
+            }
+            if (mi != index_FirstAppearingOnce)
+            {
+                return ans;
+            }
+            return '#';
+        }
+        public void Insert(char c)
+        {
+            if (bitwise_FirstAppearingOnce[c] == 0)
+            {
+                bitwise_FirstAppearingOnce[c] = index_FirstAppearingOnce++;
+            }
+            else if (bitwise_FirstAppearingOnce[c] > 0)
+            {
+                bitwise_FirstAppearingOnce[c] = -1;
+            }
+        }
+
+        /*
+         * 二叉搜索树的第k小节点
+         */
+        public TreeNode KthNode(TreeNode pRoot, int k)
+        {
+            if (pRoot == null || k == 0)
+            {
+                return null;
+            }
+            TreeNode ans = null;
+            int cur = 0;
+            Do_KthNode(pRoot, ref cur, k,ref ans);
+            return ans;
+        }
+        private void Do_KthNode(TreeNode node, ref int cur, int k, ref TreeNode ans)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            if (ans != null)
+            {
+                return;
+            }
+            Do_KthNode(node.left, ref cur, k, ref ans);
+            cur++;
+            if (cur == k)
+            {
+                ans = node;
+            }
+            Do_KthNode(node.right, ref cur, k, ref ans);
+        }
+
+        /*
+         * 删除链表中重复元素
+         */
+        public ListNode deleteDuplication(ListNode pHead)
+        {
+            if (pHead == null)
+            {
+                return null;
+            }
+            ListNode cur = pHead, newHead = null, newCur = null;
+            while (cur != null)
+            {
+                if (cur.next != null)
+                {
+                    if (cur.next.val == cur.val)
+                    {
+                        while (cur.next != null && cur.val == cur.next.val)
+                        {
+                            cur = cur.next;
+                        }
+                        if (cur.next == null)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            cur = cur.next;
+                        }
+                    }
+                    else
+                    {
+                        if (newHead == null)
+                        {
+                            newHead = cur;
+                            newCur = cur;
+                        }
+                        else
+                        {
+                            newCur.next = cur;
+                            newCur = cur;
+                        }
+                        cur = cur.next;
+                    }
+                }
+                else
+                {
+                    if (newHead == null)
+                    {
+                        newHead = cur;
+                        newCur = cur;
+                    }
+                    else
+                    {
+                        newCur.next = cur;
+                        newCur = cur;
+                    }
+                    cur = cur.next;
+                }
+            }
+            if (newCur != null)
+            {
+                newCur.next = null;
+            }
+            return newHead;
+        }
+
+        /*
+         * 链表中环的入口
+         */
+        public ListNode EntryNodeOfLoop(ListNode pHead)
+        {
+            if (pHead == null)
+            {
+                return null;
+            }
+            ListNode node1 = pHead;
+            ListNode node2 = pHead;
+            while (node1 != null && node2 != null && node2.next != null)
+            {
+                node1 = node1.next;
+                node2 = node2.next.next;
+                if (node1 == node2)
+                {
+                    break;
+                }
+            }
+            if (node1 == null || node2 == null || node2.next == null)
+            {
+                return null;
+            }
+            node2 = pHead;
+            while (node1 != node2)
+            {
+                node1 = node1.next;
+                node2 = node2.next;
+            }
+            return node1;
+        }
+
+        /*
+         * 约瑟夫环
+         */
+        public int LastRemaining_Solution(int n, int m)
+        {
+            if (n <= 0 || m <= 0)
+            {
+                return -1;
+            }
+            int last = 0;
+            for (int i = 2; i <= n; i++)
+            {
+                last = (last + m) % i;
+            }
+            return last;
+        }
+
+        /*
+         * 丑数
+         */
+         public int GetUglyNumber_Solution(int index)
+         {
+            if (index < 1)
+            {
+                return 0;
+            }
+            List<int> uglyNumbers = new List<int>();
+            uglyNumbers.Add(1);
+            int x = 0, y = 0, z = 0;
+            for (int i = 0; i < index; i++)
+            {
+                int xx = uglyNumbers[x] * 2;
+                int yy = uglyNumbers[y] * 3;
+                int zz = uglyNumbers[z] * 5;
+                int mi = 0;
+                if (xx <= yy && xx <= zz)
+                {
+                    x++;
+                    mi = xx;
+                }
+                if (yy <= xx && yy <= zz)
+                {
+                    y++;
+                    mi = yy;
+                }
+                if (zz <= xx && zz <= yy)
+                {
+                    z++;
+                    mi = zz;
+                }
+                uglyNumbers.Add(mi);
+            }
+            return uglyNumbers[index - 1];
+         }
 
         /*
          * 树节点包含左儿子、右儿子、父节点，求中序遍历的下一个节点

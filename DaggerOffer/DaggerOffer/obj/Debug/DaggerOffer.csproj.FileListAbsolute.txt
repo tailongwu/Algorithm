@@ -1,7 +1,7 @@
-D:\Git\Algorithm\DaggerOffer\DaggerOffer\obj\Debug\DaggerOffer.csprojResolveAssemblyReference.cache
 D:\Git\Algorithm\DaggerOffer\DaggerOffer\obj\Debug\DaggerOffer.csproj.CoreCompileInputs.cache
 D:\Git\Algorithm\DaggerOffer\DaggerOffer\bin\Debug\DaggerOffer.exe.config
 D:\Git\Algorithm\DaggerOffer\DaggerOffer\bin\Debug\DaggerOffer.exe
 D:\Git\Algorithm\DaggerOffer\DaggerOffer\bin\Debug\DaggerOffer.pdb
 D:\Git\Algorithm\DaggerOffer\DaggerOffer\obj\Debug\DaggerOffer.exe
 D:\Git\Algorithm\DaggerOffer\DaggerOffer\obj\Debug\DaggerOffer.pdb
+D:\Git\Algorithm\DaggerOffer\DaggerOffer\obj\Debug\DaggerOffer.csprojAssemblyReference.cache

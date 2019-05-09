@@ -13,11 +13,12 @@ namespace DaggerOffer
         {
             int[] a = { 4, 1, 3, 2, 5, 0, 8, 7, 2, 9 };
             Common common = new Common();
-            common.Bubble_Sort(a, 0, 9);
+            common.Insert_Sort(a, 0, 9);
             foreach (int i in a)
             {
                 Console.WriteLine(i);
             }
+
         }
     }
 
