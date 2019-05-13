@@ -22,11 +22,637 @@ struct ListNode {
 class Solution
 {
 public:
-    // 797
-    // ���п���·��
+    // 930
+    // 和相同的二元子数组
     /*
-        ��һ���� n �����������޻�ͼ���ҵ����д� 0 �� n-1 ��·�����������Ҫ��˳��
-        ��ά����ĵ� i �������еĵ�Ԫ����ʾ����ͼ�� i �Ž�����ܵ������һЩ��㣨����ע������ͼ���з���ģ����涨��a��b��Ͳ��ܴ�b��a���վ���û����һ������ˡ�
+        在由若干 0 和 1  组成的数组 A 中，有多少个和为 S 的非空子数组。
+    */
+    int numSubarraysWithSum(vector<int>& A, int S)
+    {
+        int len = A.size();
+
+    }
+
+
+    // 102
+    // 二叉树的层次遍历
+    /*
+        给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。
+    */
+    vector<vector<int> > levelOrder(TreeNode* root)
+    {
+        vector<vector<int> > ans;
+        DFS_levelOrder(root, ans, 0);
+        return ans;
+    }
+    void DFS_levelOrder(TreeNode *node, vector<vector<int> > &ans, int step)
+    {
+        if (node == 0)
+        {
+            return;
+        }
+        if (ans.size() == step)
+        {
+            vector<int> result;
+            ans.push_back(result);
+        }
+        ans[step].push_back(node->val);
+        DFS_levelOrder(node->left, ans, step + 1);
+        DFS_levelOrder(node->right, ans, step + 1);
+    }
+
+
+    // 144
+    // 二叉树的前序遍历
+    /*
+        给定一个二叉树，返回它的前序 遍历。
+    */
+    vector<int> preorderTraversal(TreeNode* root)
+    {
+        vector<int> ans;
+        DFS_preorderTraversal(root, ans);
+        return ans;
+    }
+    void DFS_preorderTraversal(TreeNode *root, vector<int> &ans)
+    {
+        if (root == 0)
+        {
+            return;
+        }
+        ans.push_back(root->val);
+        DFS_preorderTraversal(root->left, ans);
+        DFS_preorderTraversal(root->right, ans);
+    }
+
+
+    // 94
+    // 二叉树的中序遍历
+    /*
+        给定一个二叉树，返回它的中序 遍历。
+    */
+    vector<int> inorderTraversal(TreeNode* root)
+    {
+        vector<int> ans;
+        DFS_inorderTraversal(root, ans);
+        return ans;
+    }
+    void DFS_inorderTraversal(TreeNode *root, vector<int> &ans)
+    {
+        if (root == 0)
+        {
+            return;
+        }
+        DFS_inorderTraversal(root->left, ans);
+        ans.push_back(root->val);
+        DFS_inorderTraversal(root->right, ans);
+    }
+
+
+    // 714
+    // 买卖股票的最佳时机含手续费
+    /*
+        给定一个整数数组 prices，其中第 i 个元素代表了第 i 天的股票价格 ；非负整数 fee 代表了交易股票的手续费用。
+        你可以无限次地完成交易，但是你每次交易都需要付手续费。如果你已经购买了一个股票，在卖出它之前你就不能再继续购买股票了。
+        返回获得利润的最大值。
+    */
+    int maxProfit(vector<int>& prices, int fee)
+    {
+        int len = prices.size();
+        if (len == 0)
+        {
+            return 0;
+        }
+        vector<int> buy(len);
+        vector<int> sell(len);
+        buy[0] = -prices[0];
+        sell[0] = 0;
+        for (int i = 1; i < len; i++)
+        {
+            buy[i] = max(buy[i - 1], sell[i - 1] - prices[i]);
+            sell[i] = max(sell[i - 1], buy[i - 1] + prices[i] - fee);
+        }
+        return sell[len - 1];
+    }
+
+
+    // 309
+    // 最佳买卖股票时机含冷冻期
+    /*
+        给定一个整数数组，其中第 i 个元素代表了第 i 天的股票价格 。​
+        设计一个算法计算出最大利润。在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:
+        你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+        卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。
+    */
+    // 提示：每种抉择都是这次不行动和这次行动的最大值
+    int maxProfit(vector<int>& prices)
+    {
+        int len = prices.size();
+        if (len == 0)
+        {
+            return 0;
+        }
+        vector<int> buy(len);
+        vector<int> sell(len);
+        vector<int> cold(len);
+        buy[0] = -prices[0];
+        sell[0] = 0;
+        cold[0] = 0;
+        for (int i = 1; i < len; i++)
+        {
+            buy[i] = max(cold[i - 1] - prices[i], buy[i - 1]);
+            sell[i] = max(buy[i - 1] + prices[i], sell[i - 1]);
+            cold[i] = max(sell[i - 1], max(buy[i - 1], cold[i - 1]));
+        }
+        return sell[len - 1];
+    }
+
+
+    // 1014
+    // 最佳观光组合
+    /*
+        给定正整数数组 A，A[i] 表示第 i 个观光景点的评分，并且两个景点 i 和 j 之间的距离为 j - i。
+        一对景点（i < j）组成的观光组合的得分为（A[i] + A[j] + i - j）：景点的评分之和减去它们两者之间的距离。
+        返回一对观光景点能取得的最高分。
+    */
+    // 提示：（i<j）A[i] + i + A[j] - j最大值，保存A[i] + i的最大值再遍历
+    int maxScoreSightseeingPair(vector<int>& A)
+    {
+        int len = A.size();
+        int ans = 0;
+        int ma = A[0];
+        for (int i = 1; i < len; i++)
+        {
+            ans = max(ans, A[i] - i + ma);
+            if (A[i] + i > ma)
+            {
+                ma = A[i] + i;
+            }
+        }
+        return ans;
+    }
+
+
+    // 932
+    // 漂亮的数组
+    /*
+        对于某些固定的 N，如果数组 A 是整数 1, 2, ..., N 组成的排列，使得：
+        对于每个 i < j，都不存在 k 满足 i < k < j 使得 A[k] * 2 = A[i] + A[j]。
+        那么数组 A 是漂亮数组。
+        给定 N，返回任意漂亮数组 A（保证存在一个）
+    */
+    // 提示：奇数放在左边，偶数放在右边。如果奇数和偶数数组都是漂亮数组，那么组合起来也是漂亮数组
+    // 如果A数组为漂亮数组，那么A*2数组也为漂亮数组，那么A*2-1数组也是漂亮数组
+    // [1] -> [1, 2] -> [1, 3, 2, 4] -> [1, 5, 3, 7, 2, 6, 4, 8]
+    vector<int> beautifulArray(int N)
+    {
+        vector<int> ans(N);
+        ans[0] = 1;
+        for (int i = 1; ; i *= 2)
+        {
+            int index = 0;
+            for (int j = 0; j < i; j++)
+            {
+                if (ans[j] * 2 - 1 <= N)
+                {
+                    ans[index++] = ans[j] * 2 - 1;
+                    if (index == N)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (index == N)
+            {
+                break;
+            }
+            for (int j = 0; j < i; j++)
+            {
+                if (ans[j] + 1 <= N)
+                {
+                    ans[index++] = ans[j] + 1;
+                    if (index == N)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (index == N)
+            {
+                break;
+            }
+        }
+        return ans;
+    }
+
+
+    // 667
+    // 优美的排列II
+    /*
+        给定两个整数 n 和 k，你需要实现一个数组，这个数组包含从 1 到 n 的 n 个不同整数，同时满足以下条件：
+        ① 如果这个数组是 [a1, a2, a3, ... , an] ，那么数组 [|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|] 中应该有且仅有 k 个不同整数；.
+        ② 如果存在多种答案，你只需实现并返回其中任意一种.
+    */
+    vector<int> constructArray(int n, int k)
+    {
+        vector<int> ans(n);
+        vector<bool> vis(n, false);
+        ans[0] = 1;
+        vis[1] = true;
+        int index = 1;
+        for (int i = k; i >= 1; i--)
+        {
+            int ma = ans[index - 1] + i;
+            int mi = ans[index - 1] - i;
+            if (mi < 1 || vis[mi])
+            {
+                ans[index] = ma;
+                vis[ma] = true;
+            }
+            else
+            {
+                ans[index] = mi;
+                vis[mi] = true;
+            }
+            index++;
+        }
+        for (int i = k + 2; i <= n; i++)
+        {
+            ans[index++] = i;
+        }
+        return ans;
+    }
+
+
+    // 526
+    // 优美的排列
+    /*
+        假设有从 1 到 N 的 N 个整数，如果从这 N 个数字中成功构造出一个数组，使得数组的第 i 位 (1 <= i <= N) 满足如下两个条件中的一个，我们就称这个数组为一个优美的排列。条件：
+        第 i 位的数字能被 i 整除
+        i 能被第 i 位上的数字整除
+        现在给定一个整数 N，请问可以构造多少个优美的排列？
+    */
+    int countArrangement(int N)
+    {
+        vector<bool> vis(N + 1, false);
+        int ans = 0;
+        DFS_countArrangement(N, ans, vis, 1);
+        return ans;
+    }
+    void DFS_countArrangement(int N, int &ans, vector<bool> &vis, int stp)
+    {
+        if (stp == N + 1)
+        {
+            ans++;
+            return;
+        }
+        for (int i = 1; i <= N; i++)
+        {
+            if (!vis[i] && (i % stp == 0 || stp % i == 0))
+            {
+                vis[i] = true;
+                DFS_countArrangement(N, ans, vis, stp + 1);
+                vis[i] = false;
+            }
+        }
+    }
+
+
+    // 419
+    // 甲板上的战舰
+    /*
+        给定一个二维的甲板， 请计算其中有多少艘战舰。 战舰用 'X'表示，空位用 '.'表示。 你需要遵守以下规则：
+        给你一个有效的甲板，仅由战舰或者空位组成。
+        战舰只能水平或者垂直放置。换句话说,战舰只能由 1xN (1 行, N 列)组成，或者 Nx1 (N 行, 1 列)组成，其中N可以是任意大小。
+        两艘战舰之间至少有一个水平或垂直的空位分隔 - 即没有相邻的战舰。
+        进阶:你可以用一次扫描算法，只使用O(1)额外空间，并且不修改甲板的值来解决这个问题吗？
+    */
+    int countBattleships(vector<vector<char> >& board)
+    {
+        int row = board.size();
+        int col = board[0].size();
+        int ans = 0;
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (board[i][j] == 'X')
+                {
+                    if (i > 0 && board[i - 1][j] == 'X')
+                    {
+                        continue;
+                    }
+                    if (j > 0 && board[i][j - 1] == 'X')
+                    {
+                        continue;
+                    }
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+
+
+    // 227
+    // 基本计算器II
+    /*
+        实现一个基本的计算器来计算一个简单的字符串表达式的值。
+        字符串表达式仅包含非负整数，+， - ，*，/ 四种运算符和空格  。 整数除法仅保留整数部分。
+    */
+    int calculate(string s)
+    {
+        int len = s.size(), ans = 0;
+        stack<char> ops;
+        stack<int> num;
+        for (int i = 0; i < len; i++)
+        {
+            if (s[i] == '+' || s[i] == '-')
+            {
+                while (ops.size() > 0)
+                {
+                    char op = ops.top();
+                    ops.pop();
+                    int num2 = num.top();
+                    num.pop();
+                    int num1 = num.top();
+                    num.pop();
+                    num.push(do_calculate(num1, num2, op));
+                }
+                ops.push(s[i]);
+            }
+            else if (s[i] == '*' || s[i] == '/')
+            {
+                if (ops.size() > 0 && (ops.top() == '*' || ops.top() == '/'))
+                {
+                    char op = ops.top();
+                    ops.pop();
+                    int num2 = num.top();
+                    num.pop();
+                    int num1 = num.top();
+                    num.pop();
+                    num.push(do_calculate(num1, num2, op));
+                }
+                ops.push(s[i]);
+            }
+            else if (s[i] >= '0' && s[i] <= '9')
+            {
+                long long k = 0;
+                int j = i;
+                while (j < len && s[j] >= '0' && s[j] <= '9')
+                {
+                    k = k * 10 + s[j] - '0';
+                    j++;
+                }
+                i = j - 1;
+                num.push(k);
+            }
+        }
+        while (!ops.empty())
+        {
+            char op = ops.top();
+            ops.pop();
+            int num2 = num.top();
+            num.pop();
+            int num1 = num.top();
+            num.pop();
+            num.push(do_calculate(num1, num2, op));
+        }
+        return num.top();
+    }
+    int do_calculate(int num1, int num2, char op)
+    {
+        switch(op)
+        {
+            case '+': return num1 + num2;
+            case '-': return num1 - num2;
+            case '*': return num1 * num2;
+            case '/': return num1 / num2;
+        }
+        return 0;
+    }
+
+
+    // 948
+    // 令牌放置
+    /*
+        你的初始能量为 P，初始分数为 0，只有一包令牌。
+        令牌的值为 token[i]，每个令牌最多只能使用一次，可能的两种使用方法如下：
+        如果你至少有 token[i] 点能量，可以将令牌置为正面朝上，失去 token[i] 点能量，并得到 1 分。
+        如果我们至少有 1 分，可以将令牌置为反面朝上，获得 token[i] 点能量，并失去 1 分。
+        在使用任意数量的令牌后，返回我们可以得到的最大分数。
+    */
+    int bagOfTokensScore(vector<int>& tokens, int P)
+    {
+        sort (tokens.begin(), tokens.end());
+        int L = 0, R = tokens.size() - 1, ans = 0;
+        while (L <= R)
+        {
+            if (P >= tokens[L])
+            {
+                ans++;
+                P -= tokens[L];
+                L++;
+            }
+            else
+            {
+                if (ans > 0)
+                {
+                    P += (tokens[R] - tokens[L]);
+                    L++;
+                    R--;
+                }
+                else
+                {
+                    return ans;
+                }
+            }
+        }
+        return ans;
+    }
+
+
+    // 735
+    // 星星碰撞
+    /*
+        给定一个整数数组 asteroids，表示在同一行的行星。
+        对于数组中的每一个元素，其绝对值表示行星的大小，正负表示行星的移动方向（正表示向右移动，负表示向左移动）。每一颗行星以相同的速度移动。
+        找出碰撞后剩下的所有行星。碰撞规则：两个行星相互碰撞，较小的行星会爆炸。如果两颗行星大小相同，则两颗行星都会爆炸。两颗移动方向相同的行星，永远不会发生碰撞。
+    */
+    vector<int> asteroidCollision(vector<int>& asteroids)
+    {
+        vector<int> ans;
+        int len = asteroids.size();
+        for (int i = 0; i < len; i++)
+        {
+            if (asteroids[i] > 0)
+            {
+                ans.push_back(asteroids[i]);
+            }
+            else
+            {
+                bool push = true;
+                while (ans.size() > 0)
+                {
+                    if (ans.back() < 0)
+                    {
+                        ans.push_back(asteroids[i]);
+                        push = false;
+                        break;
+                    }
+                    else if (ans.back() > -asteroids[i])
+                    {
+                        push = false;
+                        break;
+                    }
+                    else if (ans.back() < -asteroids[i])
+                    {
+                        ans.pop_back();
+                    }
+                    else if(ans.back() == -asteroids[i])
+                    {
+                        ans.pop_back();
+                        push = false;
+                        break;
+                    }
+                }
+                if (push)
+                {
+                    ans.push_back(asteroids[i]);
+                }
+            }
+        }
+        return ans;
+    }
+
+
+    // 954
+    // 二倍数对数组
+    /*
+        给定一个长度为偶数的整数数组 A，只有对 A 进行重组后可以满足 “对于每个 0 <= i < len(A) / 2，都有 A[2 * i + 1] = 2 * A[2 * i]” 时，返回 true；否则，返回 false。
+    */
+    bool canReorderDoubled(vector<int>& A)
+    {
+        int len = A.size();
+        vector<int> p;
+        vector<int> n;
+        map<int, int> m;
+        for (int i = 0; i < len; i++)
+        {
+            m[A[i]]++;
+            if (A[i] >= 0)
+            {
+                p.push_back(A[i]);
+            }
+            else
+            {
+                n.push_back(A[i]);
+            }
+        }
+        if (p.size() %2 != 0)
+        {
+            return false;
+        }
+        sort(p.begin(), p.end());
+        sort(n.begin(), n.end());
+        int len1 = p.size(), len2 = n.size();
+        for (int i = 0; i < len1; i++)
+        {
+            if (m[p[i]] > 0)
+            {
+                m[p[i]]--;
+                if (m[p[i] * 2] == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    m[p[i] * 2]--;
+                }
+            }
+        }
+        for (int i = len2 - 1; i >= 0; i--)
+        {
+            if (m[n[i]] > 0)
+            {
+                m[n[i]]--;
+                if (m[n[i] * 2] == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    m[n[i] * 2]--;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    // 565
+    // 数组嵌套
+    /*
+        索引从0开始长度为N的数组A，包含0到N - 1的所有整数。找到并返回最大的集合S，S[i] = {A[i], A[A[i]], A[A[A[i]]], ... }且遵守以下的规则。
+        假设选择索引为i的元素A[i]为S的第一个元素，S的下一个元素应该是A[A[i]]，之后是A[A[A[i]]]... 以此类推，不断添加直到S出现重复的元素
+    */
+    int arrayNesting(vector<int>& nums)
+    {
+        int len = nums.size(), ma = 0;
+        vector<bool> vis(len, false);
+        for (int i = 0; i < len; i++)
+        {
+            if (vis[i])
+            {
+                continue;
+            }
+            int j = i, cnt = 0;
+            while (!vis[j])
+            {
+                vis[j] = true;
+                j = nums[j];
+                cnt++;
+            }
+            if (cnt > ma)
+            {
+                ma = cnt;
+            }
+        }
+        return ma;
+    }
+
+
+    // 413
+    // 等差数列划分
+    /*
+        数组 A 包含 N 个数，且索引从0开始。数组 A 的一个子数组划分为数组 (P, Q)，P 与 Q 是整数且满足 0<=P<Q<N 。
+        如果满足以下条件，则称子数组(P, Q)为等差数组：
+        元素 A[P], A[p + 1], ..., A[Q - 1], A[Q] 是等差的。并且 P + 1 < Q 。
+        函数要返回数组 A 中所有为等差数组的子数组个数。
+    */
+    int numberOfArithmeticSlices(vector<int>& A)
+    {
+        int ans = 0;
+        int len = A.size();
+        for (int i = 0; i < len - 2; i++)
+        {
+            int d = A[i + 1] - A[i];
+            int j = i + 2;
+            while (j < len && A[j] - A[j - 1] == d)
+            {
+                j++;
+            }
+            ans = ans + (j - i - 2 + 1) * (j - i - 2) / 2;
+            i = j - 2;
+        }
+        return ans;
+    }
+
+
+    // 797
+    // 所有可能路径
+    /*
+        给一个有 n 个结点的有向无环图，找到所有从 0 到 n-1 的路径并输出（不要求按顺序）
+        二维数组的第 i 个数组中的单元都表示有向图中 i 号结点所能到达的下一些结点（译者注：有向图是有方向的，即规定了a→b你就不能从b→a）空就是没有下一个结点了。
     */
     vector<vector<int> > allPathsSourceTarget(vector<vector<int> >& graph)
     {
@@ -55,12 +681,12 @@ public:
 
 
     // 863
-    // �����������о���Ϊ K �Ľ��
+    // 二叉树中所有距离为 K 的结点
     /*
-        ����һ�������������и���� root���� һ��Ŀ���� target ����һ������ֵ K ��
-        ���ص�Ŀ���� target ����Ϊ K �����н���ֵ���б��� �𰸿������κ�˳�򷵻ء�
+        给定一个二叉树（具有根结点 root）， 一个目标结点 target ，和一个整数值 K 。
+        返回到目标结点 target 距离为 K 的所有结点的值的列表。 答案可以以任何顺序返回。
     */
-    // ��ʾ�����ҳ���Ŀ����path��Ȼ�����ÿ���ڵ����һ�����ӣ�ע�⵱ǰ�ڵ�Ҳ�����Ǵ�
+    // 提示：先找出到目标点的path，然后遍历每个节点的另一个儿子，注意当前节点也可能是答案
     vector<int> distanceK(TreeNode* root, TreeNode* target, int K)
     {
         vector<int> ans;
@@ -139,10 +765,10 @@ public:
 
 
     // 870
-    // ����ϴ��
+    // 优势洗牌
     /*
-        ����������С��ȵ����� A �� B��A ����� B �����ƿ��������� A[i] > B[i] ������ i ����Ŀ��������
-        ���� A ���������У�ʹ������� B ��������󻯡�
+        给定两个大小相等的数组 A 和 B，A 相对于 B 的优势可以用满足 A[i] > B[i] 的索引 i 的数目来描述。
+        返回 A 的任意排列，使其相对于 B 的优势最大化。
     */
     vector<int> advantageCount(vector<int>& A, vector<int>& B)
     {
@@ -190,13 +816,13 @@ public:
 
 
     // 306
-    // �ۼ���
+    // 累加数
     /*
-        �ۼ�����һ���ַ���������������ֿ����γ��ۼ����С�
-        һ����Ч���ۼ����б������ٰ��� 3 �����������ʼ�����������⣬�ַ����е���������������֮ǰ��������ӵĺ͡�
-        ����һ��ֻ�������� '0'-'9' ���ַ�������дһ���㷨���жϸ��������Ƿ����ۼ�����
-        ˵��: �ۼ���������������� 0 ��ͷ�����Բ������ 1, 2, 03 ���� 1, 02, 3 �������
-        ���磺112358��199100199
+        累加数是一个字符串，组成它的数字可以形成累加序列。
+        一个有效的累加序列必须至少包含 3 个数。除了最开始的两个数以外，字符串中的其他数都等于它之前两个数相加的和。
+        给定一个只包含数字 '0'-'9' 的字符串，编写一个算法来判断给定输入是否是累加数。
+        说明: 累加序列里的数不会以 0 开头，所以不会出现 1, 2, 03 或者 1, 02, 3 的情况。
+        比如：112358，199100199
     */
     bool isAdditiveNumber(string num)
     {
@@ -305,10 +931,10 @@ public:
 
 
     // 445
-    // �������II
+    // 两数相加II
     /*
-        ���������ǿ����������������Ǹ��������������λλ��������ʼλ�á����ǵ�ÿ���ڵ�ֻ�洢�������֡�����������ӻ᷵��һ���µ�������
-        ����: ����������������޸ĸ���δ��������仰˵���㲻�ܶ��б��еĽڵ���з�ת��
+        给定两个非空链表来代表两个非负整数。数字最高位位于链表开始位置。它们的每个节点只存储单个数字。将这两数相加会返回一个新的链表。
+        进阶: 如果输入链表不能修改该如何处理？换句话说，你不能对列表中的节点进行翻转。
     */
     ListNode* addTwoNumbersII(ListNode* l1, ListNode* l2)
     {
@@ -375,11 +1001,11 @@ public:
 
 
     // 2
-    // �������
+    // 两数相加
     /*
-        �������� �ǿ� ������������ʾ�����Ǹ������������У����Ǹ��Ե�λ���ǰ��� ���� �ķ�ʽ�洢�ģ��������ǵ�ÿ���ڵ�ֻ�ܴ洢 һλ ���֡�
-        ��������ǽ��������������������᷵��һ���µ���������ʾ���ǵĺ͡�
-        �����Լ���������� 0 ֮�⣬���������������� 0 ��ͷ��
+        给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+        如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
+        您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
     */
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
     {
@@ -429,10 +1055,10 @@ public:
 
 
     // 454
-    // �������II
+    // 四数相加II
     /*
-        �����ĸ����������������б� A , B , C , D ,�����ж��ٸ�Ԫ�� (i, j, k, l) ��ʹ�� A[i] + B[j] + C[k] + D[l] = 0��
-        Ϊ��ʹ����򵥻������е� A, B, C, D ������ͬ�ĳ��� N���� 0 �� N �� 500 �����������ķ�Χ�� -228 �� 228 - 1 ֮�䣬���ս�����ᳬ�� 231 - 1 ��
+        给定四个包含整数的数组列表 A , B , C , D ,计算有多少个元组 (i, j, k, l) ，使得 A[i] + B[j] + C[k] + D[l] = 0。
+        为了使问题简单化，所有的 A, B, C, D 具有相同的长度 N，且 0 ≤ N ≤ 500 。所有整数的范围在 -228 到 228 - 1 之间，最终结果不会超过 231 - 1 。
     */
     int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D)
     {
@@ -462,11 +1088,11 @@ public:
 
 
     // 18
-    // ����֮��
+    // 四数之和
     /*
-        ����һ������ n ������������ nums ��һ��Ŀ��ֵ target���ж� nums ���Ƿ�����ĸ�Ԫ�� a��b��c �� d ��ʹ�� a + b + c + d ��ֵ�� target ��ȣ��ҳ��������������Ҳ��ظ�����Ԫ�顣
+        给定一个包含 n 个整数的数组 nums 和一个目标值 target，判断 nums 中是否存在四个元素 a，b，c 和 d ，使得 a + b + c + d 的值与 target 相等？找出所有满足条件且不重复的四元组。
     */
-    // ��ʾ���̶���������˫ָ����������������������֮�ͣ���˫ָ��
+    // 提示：固定两个数，双指针找另外两个；保存两两之和，再双指针
     vector<vector<int> > fourSum(vector<int>& nums, int target)
     {
         vector<vector<int> > ans;
@@ -523,12 +1149,12 @@ public:
 
 
     // 923
-    // ����֮�͵Ķ��ֿ���
+    // 三数之和的多种可能
     /*
-        ����һ���������� A���Լ�һ������ target ��ΪĿ��ֵ���������� i < j < k �� A[i] + A[j] + A[k] == target ��Ԫ�� i, j, k ��������
-        ���ڽ����ǳ����뷵�� ������� 10^9 + 7 ��������
+        给定一个整数数组 A，以及一个整数 target 作为目标值，返回满足 i < j < k 且 A[i] + A[j] + A[k] == target 的元组 i, j, k 的数量。
+        由于结果会非常大，请返回 结果除以 10^9 + 7 的余数。
     */
-    // ��ʾ����������ͬ����������ͬ����������ͬ
+    // 提示：三个数不同，两个数相同，三个数相同
     int threeSumMulti(vector<int>& A, int target)
     {
         long long ans = 0;
@@ -600,9 +1226,9 @@ public:
 
 
     // 16
-    // ��ӽ�������֮��
+    // 最接近的三数之和
     /*
-        ����һ������ n ������������ nums �� һ��Ŀ��ֵ target���ҳ� nums �е�����������ʹ�����ǵĺ��� target ��ӽ����������������ĺ͡��ٶ�ÿ������ֻ����Ψһ�𰸡�
+        给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。
     */
     int threeSumClosest(vector<int>& nums, int target)
     {
@@ -644,9 +1270,9 @@ public:
 
 
     // 15
-    // ����֮��
+    // 三数之和
     /*
-        ����һ������ n ������������ nums���ж� nums ���Ƿ��������Ԫ�� a��b��c ��ʹ�� a + b + c = 0 ���ҳ��������������Ҳ��ظ�����Ԫ�顣
+        给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
     */
     vector<vector<int> > threeSum(vector<int>& nums)
     {
@@ -697,16 +1323,16 @@ public:
     }
 
     // 650
-    // ֻ���������ļ���
+    // 只有两个键的键盘
     /*
-        �����һ�����±���ֻ��һ���ַ� 'A'����ÿ�ο��Զ�������±��������ֲ�����
-        Copy All (����ȫ��) : ����Ը���������±��е������ַ�(���ֵĸ����ǲ�������)��
-        Paste (ճ��) : �����ճ������һ�θ��Ƶ��ַ���
-        ����һ������ n ������Ҫʹ�����ٵĲ����������ڼ��±��д�ӡ��ǡ�� n �� 'A'������ܹ���ӡ�� n �� 'A' �����ٲ���������
+        最初在一个记事本上只有一个字符 'A'。你每次可以对这个记事本进行两种操作：
+        Copy All (复制全部) : 你可以复制这个记事本中的所有字符(部分的复制是不允许的)。
+        Paste (粘贴) : 你可以粘贴你上一次复制的字符。
+        给定一个数字 n 。你需要使用最少的操作次数，在记事本中打印出恰好 n 个 'A'。输出能够打印出 n 个 'A' 的最少操作次数。
     */
     int minSteps(int n)
     {
-        // ��������30������ֽ��1*30=1+30��2*15=2+15��3*10=3+10��5*6=5+6��2*3*5=2+3+5��
+        // 分析比如30，如果分解成1*30=1+30；2*15=2+15；3*10=3+10；5*6=5+6；2*3*5=2+3+5；
         int ans = 0;
         if (n < 2)
         {
@@ -792,9 +1418,9 @@ public:
 
 
     // 456
-    // 132ģʽ
+    // 132模式
     /*
-        ����һ���������У�a1, a2, ..., an��һ��132ģʽ�������� ai, aj, ak ������Ϊ���� i < j < k ʱ��ai < ak < aj�����һ���㷨���������� n �����ֵ�����ʱ����֤����������Ƿ���132ģʽ�������С�
+        给定一个整数序列：a1, a2, ..., an，一个132模式的子序列 ai, aj, ak 被定义为：当 i < j < k 时，ai < ak < aj。设计一个算法，当给定有 n 个数字的序列时，验证这个序列中是否含有132模式的子序列。
     */
     bool find132pattern(vector<int>& nums)
     {
@@ -833,10 +1459,10 @@ public:
 
 
     // 542
-    // 01����
+    // 01矩阵
     /*
-        ����һ���� 0 �� 1 ��ɵľ����ҳ�ÿ��Ԫ�ص������ 0 �ľ��롣
-        ��������Ԫ�ؼ�ľ���Ϊ 1
+        给定一个由 0 和 1 组成的矩阵，找出每个元素到最近的 0 的距离。
+        两个相邻元素间的距离为 1
     */
     vector<vector<int> > updateMatrix(vector<vector<int> >& matrix)
     {
@@ -903,13 +1529,13 @@ public:
 
 
     // 890
-    // ���Һ��滻ģʽ
+    // 查找和替换模式
     /*
-        ����һ�������б� words ��һ��ģʽ  pattern������֪�� words �е���Щ������ģʽƥ�䡣
-        ���������ĸ������ p ��ʹ�ý�ģʽ�е�ÿ����ĸ x �滻Ϊ p(x) ֮�����Ǿ͵õ�������ĵ��ʣ���ô������ģʽ��ƥ��ġ�
-        ������һ�£���ĸ�������Ǵ���ĸ����ĸ��˫�䣺ÿ����ĸӳ�䵽��һ����ĸ��û��������ĸӳ�䵽ͬһ����ĸ����
-        ���� words �������ģʽƥ��ĵ����б���
-        ����԰��κ�˳�򷵻ش𰸡�
+        你有一个单词列表 words 和一个模式  pattern，你想知道 words 中的哪些单词与模式匹配。
+        如果存在字母的排列 p ，使得将模式中的每个字母 x 替换为 p(x) 之后，我们就得到了所需的单词，那么单词与模式是匹配的。
+        （回想一下，字母的排列是从字母到字母的双射：每个字母映射到另一个字母，没有两个字母映射到同一个字母。）
+        返回 words 中与给定模式匹配的单词列表。
+        你可以按任何顺序返回答案。
     */
     vector<string> findAndReplacePattern(vector<string>& words, string pattern)
     {
@@ -951,9 +1577,9 @@ public:
 
 
     // 216
-    // ����ܺ�III
+    // 组合总和III
     /*
-        �ҳ��������֮��Ϊ n �� k ��������ϡ������ֻ�������� 1 - 9 ��������������ÿ������в������ظ������֡�
+        找出所有相加之和为 n 的 k 个数的组合。组合中只允许含有 1 - 9 的正整数，并且每种组合中不存在重复的数字。
     */
     bool v_combinationSum3[10];
     vector<int> a_combinationSum3;
@@ -997,9 +1623,9 @@ public:
     }
 
     // 77
-    // ���
+    // 组合
     /*
-        ������������ n �� k������ 1 ... n �����п��ܵ� k ��������ϡ�
+        给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
     */
     vector<bool> v_combine;
     vector<int> a_combine;
@@ -1040,12 +1666,12 @@ public:
     }
 
     // 894
-    // ���п��ܵ���������
+    // 所有可能的满二叉树
     /*
-        ����������һ�������������ÿ�����ǡ���� 0 �� 2 ���ӽ�㡣
-        ���ذ��� N ���������п��������������б��� �𰸵�ÿ��Ԫ�ض���һ���������ĸ���㡣
-        ����ÿ������ÿ����㶼������ node.val=0��
-        ����԰��κ�˳�򷵻����������б���
+        满二叉树是一类二叉树，其中每个结点恰好有 0 或 2 个子结点。
+        返回包含 N 个结点的所有可能满二叉树的列表。 答案的每个元素都是一个可能树的根结点。
+        答案中每个树的每个结点都必须有 node.val=0。
+        你可以按任何顺序返回树的最终列表。
     */
     vector<TreeNode*> allPossibleFBT(int N)
     {
@@ -1094,7 +1720,7 @@ public:
 
 
     // 46
-    // ȫ����
+    // 全排列
     bool v_permute[20];
     int result_permute[20];
     vector<vector<int> > permute(vector<int>& nums)
@@ -1130,10 +1756,10 @@ public:
 
 
     // 814
-    // ��������֦
+    // 二叉树剪枝
     /*
-        ��������������� root ����������ÿ������ֵҪô�� 0��Ҫô�� 1��
-        �����Ƴ������в����� 1 ��������ԭ��������
+        给定二叉树根结点 root ，此外树的每个结点的值要么是 0，要么是 1。
+        返回移除了所有不包含 1 的子树的原二叉树。
     */
     TreeNode* pruneTree(TreeNode* root)
     {
@@ -1165,12 +1791,12 @@ public:
 
 
     // 861
-    // ��ת�����ĵ÷�
+    // 翻转矩阵后的得分
     /*
-        ��һ����ά���� A ����ÿ��Ԫ�ص�ֵΪ 0 �� 1 ��
-        �ƶ���ָѡ����һ�л��У���ת�����л����е�ÿһ��ֵ�������� 0 ������Ϊ 1�������� 1 ������Ϊ 0��
-        ����������������ƶ��󣬽��þ����ÿһ�ж����ն������������ͣ�����ĵ÷־�����Щ���ֵ��ܺ͡�
-        ���ؾ����ܸߵķ�����
+        有一个二维矩阵 A 其中每个元素的值为 0 或 1 。
+        移动是指选择任一行或列，并转换该行或列中的每一个值：将所有 0 都更改为 1，将所有 1 都更改为 0。
+        在做出任意次数的移动后，将该矩阵的每一行都按照二进制数来解释，矩阵的得分就是这些数字的总和。
+        返回尽可能高的分数。
     */
     int matrixScore(vector<vector<int> >& A)
     {
@@ -1211,11 +1837,11 @@ public:
 
 
     // 866
-    // ��������
+    // 回文素数
     /*
-        ������ڻ���� N ����С����������
+        求出大于或等于 N 的最小回文素数。
     */
-    // �Ż�������11��ż��λ�Ļ��Ĵ����ܱ�11����
+    // 优化：除了11，偶数位的回文串都能被11整除
     bool a_primePalindrome[20000];
     int p_primePalindrome[20000], total_primePalindrome;
     int f[10] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
@@ -1318,9 +1944,9 @@ public:
     }
 
     // 22
-    // ��������
+    // 括号生成
     /*
-        ���� n �����������ŵĶ���������д��һ��������ʹ���ܹ��������п��ܵĲ�����Ч��������ϡ�
+        给出 n 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且有效的括号组合。
     */
     vector<string> generateParenthesis(int n)
     {
@@ -1348,9 +1974,9 @@ public:
     }
 
     // 1008
-    // ��������������������
+    // 先序遍历构造二叉搜索树
     /*
-        ���������������� preorder ��ƥ��Ķ�����������binary search tree���ĸ���㡣
+        返回与给定先序遍历 preorder 相匹配的二叉搜索树（binary search tree）的根结点。
     */
     TreeNode* bstFromPreorder(vector<int>& preorder)
     {
@@ -1386,9 +2012,9 @@ public:
 
 
     // 338
-    // ����λ����
+    // 比特位计数
     /*
-        ����һ���Ǹ����� num������ 0 �� i �� num ��Χ�е�ÿ������ i ����������������е� 1 ����Ŀ����������Ϊ���鷵�ء�
+        给定一个非负整数 num。对于 0 ≤ i ≤ num 范围中的每个数字 i ，计算其二进制数中的 1 的数目并将它们作为数组返回。
     */
     vector<int> countBits(int num)
     {
@@ -1411,9 +2037,9 @@ public:
 
 
     // 59
-    // ��������2
+    // 螺旋矩阵2
     /*
-        ����һ�������� n������һ������ 1 �� n2 ����Ԫ�أ���Ԫ�ذ�˳ʱ��˳���������е������ξ���
+        给定一个正整数 n，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的正方形矩阵。
     */
     vector<vector<int> > generateMatrix(int n)
     {
@@ -1485,10 +2111,10 @@ public:
 
 
     // 78
-    // �Ӽ�
+    // 子集
     /*
-        ����һ�鲻���ظ�Ԫ�ص��������� nums�����ظ��������п��ܵ��Ӽ����ݼ�����
-        ˵�����⼯���ܰ����ظ����Ӽ���
+        给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
+        说明：解集不能包含重复的子集。
     */
     vector<vector<int> > subsets(vector<int>& nums)
     {
@@ -1513,13 +2139,13 @@ public:
     }
 
     // 654
-    // ��������
+    // 最大二叉树
     /*
-        ����һ�������ظ�Ԫ�ص��������顣һ���Դ����鹹�������������������£�
-        �������ĸ��������е����Ԫ�ء�
-        ��������ͨ�����������ֵ��߲��ֹ����������������
-        ��������ͨ�����������ֵ�ұ߲��ֹ����������������
-        ͨ�����������鹹�������������������������ĸ��ڵ㡣
+        给定一个不含重复元素的整数数组。一个以此数组构建的最大二叉树定义如下：
+        二叉树的根是数组中的最大元素。
+        左子树是通过数组中最大值左边部分构造出的最大二叉树。
+        右子树是通过数组中最大值右边部分构造出的最大二叉树。
+        通过给定的数组构建最大二叉树，并且输出这个树的根节点。
     */
     TreeNode* constructMaximumBinaryTree(vector<int>& nums)
     {
@@ -1553,9 +2179,9 @@ public:
     }
 
     // 938
-    // �����������ķ�Χ��
+    // 二叉搜索树的范围和
     /*
-        ���������������ĸ���� root������ L �� R������֮������н���ֵ�ĺ͡�������������֤����Ψһ��ֵ
+        给定二叉搜索树的根结点 root，返回 L 和 R（含）之间的所有结点的值的和。二叉搜索树保证具有唯一的值
     */
     bool findL_rangeSumBST, findR_rangeSumBST;
     int sum_rangeSumBST;
@@ -1599,11 +2225,11 @@ public:
     }
 
     // 807
-    // ���ֳ��������
+    // 保持城市天际线
     /*
-        �ڶ�ά����grid�У�grid[i][j]����λ��ĳ���Ľ�����ĸ߶ȡ� ���Ǳ����������κ���������ͬ��������������ܲ�ͬ���Ľ�����ĸ߶ȡ� �߶� 0 Ҳ����Ϊ�ǽ����
-        ��󣬴�������������ĸ����򣨼��������ײ��������Ҳࣩ�ۿ��ġ�����ߡ�������ԭʼ������������ͬ�� ���е�������Ǵ�Զ���ۿ�ʱ�������н������γɵľ��ε��ⲿ������ �뿴��������ӡ�
-        ������߶ȿ������ӵ�����ܺ��Ƕ��٣�
+        在二维数组grid中，grid[i][j]代表位于某处的建筑物的高度。 我们被允许增加任何数量（不同建筑物的数量可能不同）的建筑物的高度。 高度 0 也被认为是建筑物。
+        最后，从新数组的所有四个方向（即顶部，底部，左侧和右侧）观看的“天际线”必须与原始数组的天际线相同。 城市的天际线是从远处观看时，由所有建筑物形成的矩形的外部轮廓。 请看下面的例子。
+        建筑物高度可以增加的最大总和是多少？
     */
     int maxIncreaseKeepingSkyline(vector<vector<int> >& grid)
     {
@@ -1643,20 +2269,20 @@ public:
     }
 
     // 950
-    // ������˳����ʾ����
+    // 按递增顺序显示卡牌
     /*
-        �����е�ÿ�ſ��ƶ���Ӧ��һ��Ψһ������������԰�����Ҫ��˳������׿�Ƭ��������
-        �������Щ�����������������泯�µģ�����δ��ʾ״̬����
-        ���ڣ��ظ�ִ�����²��裬ֱ����ʾ���п���Ϊֹ��
+        牌组中的每张卡牌都对应有一个唯一的整数。你可以按你想要的顺序对这套卡片进行排序。
+        最初，这些卡牌在牌组里是正面朝下的（即，未显示状态）。
+        现在，重复执行以下步骤，直到显示所有卡牌为止：
 
-        �����鶥����һ���ƣ���ʾ����Ȼ������������Ƴ���
-        ��������������ƣ�����һ�Ŵ������鶥�����Ʒ�������ĵײ���
-        �������δ��ʾ���ƣ���ô���ز��� 1������ֹͣ�ж���
-        �������Ե���˳����ʾ���Ƶ�����˳��
+        从牌组顶部抽一张牌，显示它，然后将其从牌组中移出。
+        如果牌组中仍有牌，则将下一张处于牌组顶部的牌放在牌组的底部。
+        如果仍有未显示的牌，那么返回步骤 1。否则，停止行动。
+        返回能以递增顺序显示卡牌的牌组顺序。
 
-        ���еĵ�һ���Ʊ���Ϊ�����ƶѶ�����
+        答案中的第一张牌被认为处于牌堆顶部。
     */
-    // ��ʾ������˼�����ҵ�����
+    // 提示：逆向思考，找到规律
     vector<int> deckRevealedIncreasing(vector<int>& deck)
     {
         int length = deck.size();
@@ -1681,16 +2307,7 @@ public:
 int main()
 {
     Solution* solution = new Solution();
-    vector<int> a;
-    a.push_back(2);
-    a.push_back(7);
-    a.push_back(11);
-    a.push_back(15);
-    vector<int> b;
-    b.push_back(1);
-    b.push_back(10);
-    b.push_back(4);
-    b.push_back(11);
-    solution->advantageCount(a, b);
+    string s = "1*2-3/4+5*6-7*8+9/10";
+    cout << solution->calculate(s);
     return 0;
 }
