@@ -14,81 +14,30 @@ struct TreeNode
     TreeNode *right;
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
-struct ListNode {
+struct ListNode
+{
     int val;
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
- };
+};
 class Solution
 {
 public:
-    // 930
-    // å’Œç›¸åŒçš„äºŒå…ƒå­æ•°ç»„
+    // 95
+    // ²»Í¬µÄ¶ş²æËÑË÷Ê÷II
     /*
-        åœ¨ç”±è‹¥å¹² 0 å’Œ 1  ç»„æˆçš„æ•°ç»„ A ä¸­ï¼Œæœ‰å¤šå°‘ä¸ªå’Œä¸º S çš„éç©ºå­æ•°ç»„ã€‚
+        ¸ø¶¨Ò»¸öÕûÊı n£¬Éú³ÉËùÓĞÓÉ 1 ... n Îª½ÚµãËù×é³ÉµÄ¶ş²æËÑË÷Ê÷¡£
     */
-    int numSubarraysWithSum(vector<int>& A, int S)
+    vector<TreeNode*> generateTrees(int n)
     {
-        int len = A.size();
 
-    }
-
-
-    // 102
-    // äºŒå‰æ ‘çš„å±‚æ¬¡éå†
-    /*
-        ç»™å®šä¸€ä¸ªäºŒå‰æ ‘ï¼Œè¿”å›å…¶æŒ‰å±‚æ¬¡éå†çš„èŠ‚ç‚¹å€¼ã€‚ ï¼ˆå³é€å±‚åœ°ï¼Œä»å·¦åˆ°å³è®¿é—®æ‰€æœ‰èŠ‚ç‚¹ï¼‰ã€‚
-    */
-    vector<vector<int> > levelOrder(TreeNode* root)
-    {
-        vector<vector<int> > ans;
-        DFS_levelOrder(root, ans, 0);
-        return ans;
-    }
-    void DFS_levelOrder(TreeNode *node, vector<vector<int> > &ans, int step)
-    {
-        if (node == 0)
-        {
-            return;
-        }
-        if (ans.size() == step)
-        {
-            vector<int> result;
-            ans.push_back(result);
-        }
-        ans[step].push_back(node->val);
-        DFS_levelOrder(node->left, ans, step + 1);
-        DFS_levelOrder(node->right, ans, step + 1);
-    }
-
-
-    // 144
-    // äºŒå‰æ ‘çš„å‰åºéå†
-    /*
-        ç»™å®šä¸€ä¸ªäºŒå‰æ ‘ï¼Œè¿”å›å®ƒçš„å‰åº éå†ã€‚
-    */
-    vector<int> preorderTraversal(TreeNode* root)
-    {
-        vector<int> ans;
-        DFS_preorderTraversal(root, ans);
-        return ans;
-    }
-    void DFS_preorderTraversal(TreeNode *root, vector<int> &ans)
-    {
-        if (root == 0)
-        {
-            return;
-        }
-        ans.push_back(root->val);
-        DFS_preorderTraversal(root->left, ans);
-        DFS_preorderTraversal(root->right, ans);
     }
 
 
     // 94
-    // äºŒå‰æ ‘çš„ä¸­åºéå†
+    // ¶ş²æÊ÷µÄÖĞĞò±éÀú
     /*
-        ç»™å®šä¸€ä¸ªäºŒå‰æ ‘ï¼Œè¿”å›å®ƒçš„ä¸­åº éå†ã€‚
+        ¸ø¶¨Ò»¸ö¶ş²æÊ÷£¬·µ»ØËüµÄÖĞĞò ±éÀú¡£
     */
     vector<int> inorderTraversal(TreeNode* root)
     {
@@ -108,687 +57,394 @@ public:
     }
 
 
-    // 714
-    // ä¹°å–è‚¡ç¥¨çš„æœ€ä½³æ—¶æœºå«æ‰‹ç»­è´¹
+    // 93
+    // ¸´Ô­IPµØÖ·
     /*
-        ç»™å®šä¸€ä¸ªæ•´æ•°æ•°ç»„ pricesï¼Œå…¶ä¸­ç¬¬ i ä¸ªå…ƒç´ ä»£è¡¨äº†ç¬¬ i å¤©çš„è‚¡ç¥¨ä»·æ ¼ ï¼›éè´Ÿæ•´æ•° fee ä»£è¡¨äº†äº¤æ˜“è‚¡ç¥¨çš„æ‰‹ç»­è´¹ç”¨ã€‚
-        ä½ å¯ä»¥æ— é™æ¬¡åœ°å®Œæˆäº¤æ˜“ï¼Œä½†æ˜¯ä½ æ¯æ¬¡äº¤æ˜“éƒ½éœ€è¦ä»˜æ‰‹ç»­è´¹ã€‚å¦‚æœä½ å·²ç»è´­ä¹°äº†ä¸€ä¸ªè‚¡ç¥¨ï¼Œåœ¨å–å‡ºå®ƒä¹‹å‰ä½ å°±ä¸èƒ½å†ç»§ç»­è´­ä¹°è‚¡ç¥¨äº†ã€‚
-        è¿”å›è·å¾—åˆ©æ¶¦çš„æœ€å¤§å€¼ã€‚
+        ¸ø¶¨Ò»¸öÖ»°üº¬Êı×ÖµÄ×Ö·û´®£¬¸´Ô­Ëü²¢·µ»ØËùÓĞ¿ÉÄÜµÄ IP µØÖ·¸ñÊ½¡£
     */
-    int maxProfit(vector<int>& prices, int fee)
+    // ÌáÊ¾£º4¸öforÑ­»·£»dfs£»
+    vector<string> restoreIpAddresses(string s)
     {
-        int len = prices.size();
-        if (len == 0)
-        {
-            return 0;
-        }
-        vector<int> buy(len);
-        vector<int> sell(len);
-        buy[0] = -prices[0];
-        sell[0] = 0;
-        for (int i = 1; i < len; i++)
-        {
-            buy[i] = max(buy[i - 1], sell[i - 1] - prices[i]);
-            sell[i] = max(sell[i - 1], buy[i - 1] + prices[i] - fee);
-        }
-        return sell[len - 1];
-    }
-
-
-    // 309
-    // æœ€ä½³ä¹°å–è‚¡ç¥¨æ—¶æœºå«å†·å†»æœŸ
-    /*
-        ç»™å®šä¸€ä¸ªæ•´æ•°æ•°ç»„ï¼Œå…¶ä¸­ç¬¬ i ä¸ªå…ƒç´ ä»£è¡¨äº†ç¬¬ i å¤©çš„è‚¡ç¥¨ä»·æ ¼ ã€‚â€‹
-        è®¾è®¡ä¸€ä¸ªç®—æ³•è®¡ç®—å‡ºæœ€å¤§åˆ©æ¶¦ã€‚åœ¨æ»¡è¶³ä»¥ä¸‹çº¦æŸæ¡ä»¶ä¸‹ï¼Œä½ å¯ä»¥å°½å¯èƒ½åœ°å®Œæˆæ›´å¤šçš„äº¤æ˜“ï¼ˆå¤šæ¬¡ä¹°å–ä¸€æ”¯è‚¡ç¥¨ï¼‰:
-        ä½ ä¸èƒ½åŒæ—¶å‚ä¸å¤šç¬”äº¤æ˜“ï¼ˆä½ å¿…é¡»åœ¨å†æ¬¡è´­ä¹°å‰å‡ºå”®æ‰ä¹‹å‰çš„è‚¡ç¥¨ï¼‰ã€‚
-        å–å‡ºè‚¡ç¥¨åï¼Œä½ æ— æ³•åœ¨ç¬¬äºŒå¤©ä¹°å…¥è‚¡ç¥¨ (å³å†·å†»æœŸä¸º 1 å¤©)ã€‚
-    */
-    // æç¤ºï¼šæ¯ç§æŠ‰æ‹©éƒ½æ˜¯è¿™æ¬¡ä¸è¡ŒåŠ¨å’Œè¿™æ¬¡è¡ŒåŠ¨çš„æœ€å¤§å€¼
-    int maxProfit(vector<int>& prices)
-    {
-        int len = prices.size();
-        if (len == 0)
-        {
-            return 0;
-        }
-        vector<int> buy(len);
-        vector<int> sell(len);
-        vector<int> cold(len);
-        buy[0] = -prices[0];
-        sell[0] = 0;
-        cold[0] = 0;
-        for (int i = 1; i < len; i++)
-        {
-            buy[i] = max(cold[i - 1] - prices[i], buy[i - 1]);
-            sell[i] = max(buy[i - 1] + prices[i], sell[i - 1]);
-            cold[i] = max(sell[i - 1], max(buy[i - 1], cold[i - 1]));
-        }
-        return sell[len - 1];
-    }
-
-
-    // 1014
-    // æœ€ä½³è§‚å…‰ç»„åˆ
-    /*
-        ç»™å®šæ­£æ•´æ•°æ•°ç»„ Aï¼ŒA[i] è¡¨ç¤ºç¬¬ i ä¸ªè§‚å…‰æ™¯ç‚¹çš„è¯„åˆ†ï¼Œå¹¶ä¸”ä¸¤ä¸ªæ™¯ç‚¹ i å’Œ j ä¹‹é—´çš„è·ç¦»ä¸º j - iã€‚
-        ä¸€å¯¹æ™¯ç‚¹ï¼ˆi < jï¼‰ç»„æˆçš„è§‚å…‰ç»„åˆçš„å¾—åˆ†ä¸ºï¼ˆA[i] + A[j] + i - jï¼‰ï¼šæ™¯ç‚¹çš„è¯„åˆ†ä¹‹å’Œå‡å»å®ƒä»¬ä¸¤è€…ä¹‹é—´çš„è·ç¦»ã€‚
-        è¿”å›ä¸€å¯¹è§‚å…‰æ™¯ç‚¹èƒ½å–å¾—çš„æœ€é«˜åˆ†ã€‚
-    */
-    // æç¤ºï¼šï¼ˆi<jï¼‰A[i] + i + A[j] - jæœ€å¤§å€¼ï¼Œä¿å­˜A[i] + içš„æœ€å¤§å€¼å†éå†
-    int maxScoreSightseeingPair(vector<int>& A)
-    {
-        int len = A.size();
-        int ans = 0;
-        int ma = A[0];
-        for (int i = 1; i < len; i++)
-        {
-            ans = max(ans, A[i] - i + ma);
-            if (A[i] + i > ma)
-            {
-                ma = A[i] + i;
-            }
-        }
+        vector<string> ans;
+        int len = s.size();
+        DFS_restoreIpAddresses(ans, s, "", len, 0, 0);
         return ans;
     }
-
-
-    // 932
-    // æ¼‚äº®çš„æ•°ç»„
-    /*
-        å¯¹äºæŸäº›å›ºå®šçš„ Nï¼Œå¦‚æœæ•°ç»„ A æ˜¯æ•´æ•° 1, 2, ..., N ç»„æˆçš„æ’åˆ—ï¼Œä½¿å¾—ï¼š
-        å¯¹äºæ¯ä¸ª i < jï¼Œéƒ½ä¸å­˜åœ¨ k æ»¡è¶³ i < k < j ä½¿å¾— A[k] * 2 = A[i] + A[j]ã€‚
-        é‚£ä¹ˆæ•°ç»„ A æ˜¯æ¼‚äº®æ•°ç»„ã€‚
-        ç»™å®š Nï¼Œè¿”å›ä»»æ„æ¼‚äº®æ•°ç»„ Aï¼ˆä¿è¯å­˜åœ¨ä¸€ä¸ªï¼‰
-    */
-    // æç¤ºï¼šå¥‡æ•°æ”¾åœ¨å·¦è¾¹ï¼Œå¶æ•°æ”¾åœ¨å³è¾¹ã€‚å¦‚æœå¥‡æ•°å’Œå¶æ•°æ•°ç»„éƒ½æ˜¯æ¼‚äº®æ•°ç»„ï¼Œé‚£ä¹ˆç»„åˆèµ·æ¥ä¹Ÿæ˜¯æ¼‚äº®æ•°ç»„
-    // å¦‚æœAæ•°ç»„ä¸ºæ¼‚äº®æ•°ç»„ï¼Œé‚£ä¹ˆA*2æ•°ç»„ä¹Ÿä¸ºæ¼‚äº®æ•°ç»„ï¼Œé‚£ä¹ˆA*2-1æ•°ç»„ä¹Ÿæ˜¯æ¼‚äº®æ•°ç»„
-    // [1] -> [1, 2] -> [1, 3, 2, 4] -> [1, 5, 3, 7, 2, 6, 4, 8]
-    vector<int> beautifulArray(int N)
+    void DFS_restoreIpAddresses(vector<string> &ans, string s, string result, int len, int sta, int stp)
     {
-        vector<int> ans(N);
-        ans[0] = 1;
-        for (int i = 1; ; i *= 2)
+        if (stp == 3)
         {
-            int index = 0;
-            for (int j = 0; j < i; j++)
+            int ip = 0;
+            string ip_s = "";
+            for (int i = sta; i < len; i++)
             {
-                if (ans[j] * 2 - 1 <= N)
+                ip = ip * 10 + s[i] - '0';
+                if (ip > 255)
                 {
-                    ans[index++] = ans[j] * 2 - 1;
-                    if (index == N)
-                    {
-                        break;
-                    }
+                    break;
                 }
-            }
-            if (index == N)
-            {
-                break;
-            }
-            for (int j = 0; j < i; j++)
-            {
-                if (ans[j] + 1 <= N)
+                if (ip == 0 && len - 1 > sta)
                 {
-                    ans[index++] = ans[j] + 1;
-                    if (index == N)
-                    {
-                        break;
-                    }
+                    ip = 256;
+                    break;
                 }
+                ip_s += s[i];
             }
-            if (index == N)
+            if (ip < 256)
             {
-                break;
+                ans.push_back(result + "." + ip_s);
             }
-        }
-        return ans;
-    }
-
-
-    // 667
-    // ä¼˜ç¾çš„æ’åˆ—II
-    /*
-        ç»™å®šä¸¤ä¸ªæ•´æ•° n å’Œ kï¼Œä½ éœ€è¦å®ç°ä¸€ä¸ªæ•°ç»„ï¼Œè¿™ä¸ªæ•°ç»„åŒ…å«ä» 1 åˆ° n çš„ n ä¸ªä¸åŒæ•´æ•°ï¼ŒåŒæ—¶æ»¡è¶³ä»¥ä¸‹æ¡ä»¶ï¼š
-        â‘  å¦‚æœè¿™ä¸ªæ•°ç»„æ˜¯ [a1, a2, a3, ... , an] ï¼Œé‚£ä¹ˆæ•°ç»„ [|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|] ä¸­åº”è¯¥æœ‰ä¸”ä»…æœ‰ k ä¸ªä¸åŒæ•´æ•°ï¼›.
-        â‘¡ å¦‚æœå­˜åœ¨å¤šç§ç­”æ¡ˆï¼Œä½ åªéœ€å®ç°å¹¶è¿”å›å…¶ä¸­ä»»æ„ä¸€ç§.
-    */
-    vector<int> constructArray(int n, int k)
-    {
-        vector<int> ans(n);
-        vector<bool> vis(n, false);
-        ans[0] = 1;
-        vis[1] = true;
-        int index = 1;
-        for (int i = k; i >= 1; i--)
-        {
-            int ma = ans[index - 1] + i;
-            int mi = ans[index - 1] - i;
-            if (mi < 1 || vis[mi])
-            {
-                ans[index] = ma;
-                vis[ma] = true;
-            }
-            else
-            {
-                ans[index] = mi;
-                vis[mi] = true;
-            }
-            index++;
-        }
-        for (int i = k + 2; i <= n; i++)
-        {
-            ans[index++] = i;
-        }
-        return ans;
-    }
-
-
-    // 526
-    // ä¼˜ç¾çš„æ’åˆ—
-    /*
-        å‡è®¾æœ‰ä» 1 åˆ° N çš„ N ä¸ªæ•´æ•°ï¼Œå¦‚æœä»è¿™ N ä¸ªæ•°å­—ä¸­æˆåŠŸæ„é€ å‡ºä¸€ä¸ªæ•°ç»„ï¼Œä½¿å¾—æ•°ç»„çš„ç¬¬ i ä½ (1 <= i <= N) æ»¡è¶³å¦‚ä¸‹ä¸¤ä¸ªæ¡ä»¶ä¸­çš„ä¸€ä¸ªï¼Œæˆ‘ä»¬å°±ç§°è¿™ä¸ªæ•°ç»„ä¸ºä¸€ä¸ªä¼˜ç¾çš„æ’åˆ—ã€‚æ¡ä»¶ï¼š
-        ç¬¬ i ä½çš„æ•°å­—èƒ½è¢« i æ•´é™¤
-        i èƒ½è¢«ç¬¬ i ä½ä¸Šçš„æ•°å­—æ•´é™¤
-        ç°åœ¨ç»™å®šä¸€ä¸ªæ•´æ•° Nï¼Œè¯·é—®å¯ä»¥æ„é€ å¤šå°‘ä¸ªä¼˜ç¾çš„æ’åˆ—ï¼Ÿ
-    */
-    int countArrangement(int N)
-    {
-        vector<bool> vis(N + 1, false);
-        int ans = 0;
-        DFS_countArrangement(N, ans, vis, 1);
-        return ans;
-    }
-    void DFS_countArrangement(int N, int &ans, vector<bool> &vis, int stp)
-    {
-        if (stp == N + 1)
-        {
-            ans++;
             return;
         }
-        for (int i = 1; i <= N; i++)
+        for (int i = sta; i < len - 1; i++)
         {
-            if (!vis[i] && (i % stp == 0 || stp % i == 0))
+            int ip = 0;
+            string ip_s = "";
+            if (sta != 0)
             {
-                vis[i] = true;
-                DFS_countArrangement(N, ans, vis, stp + 1);
-                vis[i] = false;
+                ip_s = ".";
             }
+            for (int j = sta; j <= i; j++)
+            {
+                ip = ip * 10 + s[j] - '0';
+                if (ip == 0 && i > j)
+                {
+                    ip = 256;
+                    break;
+                }
+                ip_s += s[j];
+                if (ip > 255)
+                {
+                    break;
+                }
+            }
+            if (ip > 255)
+            {
+                break;
+            }
+            DFS_restoreIpAddresses(ans, s, result + ip_s, len, i + 1, stp + 1);
         }
     }
 
 
-    // 419
-    // ç”²æ¿ä¸Šçš„æˆ˜èˆ°
+    // 92
+    // ·´×ªÁ´±íII
     /*
-        ç»™å®šä¸€ä¸ªäºŒç»´çš„ç”²æ¿ï¼Œ è¯·è®¡ç®—å…¶ä¸­æœ‰å¤šå°‘è‰˜æˆ˜èˆ°ã€‚ æˆ˜èˆ°ç”¨ 'X'è¡¨ç¤ºï¼Œç©ºä½ç”¨ '.'è¡¨ç¤ºã€‚ ä½ éœ€è¦éµå®ˆä»¥ä¸‹è§„åˆ™ï¼š
-        ç»™ä½ ä¸€ä¸ªæœ‰æ•ˆçš„ç”²æ¿ï¼Œä»…ç”±æˆ˜èˆ°æˆ–è€…ç©ºä½ç»„æˆã€‚
-        æˆ˜èˆ°åªèƒ½æ°´å¹³æˆ–è€…å‚ç›´æ”¾ç½®ã€‚æ¢å¥è¯è¯´,æˆ˜èˆ°åªèƒ½ç”± 1xN (1 è¡Œ, N åˆ—)ç»„æˆï¼Œæˆ–è€… Nx1 (N è¡Œ, 1 åˆ—)ç»„æˆï¼Œå…¶ä¸­Nå¯ä»¥æ˜¯ä»»æ„å¤§å°ã€‚
-        ä¸¤è‰˜æˆ˜èˆ°ä¹‹é—´è‡³å°‘æœ‰ä¸€ä¸ªæ°´å¹³æˆ–å‚ç›´çš„ç©ºä½åˆ†éš” - å³æ²¡æœ‰ç›¸é‚»çš„æˆ˜èˆ°ã€‚
-        è¿›é˜¶:ä½ å¯ä»¥ç”¨ä¸€æ¬¡æ‰«æç®—æ³•ï¼Œåªä½¿ç”¨O(1)é¢å¤–ç©ºé—´ï¼Œå¹¶ä¸”ä¸ä¿®æ”¹ç”²æ¿çš„å€¼æ¥è§£å†³è¿™ä¸ªé—®é¢˜å—ï¼Ÿ
+        ·´×ª´ÓÎ»ÖÃ m µ½ n µÄÁ´±í¡£ÇëÊ¹ÓÃÒ»ÌËÉ¨ÃèÍê³É·´×ª¡£
+        ËµÃ÷:
+        1 ¡Ü m ¡Ü n ¡Ü Á´±í³¤¶È¡£
     */
-    int countBattleships(vector<vector<char> >& board)
+    ListNode* reverseBetween(ListNode* head, int m, int n)
     {
-        int row = board.size();
-        int col = board[0].size();
-        int ans = 0;
-        for (int i = 0; i < row; i++)
+        ListNode *last = 0, *node = head;
+        for (int i = 0; i < m - 1; i++)
         {
-            for (int j = 0; j < col; j++)
+            last = node;
+            node = node->next;
+        }
+        ListNode *newHead, *cur, *right = node;
+        for (int i = m;i <= n; i++)
+        {
+            cur = node->next;
+            node->next = newHead;
+            newHead = node;
+            node = cur;
+        }
+        if (right != 0)
+        {
+            right->next = node;
+        }
+        if (last != 0)
+        {
+            last->next = newHead;
+        }
+        else
+        {
+            head = newHead;
+        }
+        return head;
+    }
+
+
+    // 91
+    // ½âÂë·½·¨
+    /*
+        Ò»Ìõ°üº¬×ÖÄ¸ A-Z µÄÏûÏ¢Í¨¹ıÒÔÏÂ·½Ê½½øĞĞÁË±àÂë£º
+        'A' -> 1
+        'B' -> 2
+        ...
+        'Z' -> 26
+        ¸ø¶¨Ò»¸öÖ»°üº¬Êı×ÖµÄ·Ç¿Õ×Ö·û´®£¬Çë¼ÆËã½âÂë·½·¨µÄ×ÜÊı¡£
+    */
+    // ÌáÊ¾£ºdp»òÕßdfs£¬dpĞ§ÂÊ¸ü¸ß£¬¿ÉÒÔÖ»ÓÃ3¸ö±äÁ¿
+    int numDecodings(string s)
+    {
+        int len = s.size();
+        int num;
+        vector<int> dp(len + 1);
+        dp[0] = 1;
+        for (int j = 0; j < len; j++)
+        {
+            int i = j + 1;
+            if (i >= 2)
             {
-                if (board[i][j] == 'X')
+                num = (s[j - 1] - '0') * 10 + s[j] - '0';
+                if (num < 27 && num > 9)
                 {
-                    if (i > 0 && board[i - 1][j] == 'X')
-                    {
-                        continue;
-                    }
-                    if (j > 0 && board[i][j - 1] == 'X')
-                    {
-                        continue;
-                    }
-                    ans++;
+                    dp[i] += dp[i - 2];
                 }
             }
+            num = s[j] - '0';
+            if (num > 0)
+            {
+                dp[i] += dp[i-1];
+            }
         }
+        return dp[len];
+//        int ans = 0;
+//        DFS_numDecodings(s, ans, s.size(), 0);
+//        return ans;
+    }
+//    void DFS_numDecodings(string &s, int &ans, int len, int sta)
+//    {
+//        if (sta == len)
+//        {
+//            ans++;
+//            return;
+//        }
+//        int num = 0;
+//        for (int i = sta; i < len; i++)
+//        {
+//            num = num * 10 + s[i] - '0';
+//            if (num > 26 || num == 0)
+//            {
+//                break;
+//            }
+//            if (num > 0)
+//            {
+//                DFS_numDecodings(s, ans, len, i + 1);
+//            }
+//        }
+//    }
+
+
+    // 90
+    // ×Ó¼¯II
+    /*
+        ¸ø¶¨Ò»¸ö¿ÉÄÜ°üº¬ÖØ¸´ÔªËØµÄÕûÊıÊı×é nums£¬·µ»Ø¸ÃÊı×éËùÓĞ¿ÉÄÜµÄ×Ó¼¯£¨Ãİ¼¯£©¡£
+        ËµÃ÷£º½â¼¯²»ÄÜ°üº¬ÖØ¸´µÄ×Ó¼¯¡£
+    */
+    vector<vector<int> > subsetsWithDup(vector<int>& nums)
+    {
+        sort(nums.begin(), nums.end());
+        vector<vector<int> > ans;
+        vector<int> result(nums.size());
+        DFS_subsetsWithDup(nums, ans, result, nums.size(), 0, 0);
         return ans;
     }
-
-
-    // 227
-    // åŸºæœ¬è®¡ç®—å™¨II
-    /*
-        å®ç°ä¸€ä¸ªåŸºæœ¬çš„è®¡ç®—å™¨æ¥è®¡ç®—ä¸€ä¸ªç®€å•çš„å­—ç¬¦ä¸²è¡¨è¾¾å¼çš„å€¼ã€‚
-        å­—ç¬¦ä¸²è¡¨è¾¾å¼ä»…åŒ…å«éè´Ÿæ•´æ•°ï¼Œ+ï¼Œ - ï¼Œ*ï¼Œ/ å››ç§è¿ç®—ç¬¦å’Œç©ºæ ¼  ã€‚ æ•´æ•°é™¤æ³•ä»…ä¿ç•™æ•´æ•°éƒ¨åˆ†ã€‚
-    */
-    int calculate(string s)
+    void DFS_subsetsWithDup(vector<int> &nums, vector<vector<int> > &ans, vector<int> &result, int len, int sta, int stp)
     {
-        int len = s.size(), ans = 0;
-        stack<char> ops;
-        stack<int> num;
-        for (int i = 0; i < len; i++)
+        vector<int> a(stp);
+        for (int i = 0; i < stp; i++)
         {
-            if (s[i] == '+' || s[i] == '-')
-            {
-                while (ops.size() > 0)
-                {
-                    char op = ops.top();
-                    ops.pop();
-                    int num2 = num.top();
-                    num.pop();
-                    int num1 = num.top();
-                    num.pop();
-                    num.push(do_calculate(num1, num2, op));
-                }
-                ops.push(s[i]);
-            }
-            else if (s[i] == '*' || s[i] == '/')
-            {
-                if (ops.size() > 0 && (ops.top() == '*' || ops.top() == '/'))
-                {
-                    char op = ops.top();
-                    ops.pop();
-                    int num2 = num.top();
-                    num.pop();
-                    int num1 = num.top();
-                    num.pop();
-                    num.push(do_calculate(num1, num2, op));
-                }
-                ops.push(s[i]);
-            }
-            else if (s[i] >= '0' && s[i] <= '9')
-            {
-                long long k = 0;
-                int j = i;
-                while (j < len && s[j] >= '0' && s[j] <= '9')
-                {
-                    k = k * 10 + s[j] - '0';
-                    j++;
-                }
-                i = j - 1;
-                num.push(k);
-            }
+            a[i] = result[i];
         }
-        while (!ops.empty())
+        ans.push_back(a);
+        for (int i = sta; i < len; i++)
         {
-            char op = ops.top();
-            ops.pop();
-            int num2 = num.top();
-            num.pop();
-            int num1 = num.top();
-            num.pop();
-            num.push(do_calculate(num1, num2, op));
-        }
-        return num.top();
-    }
-    int do_calculate(int num1, int num2, char op)
-    {
-        switch(op)
-        {
-            case '+': return num1 + num2;
-            case '-': return num1 - num2;
-            case '*': return num1 * num2;
-            case '/': return num1 / num2;
-        }
-        return 0;
-    }
-
-
-    // 948
-    // ä»¤ç‰Œæ”¾ç½®
-    /*
-        ä½ çš„åˆå§‹èƒ½é‡ä¸º Pï¼Œåˆå§‹åˆ†æ•°ä¸º 0ï¼Œåªæœ‰ä¸€åŒ…ä»¤ç‰Œã€‚
-        ä»¤ç‰Œçš„å€¼ä¸º token[i]ï¼Œæ¯ä¸ªä»¤ç‰Œæœ€å¤šåªèƒ½ä½¿ç”¨ä¸€æ¬¡ï¼Œå¯èƒ½çš„ä¸¤ç§ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
-        å¦‚æœä½ è‡³å°‘æœ‰ token[i] ç‚¹èƒ½é‡ï¼Œå¯ä»¥å°†ä»¤ç‰Œç½®ä¸ºæ­£é¢æœä¸Šï¼Œå¤±å» token[i] ç‚¹èƒ½é‡ï¼Œå¹¶å¾—åˆ° 1 åˆ†ã€‚
-        å¦‚æœæˆ‘ä»¬è‡³å°‘æœ‰ 1 åˆ†ï¼Œå¯ä»¥å°†ä»¤ç‰Œç½®ä¸ºåé¢æœä¸Šï¼Œè·å¾— token[i] ç‚¹èƒ½é‡ï¼Œå¹¶å¤±å» 1 åˆ†ã€‚
-        åœ¨ä½¿ç”¨ä»»æ„æ•°é‡çš„ä»¤ç‰Œåï¼Œè¿”å›æˆ‘ä»¬å¯ä»¥å¾—åˆ°çš„æœ€å¤§åˆ†æ•°ã€‚
-    */
-    int bagOfTokensScore(vector<int>& tokens, int P)
-    {
-        sort (tokens.begin(), tokens.end());
-        int L = 0, R = tokens.size() - 1, ans = 0;
-        while (L <= R)
-        {
-            if (P >= tokens[L])
-            {
-                ans++;
-                P -= tokens[L];
-                L++;
-            }
-            else
-            {
-                if (ans > 0)
-                {
-                    P += (tokens[R] - tokens[L]);
-                    L++;
-                    R--;
-                }
-                else
-                {
-                    return ans;
-                }
-            }
-        }
-        return ans;
-    }
-
-
-    // 735
-    // æ˜Ÿæ˜Ÿç¢°æ’
-    /*
-        ç»™å®šä¸€ä¸ªæ•´æ•°æ•°ç»„ asteroidsï¼Œè¡¨ç¤ºåœ¨åŒä¸€è¡Œçš„è¡Œæ˜Ÿã€‚
-        å¯¹äºæ•°ç»„ä¸­çš„æ¯ä¸€ä¸ªå…ƒç´ ï¼Œå…¶ç»å¯¹å€¼è¡¨ç¤ºè¡Œæ˜Ÿçš„å¤§å°ï¼Œæ­£è´Ÿè¡¨ç¤ºè¡Œæ˜Ÿçš„ç§»åŠ¨æ–¹å‘ï¼ˆæ­£è¡¨ç¤ºå‘å³ç§»åŠ¨ï¼Œè´Ÿè¡¨ç¤ºå‘å·¦ç§»åŠ¨ï¼‰ã€‚æ¯ä¸€é¢—è¡Œæ˜Ÿä»¥ç›¸åŒçš„é€Ÿåº¦ç§»åŠ¨ã€‚
-        æ‰¾å‡ºç¢°æ’åå‰©ä¸‹çš„æ‰€æœ‰è¡Œæ˜Ÿã€‚ç¢°æ’è§„åˆ™ï¼šä¸¤ä¸ªè¡Œæ˜Ÿç›¸äº’ç¢°æ’ï¼Œè¾ƒå°çš„è¡Œæ˜Ÿä¼šçˆ†ç‚¸ã€‚å¦‚æœä¸¤é¢—è¡Œæ˜Ÿå¤§å°ç›¸åŒï¼Œåˆ™ä¸¤é¢—è¡Œæ˜Ÿéƒ½ä¼šçˆ†ç‚¸ã€‚ä¸¤é¢—ç§»åŠ¨æ–¹å‘ç›¸åŒçš„è¡Œæ˜Ÿï¼Œæ°¸è¿œä¸ä¼šå‘ç”Ÿç¢°æ’ã€‚
-    */
-    vector<int> asteroidCollision(vector<int>& asteroids)
-    {
-        vector<int> ans;
-        int len = asteroids.size();
-        for (int i = 0; i < len; i++)
-        {
-            if (asteroids[i] > 0)
-            {
-                ans.push_back(asteroids[i]);
-            }
-            else
-            {
-                bool push = true;
-                while (ans.size() > 0)
-                {
-                    if (ans.back() < 0)
-                    {
-                        ans.push_back(asteroids[i]);
-                        push = false;
-                        break;
-                    }
-                    else if (ans.back() > -asteroids[i])
-                    {
-                        push = false;
-                        break;
-                    }
-                    else if (ans.back() < -asteroids[i])
-                    {
-                        ans.pop_back();
-                    }
-                    else if(ans.back() == -asteroids[i])
-                    {
-                        ans.pop_back();
-                        push = false;
-                        break;
-                    }
-                }
-                if (push)
-                {
-                    ans.push_back(asteroids[i]);
-                }
-            }
-        }
-        return ans;
-    }
-
-
-    // 954
-    // äºŒå€æ•°å¯¹æ•°ç»„
-    /*
-        ç»™å®šä¸€ä¸ªé•¿åº¦ä¸ºå¶æ•°çš„æ•´æ•°æ•°ç»„ Aï¼Œåªæœ‰å¯¹ A è¿›è¡Œé‡ç»„åå¯ä»¥æ»¡è¶³ â€œå¯¹äºæ¯ä¸ª 0 <= i < len(A) / 2ï¼Œéƒ½æœ‰ A[2 * i + 1] = 2 * A[2 * i]â€ æ—¶ï¼Œè¿”å› trueï¼›å¦åˆ™ï¼Œè¿”å› falseã€‚
-    */
-    bool canReorderDoubled(vector<int>& A)
-    {
-        int len = A.size();
-        vector<int> p;
-        vector<int> n;
-        map<int, int> m;
-        for (int i = 0; i < len; i++)
-        {
-            m[A[i]]++;
-            if (A[i] >= 0)
-            {
-                p.push_back(A[i]);
-            }
-            else
-            {
-                n.push_back(A[i]);
-            }
-        }
-        if (p.size() %2 != 0)
-        {
-            return false;
-        }
-        sort(p.begin(), p.end());
-        sort(n.begin(), n.end());
-        int len1 = p.size(), len2 = n.size();
-        for (int i = 0; i < len1; i++)
-        {
-            if (m[p[i]] > 0)
-            {
-                m[p[i]]--;
-                if (m[p[i] * 2] == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    m[p[i] * 2]--;
-                }
-            }
-        }
-        for (int i = len2 - 1; i >= 0; i--)
-        {
-            if (m[n[i]] > 0)
-            {
-                m[n[i]]--;
-                if (m[n[i] * 2] == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    m[n[i] * 2]--;
-                }
-            }
-        }
-        return true;
-    }
-
-
-    // 565
-    // æ•°ç»„åµŒå¥—
-    /*
-        ç´¢å¼•ä»0å¼€å§‹é•¿åº¦ä¸ºNçš„æ•°ç»„Aï¼ŒåŒ…å«0åˆ°N - 1çš„æ‰€æœ‰æ•´æ•°ã€‚æ‰¾åˆ°å¹¶è¿”å›æœ€å¤§çš„é›†åˆSï¼ŒS[i] = {A[i], A[A[i]], A[A[A[i]]], ... }ä¸”éµå®ˆä»¥ä¸‹çš„è§„åˆ™ã€‚
-        å‡è®¾é€‰æ‹©ç´¢å¼•ä¸ºiçš„å…ƒç´ A[i]ä¸ºSçš„ç¬¬ä¸€ä¸ªå…ƒç´ ï¼ŒSçš„ä¸‹ä¸€ä¸ªå…ƒç´ åº”è¯¥æ˜¯A[A[i]]ï¼Œä¹‹åæ˜¯A[A[A[i]]]... ä»¥æ­¤ç±»æ¨ï¼Œä¸æ–­æ·»åŠ ç›´åˆ°Så‡ºç°é‡å¤çš„å…ƒç´ 
-    */
-    int arrayNesting(vector<int>& nums)
-    {
-        int len = nums.size(), ma = 0;
-        vector<bool> vis(len, false);
-        for (int i = 0; i < len; i++)
-        {
-            if (vis[i])
+            if (i > sta && nums[i] == nums[i - 1])
             {
                 continue;
             }
-            int j = i, cnt = 0;
-            while (!vis[j])
-            {
-                vis[j] = true;
-                j = nums[j];
-                cnt++;
-            }
-            if (cnt > ma)
-            {
-                ma = cnt;
-            }
+            result[stp] = nums[i];
+            DFS_subsetsWithDup(nums, ans, result, len, i + 1, stp + 1);
         }
-        return ma;
     }
 
 
-    // 413
-    // ç­‰å·®æ•°åˆ—åˆ’åˆ†
+    // 89
+    // ¸ñÀ×±àÂë
     /*
-        æ•°ç»„ A åŒ…å« N ä¸ªæ•°ï¼Œä¸”ç´¢å¼•ä»0å¼€å§‹ã€‚æ•°ç»„ A çš„ä¸€ä¸ªå­æ•°ç»„åˆ’åˆ†ä¸ºæ•°ç»„ (P, Q)ï¼ŒP ä¸ Q æ˜¯æ•´æ•°ä¸”æ»¡è¶³ 0<=P<Q<N ã€‚
-        å¦‚æœæ»¡è¶³ä»¥ä¸‹æ¡ä»¶ï¼Œåˆ™ç§°å­æ•°ç»„(P, Q)ä¸ºç­‰å·®æ•°ç»„ï¼š
-        å…ƒç´  A[P], A[p + 1], ..., A[Q - 1], A[Q] æ˜¯ç­‰å·®çš„ã€‚å¹¶ä¸” P + 1 < Q ã€‚
-        å‡½æ•°è¦è¿”å›æ•°ç»„ A ä¸­æ‰€æœ‰ä¸ºç­‰å·®æ•°ç»„çš„å­æ•°ç»„ä¸ªæ•°ã€‚
+        ¸ñÀ×±àÂëÊÇÒ»¸ö¶ş½øÖÆÊı×ÖÏµÍ³£¬ÔÚ¸ÃÏµÍ³ÖĞ£¬Á½¸öÁ¬ĞøµÄÊıÖµ½öÓĞÒ»¸öÎ»ÊıµÄ²îÒì¡£
+        ¸ø¶¨Ò»¸ö´ú±í±àÂë×ÜÎ»ÊıµÄ·Ç¸ºÕûÊı n£¬´òÓ¡Æä¸ñÀ×±àÂëĞòÁĞ¡£¸ñÀ×±àÂëĞòÁĞ±ØĞëÒÔ 0 ¿ªÍ·¡£
     */
-    int numberOfArithmeticSlices(vector<int>& A)
+    // ÌáÊ¾£º¸ñÀ×±àÂëÉú³É£¬Ö¤Ã÷·½·¨£¿
+    vector<int> grayCode(int n)
     {
-        int ans = 0;
-        int len = A.size();
-        for (int i = 0; i < len - 2; i++)
-        {
-            int d = A[i + 1] - A[i];
-            int j = i + 2;
-            while (j < len && A[j] - A[j - 1] == d)
-            {
-                j++;
-            }
-            ans = ans + (j - i - 2 + 1) * (j - i - 2) / 2;
-            i = j - 2;
-        }
-        return ans;
-    }
-
-
-    // 797
-    // æ‰€æœ‰å¯èƒ½è·¯å¾„
-    /*
-        ç»™ä¸€ä¸ªæœ‰ n ä¸ªç»“ç‚¹çš„æœ‰å‘æ— ç¯å›¾ï¼Œæ‰¾åˆ°æ‰€æœ‰ä» 0 åˆ° n-1 çš„è·¯å¾„å¹¶è¾“å‡ºï¼ˆä¸è¦æ±‚æŒ‰é¡ºåºï¼‰
-        äºŒç»´æ•°ç»„çš„ç¬¬ i ä¸ªæ•°ç»„ä¸­çš„å•å…ƒéƒ½è¡¨ç¤ºæœ‰å‘å›¾ä¸­ i å·ç»“ç‚¹æ‰€èƒ½åˆ°è¾¾çš„ä¸‹ä¸€äº›ç»“ç‚¹ï¼ˆè¯‘è€…æ³¨ï¼šæœ‰å‘å›¾æ˜¯æœ‰æ–¹å‘çš„ï¼Œå³è§„å®šäº†aâ†’bä½ å°±ä¸èƒ½ä»bâ†’aï¼‰ç©ºå°±æ˜¯æ²¡æœ‰ä¸‹ä¸€ä¸ªç»“ç‚¹äº†ã€‚
-    */
-    vector<vector<int> > allPathsSourceTarget(vector<vector<int> >& graph)
-    {
-        vector<vector<int> > ans;
-        vector<int> result;
-        result.push_back(0);
-        DFS_allPathsSourceTarget(graph, ans, result, 0);
-        return ans;
-    }
-    void DFS_allPathsSourceTarget(vector<vector<int> > &graph, vector<vector<int> > &ans, vector<int> &result, int k)
-    {
-        if (k == graph.size() - 1)
-        {
-            ans.push_back(result);
-        }
-        for (int i = 0; i < graph[k].size(); i++)
-        {
-            if (graph[k][i] > k)
-            {
-                result.push_back(graph[k][i]);
-                DFS_allPathsSourceTarget(graph, ans, result, graph[k][i]);
-                result.pop_back();
-            }
-        }
-    }
-
-
-    // 863
-    // äºŒå‰æ ‘ä¸­æ‰€æœ‰è·ç¦»ä¸º K çš„ç»“ç‚¹
-    /*
-        ç»™å®šä¸€ä¸ªäºŒå‰æ ‘ï¼ˆå…·æœ‰æ ¹ç»“ç‚¹ rootï¼‰ï¼Œ ä¸€ä¸ªç›®æ ‡ç»“ç‚¹ target ï¼Œå’Œä¸€ä¸ªæ•´æ•°å€¼ K ã€‚
-        è¿”å›åˆ°ç›®æ ‡ç»“ç‚¹ target è·ç¦»ä¸º K çš„æ‰€æœ‰ç»“ç‚¹çš„å€¼çš„åˆ—è¡¨ã€‚ ç­”æ¡ˆå¯ä»¥ä»¥ä»»ä½•é¡ºåºè¿”å›ã€‚
-    */
-    // æç¤ºï¼šå…ˆæ‰¾å‡ºåˆ°ç›®æ ‡ç‚¹çš„pathï¼Œç„¶åéå†æ¯ä¸ªèŠ‚ç‚¹çš„å¦ä¸€ä¸ªå„¿å­ï¼Œæ³¨æ„å½“å‰èŠ‚ç‚¹ä¹Ÿå¯èƒ½æ˜¯ç­”æ¡ˆ
-    vector<int> distanceK(TreeNode* root, TreeNode* target, int K)
-    {
-        vector<int> ans;
-        vector<TreeNode*> path;
-        FindPath_distanceK(root, target, path);
-        int len = path.size();
+        int len = 1 << n;
+        vector<int> ans(len);
         for (int i = 0; i < len; i++)
         {
-            TreeNode *node;
-            int D;
-            if (i != len - 1)
+            ans[i] = i ^ (i >> 1);
+        }
+        return ans;
+//        int len = 1 << n;
+//        vector<int> ans(len);
+//        map<int, bool> m;
+//        string last = "";
+//        int lastNum = 0;
+//        for (int i = 0; i < n; i++)
+//        {
+//            last += '0';
+//        }
+//        m[lastNum] = true;
+//        ans[0] = lastNum;
+//        for (int i = 1; i < len; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                int newNum;
+//                if (last[j] == '0')
+//                {
+//                    newNum = lastNum + (1 << (n - 1 - j));
+//                    if (!m[newNum])
+//                    {
+//                        last[j] = '1';
+//                        ans[i] = newNum;
+//                        lastNum = newNum;
+//                        m[newNum] = true;
+//                        break;
+//                    }
+//                }
+//                else
+//                {
+//                    newNum = lastNum - (1 << (n - 1 - j));
+//                    if (!m[newNum])
+//                    {
+//                        last[j] = '0';
+//                        ans[i] = newNum;
+//                        lastNum = newNum;
+//                        m[newNum] = true;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//        return ans;
+    }
+
+    // 86
+    // ·Ö¸ôÁ´±í
+    /*
+        ¸ø¶¨Ò»¸öÁ´±íºÍÒ»¸öÌØ¶¨Öµ x£¬¶ÔÁ´±í½øĞĞ·Ö¸ô£¬Ê¹µÃËùÓĞĞ¡ÓÚ x µÄ½Úµã¶¼ÔÚ´óÓÚ»òµÈÓÚ x µÄ½ÚµãÖ®Ç°¡£
+        ÄãÓ¦µ±±£ÁôÁ½¸ö·ÖÇøÖĞÃ¿¸ö½ÚµãµÄ³õÊ¼Ïà¶ÔÎ»ÖÃ¡£
+    */
+    ListNode* partition(ListNode* head, int x)
+    {
+        ListNode *newHead = 0, *leftHead = 0, *rightHead = 0, *left = 0, *right = 0, *node = head;
+        while (node != 0)
+        {
+            if (node->val < x)
             {
-                if (path[i + 1] != path[i]->left)
+                if (leftHead == 0)
                 {
-                    node = path[i]->left;
+                    leftHead = node;
+                    left = node;
                 }
                 else
                 {
-                    node = path[i]->right;
+                    left->next = node;
+                    left = node;
                 }
-                D = K - (len - i);
             }
             else
             {
-                node = path[i];
-                D = K;
-            }
-            if (D >= 0)
-            {
-                FindAns_distanceK(node, ans, D, 0);
-            }
-            else if (D == -1)
-            {
-                ans.push_back(path[i]->val);
-            }
-        }
-        return ans;
-    }
-    void FindPath_distanceK(TreeNode *node, TreeNode *target, vector<TreeNode*> &path)
-    {
-        if (node == 0 || (path.size() > 0 && path.back() == target))
-        {
-            return;
-        }
-        path.push_back(node);
-        if (node == target)
-        {
-            return;
-        }
-        FindPath_distanceK(node->left, target, path);
-        if (path.size() > 0 && path.back() == target)
-        {
-            return;
-        }
-        FindPath_distanceK(node->right, target, path);
-        if (path.size() > 0 && path.back() == target)
-        {
-            return;
-        }
-        path.pop_back();
-    }
-    void FindAns_distanceK(TreeNode *node, vector<int> &ans, int K, int D)
-    {
-        if (node == 0)
-        {
-            return;
-        }
-        if (K == D)
-        {
-            ans.push_back(node->val);
-            return;
-        }
-        FindAns_distanceK(node->left, ans, K, D + 1);
-        FindAns_distanceK(node->right, ans, K, D + 1);
-    }
-
-
-    // 870
-    // ä¼˜åŠ¿æ´—ç‰Œ
-    /*
-        ç»™å®šä¸¤ä¸ªå¤§å°ç›¸ç­‰çš„æ•°ç»„ A å’Œ Bï¼ŒA ç›¸å¯¹äº B çš„ä¼˜åŠ¿å¯ä»¥ç”¨æ»¡è¶³ A[i] > B[i] çš„ç´¢å¼• i çš„æ•°ç›®æ¥æè¿°ã€‚
-        è¿”å› A çš„ä»»æ„æ’åˆ—ï¼Œä½¿å…¶ç›¸å¯¹äº B çš„ä¼˜åŠ¿æœ€å¤§åŒ–ã€‚
-    */
-    vector<int> advantageCount(vector<int>& A, vector<int>& B)
-    {
-        sort(A.begin(), A.end());
-        int len = A.size();
-        vector<int> ans(len);
-        vector<bool> vis(len);
-        for (int i = 0; i < len; i++)
-        {
-            vis[i] = false;
-        }
-        for (int i = 0; i < len; i++)
-        {
-            int L = 0, R = len - 1, mid, ansIndex = 0;
-            while (L <= R)
-            {
-                mid = (L + R) >> 1;
-                if (A[mid] > B[i])
+                if (rightHead == 0)
                 {
-                    ansIndex = mid;
+                    rightHead = node;
+                    right = node;
+                }
+                else
+                {
+                    right->next = node;
+                    right = node;
+                }
+            }
+            node = node->next;
+        }
+        if (leftHead != 0)
+        {
+            newHead = leftHead;
+            left->next = rightHead;
+        }
+        else
+        {
+            newHead = rightHead;
+        }
+        if (right != 0)
+        {
+            right->next = 0;
+        }
+        return newHead;
+    }
+
+
+    // 82
+    // É¾³ıÅÅĞòÁ´±íÖĞµÄÖØ¸´ÔªËØ II
+    /*
+        ¸ø¶¨Ò»¸öÅÅĞòÁ´±í£¬É¾³ıËùÓĞº¬ÓĞÖØ¸´Êı×ÖµÄ½Úµã£¬Ö»±£ÁôÔ­Ê¼Á´±íÖĞ Ã»ÓĞÖØ¸´³öÏÖ µÄÊı×Ö¡£
+    */
+    ListNode* deleteDuplicates(ListNode* head)
+    {
+        ListNode *newHead = 0, *newNode = 0, *node = head;
+        while (node != 0)
+        {
+            if (node->next != 0 && node->next->val == node->val)
+            {
+                while (node->next != 0 && node->val == node->next->val)
+                {
+                    node = node->next;
+                }
+                node = node->next;
+            }
+            else
+            {
+                if (newHead == 0)
+                {
+                    newHead = node;
+                    newNode = node;
+                }
+                else
+                {
+                    newNode->next = node;
+                    newNode = node;
+                }
+                node = node->next;
+            }
+        }
+        if (newNode != 0)
+        {
+            newNode->next = 0;
+        }
+        return newHead;
+    }
+
+
+    // 81
+    // ËÑË÷Ğı×ªÅÅĞòÊı×é II
+    /*
+        ¼ÙÉè°´ÕÕÉıĞòÅÅĞòµÄÊı×éÔÚÔ¤ÏÈÎ´ÖªµÄÄ³¸öµãÉÏ½øĞĞÁËĞı×ª¡£
+        ( ÀıÈç£¬Êı×é [0,0,1,2,2,5,6] ¿ÉÄÜ±äÎª [2,5,6,0,0,1,2] )¡£
+        ±àĞ´Ò»¸öº¯ÊıÀ´ÅĞ¶Ï¸ø¶¨µÄÄ¿±êÖµÊÇ·ñ´æÔÚÓÚÊı×éÖĞ¡£Èô´æÔÚ·µ»Ø true£¬·ñÔò·µ»Ø false¡£
+    */
+    bool searchII(vector<int>& nums, int target)
+    {
+        int L = 0, R = nums.size() - 1;
+        while (L <= R)
+        {
+            int mid = (L + R) >> 1;
+            if (nums[mid] == target)
+            {
+                return true;
+            }
+            if (nums[L] == nums[mid])
+            {
+                L++;
+            }
+            else if (nums[L] < nums[mid])
+            {
+                if (target >= nums[L] && target < nums[mid])
+                {
                     R = mid - 1;
                 }
                 else
@@ -796,290 +452,516 @@ public:
                     L = mid + 1;
                 }
             }
-            while (true)
+            else
             {
-                if (!vis[ansIndex])
+                if (target > nums[mid] && target <= nums[R])
                 {
-                    ans[i] = A[ansIndex];
-                    vis[ansIndex] = true;
-                    break;
+                    L = mid + 1;
                 }
-                ansIndex++;
-                if (ansIndex == len)
+                else
                 {
-                    ansIndex = 0;
-                }
-            }
-        }
-        return ans;
-    }
-
-
-    // 306
-    // ç´¯åŠ æ•°
-    /*
-        ç´¯åŠ æ•°æ˜¯ä¸€ä¸ªå­—ç¬¦ä¸²ï¼Œç»„æˆå®ƒçš„æ•°å­—å¯ä»¥å½¢æˆç´¯åŠ åºåˆ—ã€‚
-        ä¸€ä¸ªæœ‰æ•ˆçš„ç´¯åŠ åºåˆ—å¿…é¡»è‡³å°‘åŒ…å« 3 ä¸ªæ•°ã€‚é™¤äº†æœ€å¼€å§‹çš„ä¸¤ä¸ªæ•°ä»¥å¤–ï¼Œå­—ç¬¦ä¸²ä¸­çš„å…¶ä»–æ•°éƒ½ç­‰äºå®ƒä¹‹å‰ä¸¤ä¸ªæ•°ç›¸åŠ çš„å’Œã€‚
-        ç»™å®šä¸€ä¸ªåªåŒ…å«æ•°å­— '0'-'9' çš„å­—ç¬¦ä¸²ï¼Œç¼–å†™ä¸€ä¸ªç®—æ³•æ¥åˆ¤æ–­ç»™å®šè¾“å…¥æ˜¯å¦æ˜¯ç´¯åŠ æ•°ã€‚
-        è¯´æ˜: ç´¯åŠ åºåˆ—é‡Œçš„æ•°ä¸ä¼šä»¥ 0 å¼€å¤´ï¼Œæ‰€ä»¥ä¸ä¼šå‡ºç° 1, 2, 03 æˆ–è€… 1, 02, 3 çš„æƒ…å†µã€‚
-        æ¯”å¦‚ï¼š112358ï¼Œ199100199
-    */
-    bool isAdditiveNumber(string num)
-    {
-        int len = num.size();
-        for (int i = 1; i < len; i++)
-        {
-            string a = "";
-            for (int r = 0; r < i; r++)
-            {
-                a = a + num[r];
-            }
-            if (a[0] == '0' && i > 1)
-            {
-                continue;
-            }
-            for (int j = i; j < len; j++)
-            {
-                string b = "";
-                for (int r = i; r <= j; r++)
-                {
-                    b = b + num[r];
-                }
-                if (b[0] == '0' && j > i)
-                {
-                    continue;
-                }
-                if (DFS_isAdditiveNumber(num, len, j + 1, b, Add_isAdditiveNumber(a, b)))
-                {
-                    return true;
+                    R = mid - 1;
                 }
             }
         }
         return false;
     }
-    bool DFS_isAdditiveNumber(string num, int len, int startIndex, string last, string sum)
+
+
+    // 80
+    // É¾³ıÅÅĞòÊı×éÖĞµÄÖØ¸´ÏîII
+    /*
+        ¸ø¶¨Ò»¸öÅÅĞòÊı×é£¬ÄãĞèÒªÔÚÔ­µØÉ¾³ıÖØ¸´³öÏÖµÄÔªËØ£¬Ê¹µÃÃ¿¸öÔªËØ×î¶à³öÏÖÁ½´Î£¬·µ»ØÒÆ³ıºóÊı×éµÄĞÂ³¤¶È¡£
+        ²»ÒªÊ¹ÓÃ¶îÍâµÄÊı×é¿Õ¼ä£¬Äã±ØĞëÔÚÔ­µØĞŞ¸ÄÊäÈëÊı×é²¢ÔÚÊ¹ÓÃ O(1) ¶îÍâ¿Õ¼äµÄÌõ¼şÏÂÍê³É¡£
+    */
+    int removeDuplicates(vector<int>& nums)
     {
-        int sumLen = sum.size();
-        if (len - startIndex < sumLen)
+        int len = nums.size();
+        int index = 0, cur = 0;
+        while (cur < len)
         {
-            return false;
-        }
-        int newIndex = startIndex;
-        while (newIndex - startIndex < sumLen)
-        {
-            if (sum[newIndex - startIndex] != num[newIndex])
+            int k = cur;
+            while (cur + 1 < len && nums[cur] == nums[cur + 1])
             {
-                return false;
+                cur++;
             }
-            newIndex++;
+            if (cur - k >= 1)
+            {
+                nums[index++] = nums[k];
+                nums[index++] = nums[k];
+            }
+            else
+            {
+                nums[index++] = nums[k];
+            }
+            cur++;
         }
-        if (startIndex + sumLen == len)
+        return index;
+    }
+
+
+    // 79
+    // µ¥´ÊËÑË÷
+    /*
+        ¸ø¶¨Ò»¸ö¶şÎ¬Íø¸ñºÍÒ»¸öµ¥´Ê£¬ÕÒ³ö¸Ãµ¥´ÊÊÇ·ñ´æÔÚÓÚÍø¸ñÖĞ¡£
+        µ¥´Ê±ØĞë°´ÕÕ×ÖÄ¸Ë³Ğò£¬Í¨¹ıÏàÁÚµÄµ¥Ôª¸ñÄÚµÄ×ÖÄ¸¹¹³É£¬ÆäÖĞ¡°ÏàÁÚ¡±µ¥Ôª¸ñÊÇÄÇĞ©Ë®Æ½ÏàÁÚ»ò´¹Ö±ÏàÁÚµÄµ¥Ôª¸ñ¡£Í¬Ò»¸öµ¥Ôª¸ñÄÚµÄ×ÖÄ¸²»ÔÊĞí±»ÖØ¸´Ê¹ÓÃ¡£
+    */
+    bool exist(vector<vector<char> >& board, string word)
+    {
+        if (word.size() == 0)
         {
             return true;
         }
-        return DFS_isAdditiveNumber(num, len, startIndex + sumLen, sum, Add_isAdditiveNumber(last, sum));
+        if (board.size() == 0)
+        {
+            return false;
+        }
+        if (board[0].size() == 0)
+        {
+            return false;
+        }
+        int row = board.size();
+        int col = board[0].size();
+        int len = word.size();
+        bool exist = false;
+        for (int i = 0; i < row && !exist; i++)
+        {
+            for (int j = 0; j < col && !exist; j++)
+            {
+                if (board[i][j] == word[0])
+                {
+                    char c = board[i][j];
+                    board[i][j] = 0;
+                    DFS_exist(board, word, row, col, len, i, j, 1, exist);
+                    board[i][j] = c;
+                }
+            }
+        }
+        return exist;
     }
-    string Add_isAdditiveNumber(string a, string b)
+    void DFS_exist(vector<vector<char> >& board, string word, int row, int col, int len, int x, int y, int stp, bool &exist)
     {
-        int lenA = a.size(), lenB = b.size();
-        int L = 0, R = lenA - 1;
-        while (L < R)
+        if (exist)
         {
-            swap(a[L++], a[R--]);
+            return;
         }
-        L = 0, R = lenB - 1;
-        while (L < R)
+        if (stp == len)
         {
-            swap(b[L++], b[R--]);
+            exist = true;
+            return;
         }
-        string ans = "";
-        int r = 0, addA, addB, sum;
-        for (int i = 0; i < lenA || i < lenB; i++)
+        int dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int xx, yy;
+        for (int i = 0; i < 4; i++)
         {
-            if (i >= lenA)
+            xx = x + dir[i][0];
+            yy = y + dir[i][1];
+            if (xx < row && xx >= 0 && yy < col && yy >= 0 && board[xx][yy] == word[stp])
             {
-                addA = 0;
+                char c = board[xx][yy];
+                board[xx][yy] = 0;
+                DFS_exist(board, word, row, col, len, xx, yy, stp + 1, exist);
+                board[xx][yy] = c;
             }
-            else
-            {
-                addA = a[i] - '0';
-            }
-            if (i >= lenB)
-            {
-                addB = 0;
-            }
-            else
-            {
-                addB = b[i] - '0';
-            }
-            sum = addA + addB + r;
-            r = sum / 10;
-            sum %= 10;
-            ans = ans + (char)(sum + '0');
         }
-        if (r != 0)
+    }
+
+
+    // 78
+    // ×Ó¼¯
+    /*
+        ¸ø¶¨Ò»×é²»º¬ÖØ¸´ÔªËØµÄÕûÊıÊı×é nums£¬·µ»Ø¸ÃÊı×éËùÓĞ¿ÉÄÜµÄ×Ó¼¯£¨Ãİ¼¯£©¡£
+        ËµÃ÷£º½â¼¯²»ÄÜ°üº¬ÖØ¸´µÄ×Ó¼¯¡£
+    */
+    vector<vector<int> > subsets(vector<int>& nums)
+    {
+        vector<vector<int> > ans;
+        int len = 1 << nums.size();
+        for (int i = 0; i < len; i++)
         {
-            ans = ans + (char)(r + '0');
-        }
-        L = 0, R = ans.size() - 1;
-        while (L < R)
-        {
-            swap(ans[L++], ans[R--]);
+            vector<int> result;
+            int j = i, index = 0;
+            while (j != 0)
+            {
+                if (j & 1)
+                {
+                    result.push_back(nums[index]);
+                }
+                j >>= 1;
+                index++;
+            }
+            ans.push_back(result);
         }
         return ans;
     }
 
 
-    // 445
-    // ä¸¤æ•°ç›¸åŠ II
+    // 77
+    // ×éºÏ
     /*
-        ç»™å®šä¸¤ä¸ªéç©ºé“¾è¡¨æ¥ä»£è¡¨ä¸¤ä¸ªéè´Ÿæ•´æ•°ã€‚æ•°å­—æœ€é«˜ä½ä½äºé“¾è¡¨å¼€å§‹ä½ç½®ã€‚å®ƒä»¬çš„æ¯ä¸ªèŠ‚ç‚¹åªå­˜å‚¨å•ä¸ªæ•°å­—ã€‚å°†è¿™ä¸¤æ•°ç›¸åŠ ä¼šè¿”å›ä¸€ä¸ªæ–°çš„é“¾è¡¨ã€‚
-        è¿›é˜¶: å¦‚æœè¾“å…¥é“¾è¡¨ä¸èƒ½ä¿®æ”¹è¯¥å¦‚ä½•å¤„ç†ï¼Ÿæ¢å¥è¯è¯´ï¼Œä½ ä¸èƒ½å¯¹åˆ—è¡¨ä¸­çš„èŠ‚ç‚¹è¿›è¡Œç¿»è½¬ã€‚
+        ¸ø¶¨Á½¸öÕûÊı n ºÍ k£¬·µ»Ø 1 ... n ÖĞËùÓĞ¿ÉÄÜµÄ k ¸öÊıµÄ×éºÏ¡£
     */
-    ListNode* addTwoNumbersII(ListNode* l1, ListNode* l2)
+    vector<vector<int> > combine(int n, int k)
     {
-        l1 = Reverse_addTwoNumbers(l1);
-        l2 = Reverse_addTwoNumbers(l2);
-        int r = 0, a, b, sum;
-        ListNode *cur1 = l1, *cur2 = l2, *head = NULL, *cur;
-        while (cur1 != NULL || cur2 != NULL)
-        {
-            if (cur1 == NULL)
-            {
-                a = 0;
-            }
-            else
-            {
-                a = cur1->val;
-                cur1 = cur1->next;
-            }
-            if (cur2 == NULL)
-            {
-                b = 0;
-            }
-            else
-            {
-                b = cur2->val;
-                cur2 = cur2->next;
-            }
-            sum = a + b + r;
-            r = sum / 10;
-            sum %= 10;
-            if (head == NULL)
-            {
-                head = new ListNode(sum);
-                cur = head;
-            }
-            else
-            {
-                cur->next = new ListNode(sum);
-                cur = cur->next;
-            }
-        }
-        if (r != 0)
-        {
-            cur->next = new ListNode(r);
-            cur = cur->next;
-        }
-        l1 = Reverse_addTwoNumbers(l1);
-        l2 = Reverse_addTwoNumbers(l2);
-        head = Reverse_addTwoNumbers(head);
-        return head;
+        vector<vector<int> > ans;
+        vector<int> result(k);
+        DFS_combine(ans, result, n, k, 1, 0);
+        return ans;
     }
-    ListNode* Reverse_addTwoNumbers(ListNode *l)
+    void DFS_combine(vector<vector<int> > &ans, vector<int> &result, int n, int k, int sta, int step)
     {
-        ListNode *head = NULL, *cur = l, *next;
-        while (cur != NULL)
+        if (step == k)
         {
-            next = cur->next;
-            cur->next = head;
-            head = cur;
-            cur = next;
+            ans.push_back(result);
+            return;
         }
-        return head;
+        if (k - step > n - sta + 1)
+        {
+            return;
+        }
+        for (int i = sta; i <= n; i++)
+        {
+            result[step] = i;
+            DFS_combine(ans, result, n, k, i + 1, step + 1);
+        }
     }
 
 
-    // 2
-    // ä¸¤æ•°ç›¸åŠ 
+    // 75
+    // ÑÕÉ«·ÖÀà
     /*
-        ç»™å‡ºä¸¤ä¸ª éç©º çš„é“¾è¡¨ç”¨æ¥è¡¨ç¤ºä¸¤ä¸ªéè´Ÿçš„æ•´æ•°ã€‚å…¶ä¸­ï¼Œå®ƒä»¬å„è‡ªçš„ä½æ•°æ˜¯æŒ‰ç…§ é€†åº çš„æ–¹å¼å­˜å‚¨çš„ï¼Œå¹¶ä¸”å®ƒä»¬çš„æ¯ä¸ªèŠ‚ç‚¹åªèƒ½å­˜å‚¨ ä¸€ä½ æ•°å­—ã€‚
-        å¦‚æœï¼Œæˆ‘ä»¬å°†è¿™ä¸¤ä¸ªæ•°ç›¸åŠ èµ·æ¥ï¼Œåˆ™ä¼šè¿”å›ä¸€ä¸ªæ–°çš„é“¾è¡¨æ¥è¡¨ç¤ºå®ƒä»¬çš„å’Œã€‚
-        æ‚¨å¯ä»¥å‡è®¾é™¤äº†æ•°å­— 0 ä¹‹å¤–ï¼Œè¿™ä¸¤ä¸ªæ•°éƒ½ä¸ä¼šä»¥ 0 å¼€å¤´ã€‚
+        ¸ø¶¨Ò»¸ö°üº¬ºìÉ«¡¢°×É«ºÍÀ¶É«£¬Ò»¹² n ¸öÔªËØµÄÊı×é£¬Ô­µØ¶ÔËüÃÇ½øĞĞÅÅĞò£¬Ê¹µÃÏàÍ¬ÑÕÉ«µÄÔªËØÏàÁÚ£¬²¢°´ÕÕºìÉ«¡¢°×É«¡¢À¶É«Ë³ĞòÅÅÁĞ¡£
+        ´ËÌâÖĞ£¬ÎÒÃÇÊ¹ÓÃÕûÊı 0¡¢ 1 ºÍ 2 ·Ö±ğ±íÊ¾ºìÉ«¡¢°×É«ºÍÀ¶É«¡£
+        ×¢Òâ:
+        ²»ÄÜÊ¹ÓÃ´úÂë¿âÖĞµÄÅÅĞòº¯ÊıÀ´½â¾öÕâµÀÌâ¡£
+        ½ø½×£º
+        Ò»¸öÖ±¹ÛµÄ½â¾ö·½°¸ÊÇÊ¹ÓÃ¼ÆÊıÅÅĞòµÄÁ½ÌËÉ¨ÃèËã·¨¡£
+        Ê×ÏÈ£¬µü´ú¼ÆËã³ö0¡¢1 ºÍ 2 ÔªËØµÄ¸öÊı£¬È»ºó°´ÕÕ0¡¢1¡¢2µÄÅÅĞò£¬ÖØĞ´µ±Ç°Êı×é¡£
+        ÄãÄÜÏë³öÒ»¸ö½öÊ¹ÓÃ³£Êı¿Õ¼äµÄÒ»ÌËÉ¨ÃèËã·¨Âğ£¿
     */
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
+    // ÌáÊ¾£ºÈıÖ¸Õë·¨
+    void sortColors(vector<int>& nums)
     {
-        int r = 0, a, b, sum;
-        ListNode *cur1 = l1, *cur2 = l2, *head = NULL, *cur;
-        while (cur1 != NULL || cur2 != NULL)
+        int p0 = 0, p1 = 0, p2 = nums.size() - 1;
+        while (p0 <= p2 && p1 <= p2)
         {
-            if (cur1 == NULL)
+            while (p0 <= p2 && nums[p0] == 0)
             {
-                a = 0;
+                p0++;
+                p1++;
+            }
+            while (p0 <= p2 && nums[p2] == 2)
+            {
+                p2--;
+            }
+            if (p0 <= p2 && nums[p1] == 0)
+            {
+                swap(nums[p0], nums[p1]);
+                p0++;
+                p1++;
+            }
+            else if (p0 <= p2 && nums[p1] == 2)
+            {
+                swap(nums[p1], nums[p2]);
+                p2--;
             }
             else
             {
-                a = cur1->val;
-                cur1 = cur1->next;
-            }
-            if (cur2 == NULL)
-            {
-                b = 0;
-            }
-            else
-            {
-                b = cur2->val;
-                cur2 = cur2->next;
-            }
-            sum = a + b + r;
-            r = sum / 10;
-            sum %= 10;
-            if (head == NULL)
-            {
-                head = new ListNode(sum);
-                cur = head;
-            }
-            else
-            {
-                cur->next = new ListNode(sum);
-                cur = cur->next;
+                p1++;
             }
         }
-        if (r != 0)
-        {
-            cur->next = new ListNode(r);
-            cur = cur->next;
-        }
-        return head;
     }
 
 
-    // 454
-    // å››æ•°ç›¸åŠ II
+    // ËÑË÷¶şÎ¬¾ØÕó
+    // 74
     /*
-        ç»™å®šå››ä¸ªåŒ…å«æ•´æ•°çš„æ•°ç»„åˆ—è¡¨ A , B , C , D ,è®¡ç®—æœ‰å¤šå°‘ä¸ªå…ƒç»„ (i, j, k, l) ï¼Œä½¿å¾— A[i] + B[j] + C[k] + D[l] = 0ã€‚
-        ä¸ºäº†ä½¿é—®é¢˜ç®€å•åŒ–ï¼Œæ‰€æœ‰çš„ A, B, C, D å…·æœ‰ç›¸åŒçš„é•¿åº¦ Nï¼Œä¸” 0 â‰¤ N â‰¤ 500 ã€‚æ‰€æœ‰æ•´æ•°çš„èŒƒå›´åœ¨ -228 åˆ° 228 - 1 ä¹‹é—´ï¼Œæœ€ç»ˆç»“æœä¸ä¼šè¶…è¿‡ 231 - 1 ã€‚
+        ±àĞ´Ò»¸ö¸ßĞ§µÄËã·¨À´ÅĞ¶Ï m x n ¾ØÕóÖĞ£¬ÊÇ·ñ´æÔÚÒ»¸öÄ¿±êÖµ¡£¸Ã¾ØÕó¾ßÓĞÈçÏÂÌØĞÔ£º
+        Ã¿ĞĞÖĞµÄÕûÊı´Ó×óµ½ÓÒ°´ÉıĞòÅÅÁĞ¡£
+        Ã¿ĞĞµÄµÚÒ»¸öÕûÊı´óÓÚÇ°Ò»ĞĞµÄ×îºóÒ»¸öÕûÊı¡£
     */
-    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D)
+    // ÌáÊ¾£º´ÓÓÒÉÏ½Ç¿ªÊ¼
+    bool searchMatrix(vector<vector<int> >& matrix, int target)
     {
-        int len = A.size();
-        map<int, int> m;
-        for (int i = 0; i < len; i++)
+        int row = matrix.size();
+        if (row == 0)
         {
-            for (int j = 0; j < len; j++)
+            return false;
+        }
+        int col = matrix[0].size();
+        if (col == 0)
+        {
+            return false;
+        }
+        int curRow = 0, curCol = col - 1;
+        while (curRow < row && curCol >= 0)
+        {
+            if (matrix[curRow][curCol] == target)
             {
-                m[A[i] + B[j]]++;
+                return true;
+            }
+            if (matrix[curRow][curCol] < target)
+            {
+                curRow++;
+            }
+            else
+            {
+                curCol--;
             }
         }
-        int ans = 0;
-        for (int i = 0; i < len; i++)
+        return false;
+    }
+
+
+    // 73
+    // ¾ØÕóÖÃÁã
+    /*
+        ¸ø¶¨Ò»¸ö m x n µÄ¾ØÕó£¬Èç¹ûÒ»¸öÔªËØÎª 0£¬Ôò½«ÆäËùÔÚĞĞºÍÁĞµÄËùÓĞÔªËØ¶¼ÉèÎª 0¡£ÇëÊ¹ÓÃÔ­µØËã·¨£¬Ê¹ÓÃ³£Êı¿Õ¼ä¡£
+    */
+    // ÌáÊ¾£ºÕÒµ½µÚÒ»¸öÎª0µÄ£¬ÄÇÃ´ÆäËüµÄ0·Ö½â³ÉµÚÒ»¸ö0ËùÔÚµÄĞĞºÍÁĞ¼ÇÂ¼¡£×îºóÔÙ±éÀú¡£
+    void setZeroes(vector<vector<int> >& matrix)
+    {
+        int row = matrix.size();
+        int col = matrix[0].size();
+        int zeroRow = -1, zeroCol = -1;
+        for (int i = 0; i < row; i++)
         {
-            for (int j = 0; j < len; j++)
+            for (int j = 0; j < col; j++)
             {
-                int sum = -(C[i] + D[j]);
-                if (m[sum] > 0)
+                if (matrix[i][j] == 0)
                 {
-                    ans += m[sum];
+                    if (zeroRow == -1)
+                    {
+                        zeroRow = i;
+                        zeroCol = j;
+                    }
+                    else
+                    {
+                        matrix[i][zeroCol] = 0;
+                        matrix[zeroRow][j] = 0;
+                    }
+                }
+            }
+        }
+        if (zeroRow != -1)
+        {
+            for (int i = 0; i < row; i++)
+            {
+                if (matrix[i][zeroCol] == 0 && i != zeroRow)
+                {
+                    for (int j = 0; j < col; j++)
+                    {
+                        matrix[i][j] = 0;
+                    }
+                }
+            }
+            for (int i = 0; i < col; i++)
+            {
+                if (matrix[zeroRow][i] == 0 && i != zeroCol)
+                {
+                    for (int j = 0; j < row; j++)
+                    {
+                        matrix[j][i] = 0;
+                    }
+                }
+            }
+            for (int i = 0; i < row; i++)
+            {
+                matrix[i][zeroCol] = 0;
+            }
+            for (int i = 0; i < col; i++)
+            {
+                matrix[zeroRow][i] = 0;
+            }
+        }
+    }
+
+
+    // 71
+    // ¼ò»¯Â·¾¶
+    /*
+        ÒÔ Unix ·ç¸ñ¸ø³öÒ»¸öÎÄ¼şµÄ¾ø¶ÔÂ·¾¶£¬ÄãĞèÒª¼ò»¯Ëü¡£»òÕß»»¾ä»°Ëµ£¬½«Æä×ª»»Îª¹æ·¶Â·¾¶¡£
+        ÔÚ Unix ·ç¸ñµÄÎÄ¼şÏµÍ³ÖĞ£¬Ò»¸öµã£¨.£©±íÊ¾µ±Ç°Ä¿Â¼±¾Éí£»´ËÍâ£¬Á½¸öµã £¨..£© ±íÊ¾½«Ä¿Â¼ÇĞ»»µ½ÉÏÒ»¼¶£¨Ö¸Ïò¸¸Ä¿Â¼£©£»Á½Õß¶¼¿ÉÒÔÊÇ¸´ÔÓÏà¶ÔÂ·¾¶µÄ×é³É²¿·Ö¡£¸ü¶àĞÅÏ¢Çë²ÎÔÄ£ºLinux / UnixÖĞµÄ¾ø¶ÔÂ·¾¶ vs Ïà¶ÔÂ·¾¶
+        Çë×¢Òâ£¬·µ»ØµÄ¹æ·¶Â·¾¶±ØĞëÊ¼ÖÕÒÔĞ±¸Ü / ¿ªÍ·£¬²¢ÇÒÁ½¸öÄ¿Â¼ÃûÖ®¼ä±ØĞëÖ»ÓĞÒ»¸öĞ±¸Ü /¡£×îºóÒ»¸öÄ¿Â¼Ãû£¨Èç¹û´æÔÚ£©²»ÄÜÒÔ / ½áÎ²¡£´ËÍâ£¬¹æ·¶Â·¾¶±ØĞëÊÇ±íÊ¾¾ø¶ÔÂ·¾¶µÄ×î¶Ì×Ö·û´®¡£
+    */
+    // ÌáÊ¾£º×¢ÒâµãºÍÆäËü×Ö·û×éºÏ»òÕß³¬¹ıÁ½¸öµãËãÎÄ¼şÃû
+    string simplifyPath(string path)
+    {
+        int len = path.size();
+        stack<string> folders;
+        for (int i = 0; i < len; i++)
+        {
+            if (path[i] == '/')
+            {
+                continue;
+            }
+            else
+            {
+                int j = i;
+                string folder = "";
+                while (j < len && path[j] != '/')
+                {
+                    folder += path[j];
+                    j++;
+                }
+                i= j - 1;
+                if (folder == ".")
+                {
+                    continue;
+                }
+                else if (folder == "..")
+                {
+                    if (!folders.empty())
+                    {
+                        folders.pop();
+                    }
+                }
+                else
+                {
+                    folders.push(folder);
+                }
+            }
+        }
+        int total = folders.size();
+        vector<string> folder(total);
+        while (!folders.empty())
+        {
+            folder[--total] = folders.top();
+            folders.pop();
+        }
+        if (folder.size() == 0)
+        {
+            return "/";
+        }
+        string ans = "";
+        for (int i = 0; i < folder.size(); i++)
+        {
+            ans = ans + "/" + folder[i];
+        }
+        return ans;
+    }
+
+
+    // 64
+    // ×îĞ¡Â·¾¶ºÍ
+    /*
+        ¸ø¶¨Ò»¸ö°üº¬·Ç¸ºÕûÊıµÄ m x n Íø¸ñ£¬ÇëÕÒ³öÒ»Ìõ´Ó×óÉÏ½Çµ½ÓÒÏÂ½ÇµÄÂ·¾¶£¬Ê¹µÃÂ·¾¶ÉÏµÄÊı×Ö×ÜºÍÎª×îĞ¡¡£
+        ËµÃ÷£ºÃ¿´ÎÖ»ÄÜÏòÏÂ»òÕßÏòÓÒÒÆ¶¯Ò»²½¡£
+    */
+    int minPathSum(vector<vector<int> >& grid)
+    {
+        int row = grid.size();
+        int col = grid[0].size();
+        if (row == 0 || col == 0)
+        {
+            return 0;
+        }
+        vector<vector<int> > dp(row);
+        for (int i = 0; i < row; i++)
+        {
+            dp[i].resize(col);
+        }
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                dp[i][j] = grid[i][j];
+                if (i > 0 && j > 0)
+                {
+                    dp[i][j] += min(dp[i - 1][j], dp[i][j - 1]);
+                }
+                else if (i > 0)
+                {
+                    dp[i][j] += dp[i - 1][j];
+                }
+                else if (j > 0)
+                {
+                    dp[i][j] += dp[i][j - 1];
+                }
+            }
+        }
+        return dp[row - 1][col - 1];
+    }
+
+
+    // 63
+    // ²»Í¬Â·¾¶II
+    /*
+        Ò»¸ö»úÆ÷ÈËÎ»ÓÚÒ»¸ö m x n Íø¸ñµÄ×óÉÏ½Ç £¨ÆğÊ¼µãÔÚÏÂÍ¼ÖĞ±ê¼ÇÎª¡°Start¡± £©¡£
+        »úÆ÷ÈËÃ¿´ÎÖ»ÄÜÏòÏÂ»òÕßÏòÓÒÒÆ¶¯Ò»²½¡£»úÆ÷ÈËÊÔÍ¼´ïµ½Íø¸ñµÄÓÒÏÂ½Ç£¨ÔÚÏÂÍ¼ÖĞ±ê¼ÇÎª¡°Finish¡±£©¡£
+        ÏÖÔÚ¿¼ÂÇÍø¸ñÖĞÓĞÕÏ°­Îï¡£ÄÇÃ´´Ó×óÉÏ½Çµ½ÓÒÏÂ½Ç½«»áÓĞ¶àÉÙÌõ²»Í¬µÄÂ·¾¶£¿
+    */
+    int uniquePathsWithObstacles(vector<vector<int> >& obstacleGrid)
+    {
+        int row = obstacleGrid.size();
+        int col = obstacleGrid[0].size();
+        if (row == 0 || col == 0 || obstacleGrid[0][0] == 1)
+        {
+            return 0;
+        }
+        vector<vector<long long> > dp(row);
+        for (int i = 0; i < row; i++)
+        {
+            dp[i].resize(col);
+        }
+        dp[0][0] = 1;
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (i + j != 0)
+                {
+                    dp[i][j] = 0;
+                }
+                if (obstacleGrid[i][j] == 0)
+                {
+                    if (i > 0)
+                    {
+                        dp[i][j] += dp[i - 1][j];
+                    }
+                    if (j > 0)
+                    {
+                        dp[i][j] += dp[i][j - 1];
+                    }
+                }
+            }
+        }
+        return dp[row - 1][col - 1];
+    }
+
+
+    // 62
+    // ²»Í¬Â·¾¶
+    /*
+        Ò»¸ö»úÆ÷ÈËÎ»ÓÚÒ»¸ö m x n Íø¸ñµÄ×óÉÏ½Ç £¨ÆğÊ¼µãÔÚÏÂÍ¼ÖĞ±ê¼ÇÎª¡°Start¡± £©¡£
+        »úÆ÷ÈËÃ¿´ÎÖ»ÄÜÏòÏÂ»òÕßÏòÓÒÒÆ¶¯Ò»²½¡£»úÆ÷ÈËÊÔÍ¼´ïµ½Íø¸ñµÄÓÒÏÂ½Ç£¨ÔÚÏÂÍ¼ÖĞ±ê¼ÇÎª¡°Finish¡±£©¡£
+        ÎÊ×Ü¹²ÓĞ¶àÉÙÌõ²»Í¬µÄÂ·¾¶£¿
+        ËµÃ÷£ºm ºÍ n µÄÖµ¾ù²»³¬¹ı 100¡£
+    */
+    // ÌáÊ¾£ºans=C(m+n-2,n-1)£¬Êµ¼ÊÉÏ100ºÍ50»áÔ½½ç£¬µ«ÊÇÃ»ÓĞ¸ÃÑùÀı¡£Ò²¿ÉÒÔ·Ö½âÒòÊ½Çó»òÕßÑî»ÔÈı½Ç¡£
+    int uniquePaths(int m, int n)
+    {
+        int a = m + n - 2;
+        int b = n - 1;
+        if (a - b < b)
+        {
+            b = a - b;
+        }
+        long long ans = 1;
+        int i = a, j = b;
+        while (i > a - b || j > 0)
+        {
+            if (i > a - b)
+            {
+                ans *= i;
+                i--;
+            }
+            if (j > 0)
+            {
+                if (ans % j == 0)
+                {
+                    ans /= j;
+                    j--;
                 }
             }
         }
@@ -1087,12 +969,1055 @@ public:
     }
 
 
-    // 18
-    // å››æ•°ä¹‹å’Œ
+    // 61
+    // Ğı×ªÁ´±í
     /*
-        ç»™å®šä¸€ä¸ªåŒ…å« n ä¸ªæ•´æ•°çš„æ•°ç»„ nums å’Œä¸€ä¸ªç›®æ ‡å€¼ targetï¼Œåˆ¤æ–­ nums ä¸­æ˜¯å¦å­˜åœ¨å››ä¸ªå…ƒç´  aï¼Œbï¼Œc å’Œ d ï¼Œä½¿å¾— a + b + c + d çš„å€¼ä¸ target ç›¸ç­‰ï¼Ÿæ‰¾å‡ºæ‰€æœ‰æ»¡è¶³æ¡ä»¶ä¸”ä¸é‡å¤çš„å››å…ƒç»„ã€‚
+        ¸ø¶¨Ò»¸öÁ´±í£¬Ğı×ªÁ´±í£¬½«Á´±íÃ¿¸ö½ÚµãÏòÓÒÒÆ¶¯ k ¸öÎ»ÖÃ£¬ÆäÖĞ k ÊÇ·Ç¸ºÊı¡£
     */
-    // æç¤ºï¼šå›ºå®šä¸¤ä¸ªæ•°ï¼ŒåŒæŒ‡é’ˆæ‰¾å¦å¤–ä¸¤ä¸ªï¼›ä¿å­˜ä¸¤ä¸¤ä¹‹å’Œï¼Œå†åŒæŒ‡é’ˆ
+    ListNode* rotateRight(ListNode* head, int k)
+    {
+        if (head == 0 || k == 0)
+        {
+            return head;
+        }
+
+        int len = 0, cnt = 0;
+        ListNode *node = head, *last = head, *newHead;
+        while (node != 0)
+        {
+            len++;
+            last = node;
+            node = node->next;
+        }
+        k = k % len;
+        if (k == 0)
+        {
+            return head;
+        }
+
+        last->next = head;
+        node = head;
+        while (true)
+        {
+            cnt++;
+            if (cnt == len - k)
+            {
+                newHead = node->next;
+                node->next = 0;
+                return newHead;
+            }
+            node = node->next;
+        }
+    }
+
+
+    // 60
+    // µÚk¸öÅÅÁĞ
+    /*
+        ¸ø³ö¼¯ºÏ [1,2,3,¡­,n]£¬ÆäËùÓĞÔªËØ¹²ÓĞ n! ÖÖÅÅÁĞ¡£¸ø¶¨ n ºÍ k£¬·µ»ØµÚ k ¸öÅÅÁĞ¡£
+    */
+    string getPermutation(int n, int k)
+    {
+        vector<bool> vis(10, false);
+        int f[10];
+        f[0] = 1;
+        for (int i = 1; i <= n; i++)
+        {
+            f[i] = f[i - 1] * i;
+        }
+        string ans = "";
+        for (int i = 0; i < n; i++)
+        {
+            int d = 0, cnt = 0;
+            while (k > f[n - 1 -i])
+            {
+                d++;
+                k -= f[n - 1 - i];
+            }
+            for (int j = 1; j <= n; j++)
+            {
+                if (!vis[j])
+                {
+                    if (cnt == d)
+                    {
+                        vis[j] = true;
+                        ans = ans + (char)(j + '0');
+                    }
+                    cnt++;
+                }
+            }
+        }
+        return ans;
+    }
+
+
+    // 59
+    // ÂİĞı¾ØÕóII
+    /*
+        ¸ø¶¨Ò»¸öÕıÕûÊı n£¬Éú³ÉÒ»¸ö°üº¬ 1 µ½ n2 ËùÓĞÔªËØ£¬ÇÒÔªËØ°´Ë³Ê±ÕëË³ĞòÂİĞıÅÅÁĞµÄÕı·½ĞÎ¾ØÕó¡£
+    */
+    vector<vector<int> > generateMatrix(int n)
+    {
+        vector<vector<int> > ans(n);
+        for (int i = 0; i < n; i++)
+        {
+            ans[i].resize(n);
+        }
+        int index = 0, total = n * n;
+        for (int i = 0; i < n && index != total; i++)
+        {
+            for (int j = i; j < n - i && index != total; j++)
+            {
+                index++;
+                ans[i][j] = index;
+            }
+            for (int j = i + 1; j < n - i && index != total; j++)
+            {
+                index++;
+                ans[j][n - i - 1] = index;
+            }
+            for (int j = n - i - 2; j >= i; j--)
+            {
+                index++;
+                ans[n - i - 1][j] = index;
+            }
+            for (int j = n - i - 2; j > i && index != total; j--)
+            {
+                index++;
+                ans[j][i] = index;
+            }
+        }
+        return ans;
+    }
+
+
+    // 56
+    // ºÏ²¢Çø¼ä
+    /*
+        ¸ø³öÒ»¸öÇø¼äµÄ¼¯ºÏ£¬ÇëºÏ²¢ËùÓĞÖØµşµÄÇø¼ä¡£
+    */
+    vector<vector<int> > merge(vector<vector<int> >& intervals)
+    {
+        int len = intervals.size();
+        vector<vector<int> > ans;
+        if (len == 0)
+        {
+            return ans;
+        }
+        // sort(intervals.begin(), intervals.end(), [](vector<int> a, vector<int> b) { return a[0] < b[0]; });
+        int sta = intervals[0][0], en = intervals[0][1];
+        for (int i = 1; i < len; i++)
+        {
+            if (intervals[i][0] <= en)
+            {
+                if (intervals[i][1] >= en)
+                {
+                    en = intervals[i][1];
+                }
+            }
+            else
+            {
+                vector<int> result;
+                result.push_back(sta);
+                result.push_back(en);
+                ans.push_back(result);
+                sta = intervals[i][0];
+                en = intervals[i][1];
+            }
+        }
+        vector<int> result;
+        result.push_back(sta);
+        result.push_back(en);
+        ans.push_back(result);
+        return ans;
+    }
+
+
+    // 55
+    // ÌøÔ¾ÓÎÏ·
+    /*
+        ¸ø¶¨Ò»¸ö·Ç¸ºÕûÊıÊı×é£¬Äã×î³õÎ»ÓÚÊı×éµÄµÚÒ»¸öÎ»ÖÃ¡£
+        Êı×éÖĞµÄÃ¿¸öÔªËØ´ú±íÄãÔÚ¸ÃÎ»ÖÃ¿ÉÒÔÌøÔ¾µÄ×î´ó³¤¶È¡£
+        ÅĞ¶ÏÄãÊÇ·ñÄÜ¹»µ½´ï×îºóÒ»¸öÎ»ÖÃ¡£
+    */
+    bool canJump(vector<int>& nums)
+    {
+        int len = nums.size(), maxIndex = 0;
+        for (int i = 0; i < len; i++)
+        {
+            if (i > maxIndex)
+            {
+                break;
+            }
+            maxIndex = max(maxIndex, i + nums[i]);
+        }
+        return maxIndex >= len - 1;
+
+// ·½·¨2
+//        int step = 1;
+//        for (int i = nums.size() - 2; i >= 0; i--)
+//        {
+//            if (nums[i] >= step)
+//            {
+//                step = 1;
+//            }
+//            else
+//            {
+//                step++;
+//            }
+//        }
+//        return step == 1;
+    }
+
+
+    // 54
+    // ÂİĞı¾ØÕó
+    /*
+        ¸ø¶¨Ò»¸ö°üº¬ m x n ¸öÔªËØµÄ¾ØÕó£¨m ĞĞ, n ÁĞ£©£¬Çë°´ÕÕË³Ê±ÕëÂİĞıË³Ğò£¬·µ»Ø¾ØÕóÖĞµÄËùÓĞÔªËØ¡£
+    */
+    // ÌáÊ¾£º×¢Òâ×ª½Ç´¦°üº¬ÔÚÉÏ´Î±éÀú
+    vector<int> spiralOrder(vector<vector<int> >& matrix)
+    {
+        vector<int> ans;
+        int row = matrix.size();
+        if (row == 0)
+        {
+            return ans;
+        }
+
+        int col = matrix[0].size();
+        int total = row * col;
+        ans.resize(total);
+        int index = 0;
+        for (int i = 0; i < row && index != total; i++)
+        {
+            for (int j = i; j < col - i && index != total; j++)
+            {
+                ans[index++] = matrix[i][j];
+            }
+
+            for (int j = i + 1; j < row - i && index != total; j++)
+            {
+                ans[index++] = matrix[j][col - 1 - i];
+            }
+
+            for (int j = col - i - 2; j >= i && index != total; j--)
+            {
+                ans[index++] = matrix[row - 1 - i][j];
+            }
+
+            for (int j = row - i - 2; j > i && index != total; j--)
+            {
+                ans[index++] = matrix[j][i];
+            }
+        }
+        return ans;
+    }
+
+
+    // 50
+    // Pow(x, n)
+    /*
+        ÊµÏÖ pow(x, n) £¬¼´¼ÆËã x µÄ n ´ÎÃİº¯Êı¡£
+    */
+    double myPow(double x, int n)
+    {
+        long long nn = n;
+        if (nn < 0)
+        {
+            nn = -nn;
+        }
+        double ans = 1.0;
+        while (nn)
+        {
+            if (nn & 1)
+            {
+                ans = ans * x;
+            }
+            x = x * x;
+            nn >>= 1;
+        }
+        if (n < 0)
+        {
+            return 1.0 / ans;
+        }
+        else
+        {
+            return ans;
+        }
+    }
+
+
+    // 49
+    // ×ÖÄ¸ÒìÎ»´Ê·Ö×é
+    /*
+        ¸ø¶¨Ò»¸ö×Ö·û´®Êı×é£¬½«×ÖÄ¸ÒìÎ»´Ê×éºÏÔÚÒ»Æğ¡£×ÖÄ¸ÒìÎ»´ÊÖ¸×ÖÄ¸ÏàÍ¬£¬µ«ÅÅÁĞ²»Í¬µÄ×Ö·û´®¡£
+    */
+    vector<vector<string> > groupAnagrams(vector<string>& strs)
+    {
+        int len = strs.size();
+        vector<vector<string> > ans;
+        vector<long long> pri(26);
+        int index = 0;
+        for (int i = 2; i < 120; i++)
+        {
+            bool div = false;
+            for (int j = 2; j < i; j++)
+            {
+                if (i % j == 0)
+                {
+                    div = true;
+                    break;
+                }
+            }
+            if (!div)
+            {
+                pri[index++] = i;
+                if (index == 26)
+                {
+                    break;
+                }
+            }
+        }
+        map<unsigned long long, int> m;
+        for (int i = 0; i < len; i++)
+        {
+            unsigned long long ha = 1;
+            for (int j = 0; j < strs[i].size(); j++)
+            {
+                ha = ha * pri[strs[i][j] - 'a'];
+            }
+            if (m[ha] == 0)
+            {
+                vector<string> result;
+                result.push_back(strs[i]);
+                ans.push_back(result);
+                m[ha] = ans.size();
+            }
+            else
+            {
+                ans[m[ha] - 1].push_back(strs[i]);
+            }
+        }
+        return ans;
+    }
+
+
+    // 48
+    // Ğı×ªÍ¼Ïñ
+    /*
+        ¸ø¶¨Ò»¸ö n ¡Á n µÄ¶şÎ¬¾ØÕó±íÊ¾Ò»¸öÍ¼Ïñ¡£
+        ½«Í¼ÏñË³Ê±ÕëĞı×ª 90 ¶È¡£
+        ËµÃ÷£º
+        Äã±ØĞëÔÚÔ­µØĞı×ªÍ¼Ïñ£¬ÕâÒâÎ¶×ÅÄãĞèÒªÖ±½ÓĞŞ¸ÄÊäÈëµÄ¶şÎ¬¾ØÕó¡£Çë²»ÒªÊ¹ÓÃÁíÒ»¸ö¾ØÕóÀ´Ğı×ªÍ¼Ïñ¡£
+    */
+    // ×¢Òâ£º×îÓÒ±ßÄÇ¸öÊı²»ÓÃĞı×ª£¨¼´µÚ¶ş¸öÑ­»·µÄ-1£©
+    // ·½·¨2£ºÏÈÑÓ¸±¶Ô½ÇÏß¶Ô³Æ£¬È»ºóË®Æ½Ïß¶Ô³Æ¡£
+    // Ô­×ø±êÎª(x,y)¡£Ğı×ªºó×ø±êÎª(y,n-x)£»¶Ô³ÆºóÎª(n-y,n-x)£¬Ë®Æ½¶Ô³ÆºóÎª(y,n-x)¡£
+    void rotate(vector<vector<int> >& matrix)
+    {
+        int n = matrix.size();
+        for (int i = 0; i < (n >> 1); i++)
+        {
+            for (int j = i; j < n - i - 1; j++)
+            {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[n - 1 - j][i];
+                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
+                matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+                matrix[j][n - 1 - i] = tmp;
+            }
+        }
+    }
+
+
+    // 47
+    // È«ÅÅÁĞII
+    /*
+        ¸ø¶¨Ò»¸ö¿É°üº¬ÖØ¸´Êı×ÖµÄĞòÁĞ£¬·µ»ØËùÓĞ²»ÖØ¸´µÄÈ«ÅÅÁĞ¡£
+    */
+    // ÌáÊ¾£º½øĞĞµ½µÚiÎ»£¬Èç¹û´óÓÚiÎ»ÇÒÏàµÈ²¢Ê¹ÓÃ¹ıµÄ£¬ÄÇÃ´µÚiÎ»¾ÍÊÇÖØ¸´µÄ
+    vector<vector<int> > permuteUnique(vector<int>& nums)
+    {
+        sort(nums.begin(), nums.end());
+        vector<vector<int> > ans;
+        vector<int> result(nums.size());
+        vector<bool> vis(nums.size());
+        DFS_permuteUnique(ans, nums, vis, result, 0);
+        return ans;
+    }
+    void DFS_permuteUnique(vector<vector<int> > &ans, vector<int> &nums, vector<bool> &vis, vector<int> &result, int step)
+    {
+        if (step == nums.size())
+        {
+            ans.push_back(result);
+            return;
+        }
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (!vis[i])
+            {
+                bool exist = false;
+                for (int j = i + 1; j < nums.size(); j++)
+                {
+                    if (vis[j] && nums[j] == nums[i])
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+                if (exist)
+                {
+                    continue;
+                }
+                vis[i] = true;
+                result[step] = nums[i];
+                DFS_permuteUnique(ans, nums, vis, result, step + 1);
+                vis[i] = false;
+            }
+        }
+    }
+
+
+    // 46
+    // È«ÅÅÁĞ
+    /*
+        ¸ø¶¨Ò»¸öÃ»ÓĞÖØ¸´Êı×ÖµÄĞòÁĞ£¬·µ»ØÆäËùÓĞ¿ÉÄÜµÄÈ«ÅÅÁĞ¡£
+    */
+    bool v_permute[20];
+    int result_permute[20];
+    vector<vector<int> > permute(vector<int>& nums)
+    {
+        memset(v_permute, false, sizeof(v_permute));
+        vector<vector<int> > ans;
+        DFS_permute(nums, nums.size(), 0, ans);
+        return ans;
+    }
+    void DFS_permute(vector<int>& nums, int length, int step, vector<vector<int> >& ans)
+    {
+        if (step == length)
+        {
+            vector<int> result(step);
+            for (int i = 0; i < step; i++)
+            {
+                result[i] = result_permute[i];
+            }
+            ans.push_back(result);
+            return;
+        }
+        for (int i = 0; i < length; i++)
+        {
+            if (!v_permute[i])
+            {
+                v_permute[i] = true;
+                result_permute[step] = nums[i];
+                DFS_permute(nums, length, step + 1, ans);
+                v_permute[i] = false;
+            }
+        }
+    }
+
+
+    // 43
+    // ×Ö·û´®Ïà³Ë
+    /*
+        ¸ø¶¨Á½¸öÒÔ×Ö·û´®ĞÎÊ½±íÊ¾µÄ·Ç¸ºÕûÊı num1 ºÍ num2£¬·µ»Ø num1 ºÍ num2 µÄ³Ë»ı£¬ËüÃÇµÄ³Ë»ıÒ²±íÊ¾Îª×Ö·û´®ĞÎÊ½¡£
+        ËµÃ÷£º
+            num1 ºÍ num2 µÄ³¤¶ÈĞ¡ÓÚ110¡£
+            num1 ºÍ num2 Ö»°üº¬Êı×Ö 0-9¡£
+            num1 ºÍ num2 ¾ù²»ÒÔÁã¿ªÍ·£¬³ı·ÇÊÇÊı×Ö 0 ±¾Éí¡£
+            ²»ÄÜÊ¹ÓÃÈÎºÎ±ê×¼¿âµÄ´óÊıÀàĞÍ£¨±ÈÈç BigInteger£©»òÖ±½Ó½«ÊäÈë×ª»»ÎªÕûÊıÀ´´¦Àí¡£
+    */
+    // ×¢Òâ£º"123" * "0"
+    string multiply(string num1, string num2)
+    {
+        int len1 = num1.size(), len2 = num2.size(), index = 0, ma = 0;
+        vector<char> ans(len1 + len2, 0);
+        for (int i = len1 - 1; i >= 0; i--)
+        {
+            int r = 0, sta = index;
+            for (int j = len2 - 1; j >= 0; j--)
+            {
+                int u = r + (num2[j] - '0') * (num1[i] - '0') + ans[sta];
+                int v = u % 10;
+                r = u / 10;
+                ans[sta++] = u % 10;
+            }
+            if (r != 0)
+            {
+                ans[sta++] = r;
+            }
+            if (sta > ma)
+            {
+                ma = sta;
+            }
+            index++;
+        }
+        string result = "";
+        for (int i = ma - 1; i >= 0; i--)
+        {
+            if (ans[i] == 0)
+            {
+                continue;
+            }
+            else
+            {
+                while (i >= 0)
+                {
+                    result = result + (char)(ans[i--] + '0');
+                }
+            }
+        }
+        if (result.size() == 0)
+        {
+            result = "0";
+        }
+        return result;
+    }
+
+
+    // 40
+    // ×éºÏ×ÜºÍII
+    /*
+        ¸ø¶¨Ò»¸öÊı×é candidates ºÍÒ»¸öÄ¿±êÊı target £¬ÕÒ³ö candidates ÖĞËùÓĞ¿ÉÒÔÊ¹Êı×ÖºÍÎª target µÄ×éºÏ¡£
+        candidates ÖĞµÄÃ¿¸öÊı×ÖÔÚÃ¿¸ö×éºÏÖĞÖ»ÄÜÊ¹ÓÃÒ»´Î¡£
+    */
+    vector<vector<int> > combinationSum2(vector<int>& candidates, int target)
+    {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int> > ans;
+        vector<int> selections(target + 1);
+        DFS_combinationSum2(ans, candidates, selections, target, 0, 0, 0);
+        return ans;
+    }
+    void DFS_combinationSum2(vector<vector<int> > &ans, vector<int> &candidates, vector<int> &selections, int target, int sum, int step, int sta)
+    {
+        if (target < sum)
+        {
+            return;
+        }
+        if (target == sum)
+        {
+            vector<int> result(step);
+            for (int i = 0; i < step; i++)
+            {
+                result[i] = selections[i];
+            }
+            bool eq = false;
+            for (int i = 0; i < ans.size(); i++)
+            {
+                if (result.size() == ans[i].size())
+                {
+                    int j = 0;
+                    for (; j < result.size(); j++)
+                    {
+                        if (result[j] != ans[i][j])
+                        {
+                            break;
+                        }
+                    }
+                    if (j == result.size())
+                    {
+                        eq = true;
+                        break;
+                    }
+                }
+            }
+            if (!eq)
+            {
+                ans.push_back(result);
+            }
+            return;
+        }
+        for (int i = sta; i< candidates.size(); i++)
+        {
+            if (sum + candidates[i] > target)
+            {
+                break;
+            }
+            selections[step] = candidates[i];
+            DFS_combinationSum2(ans, candidates, selections, target, sum + candidates[i], step + 1, i + 1);
+        }
+    }
+
+
+    // 39
+    // ×éºÏ×ÜºÍ
+    /*
+        ¸ø¶¨Ò»¸öÎŞÖØ¸´ÔªËØµÄÊı×é candidates ºÍÒ»¸öÄ¿±êÊı target £¬ÕÒ³ö candidates ÖĞËùÓĞ¿ÉÒÔÊ¹Êı×ÖºÍÎª target µÄ×éºÏ¡£
+        candidates ÖĞµÄÊı×Ö¿ÉÒÔÎŞÏŞÖÆÖØ¸´±»Ñ¡È¡¡£
+        ËµÃ÷£º
+        ËùÓĞÊı×Ö£¨°üÀ¨ target£©¶¼ÊÇÕıÕûÊı¡£
+        ½â¼¯²»ÄÜ°üº¬ÖØ¸´µÄ×éºÏ¡£
+    */
+    vector<vector<int> > combinationSum(vector<int>& candidates, int target)
+    {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int> > ans;
+        vector<int> selections(target + 1);
+        DFS_combinationSum(ans, candidates, selections, target, 0, 0, 0);
+        return ans;
+    }
+    void DFS_combinationSum(vector<vector<int> > &ans, vector<int> &candidates, vector<int> &selections, int target, int sum, int step, int sta)
+    {
+        if (target < sum)
+        {
+            return;
+        }
+        if (target == sum)
+        {
+            vector<int> result(step);
+            for (int i = 0; i < step; i++)
+            {
+                result[i] = selections[i];
+            }
+            ans.push_back(result);
+            return;
+        }
+        for (int i = sta; i< candidates.size(); i++)
+        {
+            if (sum + candidates[i] > target)
+            {
+                break;
+            }
+            selections[step] = candidates[i];
+            DFS_combinationSum(ans, candidates, selections, target, sum + candidates[i], step + 1, i);
+        }
+    }
+
+
+    // 36
+    // ÓĞĞ§µÄÊı¶À
+    /*
+        ÅĞ¶ÏÒ»¸ö 9x9 µÄÊı¶ÀÊÇ·ñÓĞĞ§¡£Ö»ĞèÒª¸ù¾İÒÔÏÂ¹æÔò£¬ÑéÖ¤ÒÑ¾­ÌîÈëµÄÊı×ÖÊÇ·ñÓĞĞ§¼´¿É¡£
+        Êı×Ö 1-9 ÔÚÃ¿Ò»ĞĞÖ»ÄÜ³öÏÖÒ»´Î¡£
+        Êı×Ö 1-9 ÔÚÃ¿Ò»ÁĞÖ»ÄÜ³öÏÖÒ»´Î¡£
+        Êı×Ö 1-9 ÔÚÃ¿Ò»¸öÒÔ´ÖÊµÏß·Ö¸ôµÄ 3x3 ¹¬ÄÚÖ»ÄÜ³öÏÖÒ»´Î¡£
+    */
+    bool isValidSudoku(vector<vector<char> >& board)
+    {
+        bool isValid = true;
+        for (int i = 0; i < 9 && isValid; i++)
+        {
+            vector<bool> vis(9, false);
+            for (int j = 0; j < 9; j++)
+            {
+                if (board[i][j] != '.')
+                {
+                    if (vis[board[i][j] - '0'])
+                    {
+                        isValid = false;
+                        break;
+                    }
+                    vis[board[i][j] - '0'] = true;
+                }
+            }
+        }
+        for (int i = 0; i < 9 && isValid; i++)
+        {
+            vector<bool> vis(9, false);
+            for (int j = 0; j < 9; j++)
+            {
+                if (board[j][i] != '.')
+                {
+                    if (vis[board[j][i] - '0'])
+                    {
+                        isValid = false;
+                        break;
+                    }
+                    vis[board[j][i] - '0'] = true;
+                }
+            }
+        }
+        for (int i = 0; i < 3 && isValid; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                int row = 3 * i;
+                int col = 3 * j;
+                vector<bool> vis(9, false);
+                for (int r = row; r < row + 3; r++)
+                {
+                    for (int s = col; s < col + 3; s++)
+                    {
+                        if (board[r][s] != '.')
+                        {
+                            if (vis[board[r][s] - '0'])
+                            {
+                                isValid = false;
+                                break;
+                            }
+                            vis[board[r][s] - '0'] = true;
+                        }
+                    }
+                }
+            }
+        }
+        return isValid;
+    }
+
+
+    // 34
+    // ÔÚÅÅĞòÊı×éÖĞ²éÕÒÔªËØµÄµÚÒ»¸öºÍ×îºóÒ»¸öÎ»ÖÃ
+    /*
+        ¸ø¶¨Ò»¸ö°´ÕÕÉıĞòÅÅÁĞµÄÕûÊıÊı×é nums£¬ºÍÒ»¸öÄ¿±êÖµ target¡£ÕÒ³ö¸ø¶¨Ä¿±êÖµÔÚÊı×éÖĞµÄ¿ªÊ¼Î»ÖÃºÍ½áÊøÎ»ÖÃ¡£
+        ÄãµÄËã·¨Ê±¼ä¸´ÔÓ¶È±ØĞëÊÇ O(log n) ¼¶±ğ¡£
+        Èç¹ûÊı×éÖĞ²»´æÔÚÄ¿±êÖµ£¬·µ»Ø [-1, -1]¡£
+    */
+    vector<int> searchRange(vector<int>& nums, int target)
+    {
+        int L = 0, R = nums.size() - 1;
+        vector<int> ans(2, -1);
+        while (L <= R)
+        {
+            int mid = (L + R) >> 1;
+            if (nums[mid] > target)
+            {
+                R = mid - 1;
+            }
+            else if (nums[mid] < target)
+            {
+                L = mid + 1;
+            }
+            else
+            {
+                ans[0] = mid;
+                R = mid - 1;
+            }
+        }
+        if (ans[0] != -1)
+        {
+            L = 0, R = nums.size() - 1;
+            while (L <= R)
+            {
+                int mid = (L + R) >> 1;
+                if (nums[mid] > target)
+                {
+                    R = mid - 1;
+                }
+                else if (nums[mid] < target)
+                {
+                    L = mid + 1;
+                }
+                else
+                {
+                    ans[1] = mid;
+                    L = mid + 1;
+                }
+            }
+        }
+        return ans;
+    }
+
+
+    // 33
+    // ËÑË÷Ğı×ªÅÅĞòÊı×é
+    /*
+        ¼ÙÉè°´ÕÕÉıĞòÅÅĞòµÄÊı×éÔÚÔ¤ÏÈÎ´ÖªµÄÄ³¸öµãÉÏ½øĞĞÁËĞı×ª¡£
+        ( ÀıÈç£¬Êı×é [0,1,2,4,5,6,7] ¿ÉÄÜ±äÎª [4,5,6,7,0,1,2] )¡£
+        ËÑË÷Ò»¸ö¸ø¶¨µÄÄ¿±êÖµ£¬Èç¹ûÊı×éÖĞ´æÔÚÕâ¸öÄ¿±êÖµ£¬Ôò·µ»ØËüµÄË÷Òı£¬·ñÔò·µ»Ø -1 ¡£
+        Äã¿ÉÒÔ¼ÙÉèÊı×éÖĞ²»´æÔÚÖØ¸´µÄÔªËØ¡£
+        ÄãµÄËã·¨Ê±¼ä¸´ÔÓ¶È±ØĞëÊÇ O(log n) ¼¶±ğ¡£
+    */
+    // ÌáÊ¾£º²»´æÔÚÖØ¸´ÔªËØ£¬×¢ÒâÓĞĞòÇé¿ö·ñÔò·Ö×ó°ëÇøºÍÓÒ°ëÇø.
+    // Èç¹ûÖĞ¼äµÄÊıĞ¡ÓÚ×îÓÒ±ßµÄÊı£¬ÔòÓÒ°ë¶ÎÊÇÓĞĞòµÄ£¬ÈôÖĞ¼äÊı´óÓÚ×îÓÒ±ßÊı£¬Ôò×ó°ë¶ÎÊÇÓĞĞòµÄ
+    int search(vector<int>& nums, int target)
+    {
+        int L = 0, R = nums.size() - 1;
+        while (L <= R)
+        {
+            int mid = (L + R) >> 1;
+            if (nums[mid] == target)
+            {
+                return mid;
+            }
+            if (nums[L] <= nums[mid])
+            {
+                if (target >= nums[L] && target < nums[mid])
+                {
+                    R = mid - 1;
+                }
+                else
+                {
+                    L = mid + 1;
+                }
+            }
+            else
+            {
+                if (target > nums[mid] && target <= nums[R])
+                {
+                    L = mid + 1;
+                }
+                else
+                {
+                    R = mid - 1;
+                }
+            }
+        }
+        return -1;
+
+//        int len = nums.size();
+//        if (len == 0)
+//        {
+//            return -1;
+//        }
+//        int L = 0, R = len - 1;
+//        while (L <= R)
+//        {
+//            if (nums[R] > nums[L])
+//            {
+//                while (L <= R)
+//                {
+//                    int mid = (L + R) >> 1;
+//                    if (nums[mid] == target)
+//                    {
+//                        return mid;
+//                    }
+//                    if (nums[mid] > target)
+//                    {
+//                        R = mid - 1;
+//                    }
+//                    else
+//                    {
+//                        L = mid + 1;
+//                    }
+//                }
+//                return -1;
+//            }
+//            int mid = (L + R) >> 1;
+//            if (nums[mid] == target)
+//            {
+//                return mid;
+//            }
+//            if (nums[mid] > nums[R])
+//            {
+//                if (target < nums[mid])
+//                {
+//                    if (target > nums[R])
+//                    {
+//                        R = mid - 1;
+//                    }
+//                    else
+//                    {
+//                        L = mid + 1;
+//                    }
+//                }
+//                else
+//                {
+//                    L = mid + 1;
+//                }
+//            }
+//            else
+//            {
+//                if (target < nums[mid])
+//                {
+//                    R = mid - 1;
+//                }
+//                else
+//                {
+//                    if (target >= nums[L])
+//                    {
+//                        R = mid - 1;
+//                    }
+//                    else
+//                    {
+//                        L = mid + 1;
+//                    }
+//                }
+//            }
+//        }
+//        return -1;
+    }
+
+
+    // 31
+    // ÏÂÒ»¸öÅÅÁĞ
+    /*
+        ÊµÏÖ»ñÈ¡ÏÂÒ»¸öÅÅÁĞµÄº¯Êı£¬Ëã·¨ĞèÒª½«¸ø¶¨Êı×ÖĞòÁĞÖØĞÂÅÅÁĞ³É×ÖµäĞòÖĞÏÂÒ»¸ö¸ü´óµÄÅÅÁĞ¡£
+        Èç¹û²»´æÔÚÏÂÒ»¸ö¸ü´óµÄÅÅÁĞ£¬Ôò½«Êı×ÖÖØĞÂÅÅÁĞ³É×îĞ¡µÄÅÅÁĞ£¨¼´ÉıĞòÅÅÁĞ£©¡£
+        ±ØĞëÔ­µØĞŞ¸Ä£¬Ö»ÔÊĞíÊ¹ÓÃ¶îÍâ³£Êı¿Õ¼ä¡£
+    */
+    void nextPermutation(vector<int>& nums)
+    {
+        int len = nums.size();
+        bool rev = true;
+        for (int i = 1; i < len; i++)
+        {
+            if (nums[i] <= nums[i - 1])
+            {
+                continue;
+            }
+            else
+            {
+                rev = false;
+            }
+        }
+        if (rev)
+        {
+            reverse(nums.begin(), nums.end());
+            return;
+        }
+        for (int i = len - 1; i > 0; i--)
+        {
+            if (nums[i] <= nums[i - 1])
+            {
+                continue;
+            }
+            for (int j = len - 1; j >= 0; j--)
+            {
+                if (nums[j] > nums[i - 1])
+                {
+                    swap(nums[j], nums[i - 1]);
+                    break;
+                }
+            }
+            int L = i, R = len - 1;
+            while (L < R)
+            {
+                swap(nums[L++], nums[R--]);
+            }
+            return;
+        }
+    }
+
+
+    // 29
+    // Á½ÊıÏà³ı
+    /*
+        ¸ø¶¨Á½¸öÕûÊı£¬±»³ıÊı dividend ºÍ³ıÊı divisor¡£½«Á½ÊıÏà³ı£¬ÒªÇó²»Ê¹ÓÃ³Ë·¨¡¢³ı·¨ºÍ mod ÔËËã·û¡£
+        ·µ»Ø±»³ıÊı dividend ³ıÒÔ³ıÊı divisor µÃµ½µÄÉÌ¡£
+    */
+    // ÌáÊ¾£º·½·¨1£º¶ş·Ö£¬³Ë·¨ÓÃÎ»ÔËËã¼ÆËã£»·½·¨2£º±Æ½ü·¨
+    int divide(int dividend, int divisor)
+    {
+        long long ans = 0, div1 = dividend, div2 = divisor;
+        if (div1 < 0)
+        {
+            div1 = -div1;
+        }
+        if (div2 < 0)
+        {
+            div2 = -div2;
+        }
+        while (div1 >= div2)
+        {
+            long long a = 1, b = div2;
+            while (div1 >= div2)
+            {
+                b <<= 1;
+                if (b > div1)
+                {
+                    break;
+                }
+                a <<= 1;
+            }
+            div1 -= (b >> 1);
+            ans = ans + a;
+        }
+        ans = (dividend < 0) ^ (divisor < 0) ? -ans : ans;
+        return (ans > INT_MAX || ans < INT_MIN) ? INT_MAX : ans;
+    }
+
+
+    // 24
+    // Á½Á½½»»»Á´±íÖĞµÄ½Úµã
+    /*
+        ¸ø¶¨Ò»¸öÁ´±í£¬Á½Á½½»»»ÆäÖĞÏàÁÚµÄ½Úµã£¬²¢·µ»Ø½»»»ºóµÄÁ´±í¡£
+        Äã²»ÄÜÖ»ÊÇµ¥´¿µÄ¸Ä±ä½ÚµãÄÚ²¿µÄÖµ£¬¶øÊÇĞèÒªÊµ¼ÊµÄ½øĞĞ½Úµã½»»»¡£
+    */
+    // ÌáÊ¾£º×¢Òâ[], [1], [1, 2, 3]
+    ListNode* swapPairs(ListNode* head)
+    {
+        if (head == 0 || head->next == 0)
+        {
+            return head;
+        }
+        ListNode *node1 = head, *node2 = head->next, *node3, *node4;
+        ListNode *newHead = node2;
+        while (node1 != 0 && node2 != 0)
+        {
+            node3 = node2->next;
+            node4 = node3 == 0 ? 0 : node3->next;
+
+            node1->next = node4 == 0 ? node3 : node4;
+            node2->next = node1;
+
+            node1 = node3;
+            node2 = node4;
+        }
+        return newHead;
+    }
+
+
+    // 22
+    // À¨ºÅÉú³É
+    /*
+        ¸ø³ö n ´ú±íÉú³ÉÀ¨ºÅµÄ¶ÔÊı£¬ÇëÄãĞ´³öÒ»¸öº¯Êı£¬Ê¹ÆäÄÜ¹»Éú³ÉËùÓĞ¿ÉÄÜµÄ²¢ÇÒÓĞĞ§µÄÀ¨ºÅ×éºÏ¡£
+    */
+    vector<string> generateParenthesis(int n)
+    {
+        vector<string> ans;
+        DFS_generateParenthesis(ans, "", 0, 0, n);
+        return ans;
+
+    }
+    void DFS_generateParenthesis(vector<string>& ans, string s, int left, int length, int n)
+    {
+        if (length == n * 2)
+        {
+            if (left == 0)
+            {
+                ans.push_back(s);
+            }
+            return;
+        }
+        if (left > n || left < 0)
+        {
+            return;
+        }
+        DFS_generateParenthesis(ans, s + "(", left + 1, length + 1, n);
+        DFS_generateParenthesis(ans, s + ")", left - 1, length + 1, n);
+    }
+
+
+    // 19
+    // É¾³ıÁ´±íµÄµ¹ÊıµÚN¸ö½Úµã
+    /*
+        ¸ø¶¨Ò»¸öÁ´±í£¬É¾³ıÁ´±íµÄµ¹ÊıµÚ n ¸ö½Úµã£¬²¢ÇÒ·µ»ØÁ´±íµÄÍ·½áµã¡£
+    */
+    ListNode* removeNthFromEnd(ListNode* head, int n)
+    {
+        ListNode *node = head;
+        int len = 0, k = 1;
+        while (node != 0)
+        {
+            len++;
+            node = node->next;
+        }
+        if (len == n)
+        {
+            return head->next;
+        }
+        node = head;
+        while (true)
+        {
+            if (k == len - n)
+            {
+                node->next = node->next->next;
+                return head;
+            }
+            node = node->next;
+            k++;
+        }
+    }
+
+
+    // 18
+    // ËÄÊıÖ®ºÍ
+    /*
+        ¸ø¶¨Ò»¸ö°üº¬ n ¸öÕûÊıµÄÊı×é nums ºÍÒ»¸öÄ¿±êÖµ target£¬ÅĞ¶Ï nums ÖĞÊÇ·ñ´æÔÚËÄ¸öÔªËØ a£¬b£¬c ºÍ d £¬Ê¹µÃ a + b + c + d µÄÖµÓë target ÏàµÈ£¿ÕÒ³öËùÓĞÂú×ãÌõ¼şÇÒ²»ÖØ¸´µÄËÄÔª×é¡£
+    */
+    // ÌáÊ¾£º¹Ì¶¨Á½¸öÊı£¬Ë«Ö¸ÕëÕÒÁíÍâÁ½¸ö£»±£´æÁ½Á½Ö®ºÍ£¬ÔÙË«Ö¸Õë
     vector<vector<int> > fourSum(vector<int>& nums, int target)
     {
         vector<vector<int> > ans;
@@ -1148,87 +2073,40 @@ public:
     }
 
 
-    // 923
-    // ä¸‰æ•°ä¹‹å’Œçš„å¤šç§å¯èƒ½
+    // 17
+    // µç»°ºÅÂëµÄ×ÖÄ¸×éºÏ
     /*
-        ç»™å®šä¸€ä¸ªæ•´æ•°æ•°ç»„ Aï¼Œä»¥åŠä¸€ä¸ªæ•´æ•° target ä½œä¸ºç›®æ ‡å€¼ï¼Œè¿”å›æ»¡è¶³ i < j < k ä¸” A[i] + A[j] + A[k] == target çš„å…ƒç»„ i, j, k çš„æ•°é‡ã€‚
-        ç”±äºç»“æœä¼šéå¸¸å¤§ï¼Œè¯·è¿”å› ç»“æœé™¤ä»¥ 10^9 + 7 çš„ä½™æ•°ã€‚
+        ¸ø¶¨Ò»¸ö½ö°üº¬Êı×Ö 2-9 µÄ×Ö·û´®£¬·µ»ØËùÓĞËüÄÜ±íÊ¾µÄ×ÖÄ¸×éºÏ¡£
+        ¸ø³öÊı×Öµ½×ÖÄ¸µÄÓ³ÉäÈçÏÂ£¨Óëµç»°°´¼üÏàÍ¬£©¡£×¢Òâ 1 ²»¶ÔÓ¦ÈÎºÎ×ÖÄ¸¡£
     */
-    // æç¤ºï¼šä¸‰ä¸ªæ•°ä¸åŒï¼Œä¸¤ä¸ªæ•°ç›¸åŒï¼Œä¸‰ä¸ªæ•°ç›¸åŒ
-    int threeSumMulti(vector<int>& A, int target)
+    vector<string> letterCombinations(string digits)
     {
-        long long ans = 0;
-        int len = A.size();
-        sort(A.begin(), A.end());
-        vector<int> nums(101);
-        for (int i = 0; i < 101; i++)
+        string nums[] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        vector<string> ans;
+        DFS_letterCombinations(nums, ans, digits, 0, "");
+        return ans;
+    }
+    void DFS_letterCombinations(string nums[], vector<string> &ans, string digits, int step, string num)
+    {
+        if (digits.size() == step)
         {
-            nums[i] = 0;
-        }
-        for (int i = 0; i < len; i++)
-        {
-            nums[A[i]]++;
-        }
-        int cur = 0;
-        for (int i = 0; i < len; )
-        {
-            int j = i + 1;
-            while (j < len && A[j] == A[i])
+            if (step != 0)
             {
-                j++;
+                ans.push_back(num);
             }
-            A[cur++] = A[i];
-            i = j;
+            return;
         }
-        for (int i = 0; i < cur; i++)
+        for (int i = 0; i < nums[digits[step] - '2'].size(); i++)
         {
-            int L = i + 1, R = cur - 1;
-            while (L < R)
-            {
-                int sum = A[i] + A[L] + A[R];
-                if (sum < target)
-                {
-                    L++;
-                }
-                else if (sum > target)
-                {
-                    R--;
-                }
-                else
-                {
-                    ans = (ans + (long long)nums[A[i]] * nums[A[L]] * nums[A[R]]) % 1000000007;
-                    L++;
-                    R--;
-                }
-            }
+            DFS_letterCombinations(nums, ans, digits, step + 1, num + nums[digits[step] - '2'][i]);
         }
-        for (int i = 0; i < 101; i++)
-        {
-            if (nums[i] >= 2)
-            {
-                int k = target - i * 2;
-                if (k >= 0 && k < 101 && k != i && nums[k] > 0)
-                {
-                    ans = (ans + (long long)nums[i] * (nums[i] - 1) / 2 * nums[k]) % 1000000007;
-                }
-            }
-        }
-        if (target % 3 == 0)
-        {
-            int k = target / 3;
-            if (k >= 0 && k < 101 && nums[k] >= 3)
-            {
-                ans = (ans + (long long)nums[k] * (nums[k] - 1) * (nums[k] - 2) / 6) % 1000000007;
-            }
-        }
-        return (int)ans;
     }
 
 
     // 16
-    // æœ€æ¥è¿‘çš„ä¸‰æ•°ä¹‹å’Œ
+    // ×î½Ó½üµÄÈıÊıÖ®ºÍ
     /*
-        ç»™å®šä¸€ä¸ªåŒ…æ‹¬ n ä¸ªæ•´æ•°çš„æ•°ç»„ nums å’Œ ä¸€ä¸ªç›®æ ‡å€¼ targetã€‚æ‰¾å‡º nums ä¸­çš„ä¸‰ä¸ªæ•´æ•°ï¼Œä½¿å¾—å®ƒä»¬çš„å’Œä¸ target æœ€æ¥è¿‘ã€‚è¿”å›è¿™ä¸‰ä¸ªæ•°çš„å’Œã€‚å‡å®šæ¯ç»„è¾“å…¥åªå­˜åœ¨å”¯ä¸€ç­”æ¡ˆã€‚
+        ¸ø¶¨Ò»¸ö°üÀ¨ n ¸öÕûÊıµÄÊı×é nums ºÍ Ò»¸öÄ¿±êÖµ target¡£ÕÒ³ö nums ÖĞµÄÈı¸öÕûÊı£¬Ê¹µÃËüÃÇµÄºÍÓë target ×î½Ó½ü¡£·µ»ØÕâÈı¸öÊıµÄºÍ¡£¼Ù¶¨Ã¿×éÊäÈëÖ»´æÔÚÎ¨Ò»´ğ°¸¡£
     */
     int threeSumClosest(vector<int>& nums, int target)
     {
@@ -1270,9 +2148,9 @@ public:
 
 
     // 15
-    // ä¸‰æ•°ä¹‹å’Œ
+    // ÈıÊıÖ®ºÍ
     /*
-        ç»™å®šä¸€ä¸ªåŒ…å« n ä¸ªæ•´æ•°çš„æ•°ç»„ numsï¼Œåˆ¤æ–­ nums ä¸­æ˜¯å¦å­˜åœ¨ä¸‰ä¸ªå…ƒç´  aï¼Œbï¼Œc ï¼Œä½¿å¾— a + b + c = 0 ï¼Ÿæ‰¾å‡ºæ‰€æœ‰æ»¡è¶³æ¡ä»¶ä¸”ä¸é‡å¤çš„ä¸‰å…ƒç»„ã€‚
+        ¸ø¶¨Ò»¸ö°üº¬ n ¸öÕûÊıµÄÊı×é nums£¬ÅĞ¶Ï nums ÖĞÊÇ·ñ´æÔÚÈı¸öÔªËØ a£¬b£¬c £¬Ê¹µÃ a + b + c = 0 £¿ÕÒ³öËùÓĞÂú×ãÌõ¼şÇÒ²»ÖØ¸´µÄÈıÔª×é¡£
     */
     vector<vector<int> > threeSum(vector<int>& nums)
     {
@@ -1322,992 +2200,353 @@ public:
         return ans;
     }
 
-    // 650
-    // åªæœ‰ä¸¤ä¸ªé”®çš„é”®ç›˜
+
+    // 12
+    // ÕûÊı×ªÂŞÂíÊı×Ö
     /*
-        æœ€åˆåœ¨ä¸€ä¸ªè®°äº‹æœ¬ä¸Šåªæœ‰ä¸€ä¸ªå­—ç¬¦ 'A'ã€‚ä½ æ¯æ¬¡å¯ä»¥å¯¹è¿™ä¸ªè®°äº‹æœ¬è¿›è¡Œä¸¤ç§æ“ä½œï¼š
-        Copy All (å¤åˆ¶å…¨éƒ¨) : ä½ å¯ä»¥å¤åˆ¶è¿™ä¸ªè®°äº‹æœ¬ä¸­çš„æ‰€æœ‰å­—ç¬¦(éƒ¨åˆ†çš„å¤åˆ¶æ˜¯ä¸å…è®¸çš„)ã€‚
-        Paste (ç²˜è´´) : ä½ å¯ä»¥ç²˜è´´ä½ ä¸Šä¸€æ¬¡å¤åˆ¶çš„å­—ç¬¦ã€‚
-        ç»™å®šä¸€ä¸ªæ•°å­— n ã€‚ä½ éœ€è¦ä½¿ç”¨æœ€å°‘çš„æ“ä½œæ¬¡æ•°ï¼Œåœ¨è®°äº‹æœ¬ä¸­æ‰“å°å‡ºæ°å¥½ n ä¸ª 'A'ã€‚è¾“å‡ºèƒ½å¤Ÿæ‰“å°å‡º n ä¸ª 'A' çš„æœ€å°‘æ“ä½œæ¬¡æ•°ã€‚
+        ÂŞÂíÊı×Ö°üº¬ÒÔÏÂÆßÖÖ×Ö·û£º I£¬ V£¬ X£¬ L£¬C£¬D ºÍ M¡£
+        ×Ö·û          ÊıÖµ
+        I             1
+        V             5
+        X             10
+        L             50
+        C             100
+        D             500
+        M             1000
+        ÀıÈç£¬ ÂŞÂíÊı×Ö 2 Ğ´×ö II £¬¼´ÎªÁ½¸ö²¢ÁĞµÄ 1¡£12 Ğ´×ö XII £¬¼´Îª X + II ¡£ 27 Ğ´×ö  XXVII, ¼´Îª XX + V + II ¡£
+        Í¨³£Çé¿öÏÂ£¬ÂŞÂíÊı×ÖÖĞĞ¡µÄÊı×ÖÔÚ´óµÄÊı×ÖµÄÓÒ±ß¡£µ«Ò²´æÔÚÌØÀı£¬ÀıÈç 4 ²»Ğ´×ö IIII£¬¶øÊÇ IV¡£Êı×Ö 1 ÔÚÊı×Ö 5 µÄ×ó±ß£¬Ëù±íÊ¾µÄÊıµÈÓÚ´óÊı 5 ¼õĞ¡Êı 1 µÃµ½µÄÊıÖµ 4 ¡£Í¬ÑùµØ£¬Êı×Ö 9 ±íÊ¾Îª IX¡£Õâ¸öÌØÊâµÄ¹æÔòÖ»ÊÊÓÃÓÚÒÔÏÂÁùÖÖÇé¿ö£º
+        I ¿ÉÒÔ·ÅÔÚ V (5) ºÍ X (10) µÄ×ó±ß£¬À´±íÊ¾ 4 ºÍ 9¡£
+        X ¿ÉÒÔ·ÅÔÚ L (50) ºÍ C (100) µÄ×ó±ß£¬À´±íÊ¾ 40 ºÍ 90¡£
+        C ¿ÉÒÔ·ÅÔÚ D (500) ºÍ M (1000) µÄ×ó±ß£¬À´±íÊ¾ 400 ºÍ 900¡£
+        ¸ø¶¨Ò»¸öÕûÊı£¬½«Æä×ªÎªÂŞÂíÊı×Ö¡£ÊäÈëÈ·±£ÔÚ 1 µ½ 3999 µÄ·¶Î§ÄÚ¡£
     */
-    int minSteps(int n)
+    string intToRoman(int num)
     {
-        // åˆ†ææ¯”å¦‚30ï¼Œå¦‚æœåˆ†è§£æˆ1*30=1+30ï¼›2*15=2+15ï¼›3*10=3+10ï¼›5*6=5+6ï¼›2*3*5=2+3+5ï¼›
-        int ans = 0;
-        if (n < 2)
+        int values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        string reps[] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        string ans = "";
+        for (int i = 0; i < 13; i++)
         {
-            return 0;
-        }
-        for (int i = 2; i <= n; i++)
-        {
-            if (n % i == 0)
+            while (num >= values[i])
             {
-                while (n % i == 0)
+                ans = ans + reps[i];
+                num -= values[i];
+                if (num == 0)
                 {
-                    ans += i;
-                    n /= i;
+                    break;
                 }
             }
         }
         return ans;
     }
-//    int minSteps(int n)
-//    {
-//        vector<int> dp(n + 1);
-//        for (int i = 0; i <= n; i++)
-//        {
-//            dp[i] = 1e9;
-//        }
-//        dp[1] = 0;
-//        for (int i = 2; i <= n; i++)
-//        {
-//            for (int j = 2; j <= i; j++)
-//            {
-//                if (i % j == 0)
-//                {
-//                    dp[i] = min(dp[i], dp[i / j] + i / j);
-//                }
-//            }
-//        }
-//        return dp[n];
-//    }
-//    struct Q_minSteps
-//    {
-//        int step, len, copyLen;
-//    };
-//    int minSteps(int n)
-//    {
-//        queue<Q_minSteps> Q;
-//        Q_minSteps p, q;
-//        p.step = 0;
-//        p.len = 1;
-//        p.copyLen = 0;
-//        Q.push(p);
-//        while (!Q.empty())
-//        {
-//            p = Q.front();
-//            Q.pop();
-//            if (p.len == n)
-//            {
-//                while (!Q.empty())
-//                {
-//                    Q.pop();
-//                }
-//                return p.step;
-//            }
-//            if (p.copyLen != 0)
-//            {
-//                q.len = p.len + p.copyLen;
-//                q.step = p.step + 1;
-//                q.copyLen = p.copyLen;
-//                if (q.len <= n)
-//                {
-//                    Q.push(q);
-//                }
-//            }
-//            if (p.len != p.copyLen)
-//            {
-//                q.len = p.len;
-//                q.step = p.step + 1;
-//                q.copyLen = p.len;
-//                Q.push(q);
-//            }
-//        }
-//        return 0;
-//    }
 
 
-    // 456
-    // 132æ¨¡å¼
+    // 11
+    // Ê¢×î¶àË®µÄÈİÆ÷
     /*
-        ç»™å®šä¸€ä¸ªæ•´æ•°åºåˆ—ï¼ša1, a2, ..., anï¼Œä¸€ä¸ª132æ¨¡å¼çš„å­åºåˆ— ai, aj, ak è¢«å®šä¹‰ä¸ºï¼šå½“ i < j < k æ—¶ï¼Œai < ak < ajã€‚è®¾è®¡ä¸€ä¸ªç®—æ³•ï¼Œå½“ç»™å®šæœ‰ n ä¸ªæ•°å­—çš„åºåˆ—æ—¶ï¼ŒéªŒè¯è¿™ä¸ªåºåˆ—ä¸­æ˜¯å¦å«æœ‰132æ¨¡å¼çš„å­åºåˆ—ã€‚
+        ¸ø¶¨ n ¸ö·Ç¸ºÕûÊı a1£¬a2£¬...£¬an£¬Ã¿¸öÊı´ú±í×ø±êÖĞµÄÒ»¸öµã (i, ai) ¡£ÔÚ×ø±êÄÚ»­ n Ìõ´¹Ö±Ïß£¬´¹Ö±Ïß i µÄÁ½¸ö¶Ëµã·Ö±ğÎª (i, ai) ºÍ (i, 0)¡£ÕÒ³öÆäÖĞµÄÁ½ÌõÏß£¬Ê¹µÃËüÃÇÓë x Öá¹²Í¬¹¹³ÉµÄÈİÆ÷¿ÉÒÔÈİÄÉ×î¶àµÄË®¡£
+        ËµÃ÷£ºÄã²»ÄÜÇãĞ±ÈİÆ÷£¬ÇÒ n µÄÖµÖÁÉÙÎª 2¡£
     */
-    bool find132pattern(vector<int>& nums)
+    // ÌáÊ¾£ºË«Ö¸Õë·¨£¬°«µÄÒ»·½ÒÆ¶¯
+    int maxArea(vector<int>& height)
     {
-        int len = nums.size();
-        if (len == 0)
+        int L = 0, R = height.size() - 1;
+        int ans = 0;
+        while (L < R)
         {
-            return false;
-        }
-
-        vector<int> mi(len);
-        mi[0] = nums[0];
-        for (int i = 1; i < len; i++)
-        {
-            mi[i] = mi[i - 1] < nums[i] ? mi[i - 1] : nums[i];
-        }
-        stack<int> sta;
-        int ma = 1e9;
-        for (int i = len - 1; i > 0; i--)
-        {
-            if (nums[i] > mi[i])
+            ans = max(ans, min(height[L], height[R]) * (R - L));
+            if (height[L] < height[R])
             {
-                while (!sta.empty() && sta.top() < nums[i])
-                {
-                    ma = sta.top();
-                    sta.pop();
-                }
-                if (ma < nums[i] && ma > mi[i] < ma)
-                {
-                    return true;
-                }
+                L++;
             }
-            sta.push(nums[i]);
+            else
+            {
+                R--;
+            }
         }
-        return false;
+        return ans;
     }
 
 
-    // 542
-    // 01çŸ©é˜µ
+    // 8
+    // ×Ö·û´®×ªÕûÊı
     /*
-        ç»™å®šä¸€ä¸ªç”± 0 å’Œ 1 ç»„æˆçš„çŸ©é˜µï¼Œæ‰¾å‡ºæ¯ä¸ªå…ƒç´ åˆ°æœ€è¿‘çš„ 0 çš„è·ç¦»ã€‚
-        ä¸¤ä¸ªç›¸é‚»å…ƒç´ é—´çš„è·ç¦»ä¸º 1
+        µ±ÎÒÃÇÑ°ÕÒµ½µÄµÚÒ»¸ö·Ç¿Õ×Ö·ûÎªÕı»òÕß¸ººÅÊ±£¬Ôò½«¸Ã·ûºÅÓëÖ®ºóÃæ¾¡¿ÉÄÜ¶àµÄÁ¬ĞøÊı×Ö×éºÏÆğÀ´£¬×÷Îª¸ÃÕûÊıµÄÕı¸ººÅ£»¼ÙÈçµÚÒ»¸ö·Ç¿Õ×Ö·ûÊÇÊı×Ö£¬ÔòÖ±½Ó½«ÆäÓëÖ®ºóÁ¬ĞøµÄÊı×Ö×Ö·û×éºÏÆğÀ´£¬ĞÎ³ÉÕûÊı¡£
+        ¸Ã×Ö·û´®³ıÁËÓĞĞ§µÄÕûÊı²¿·ÖÖ®ºóÒ²¿ÉÄÜ»á´æÔÚ¶àÓàµÄ×Ö·û£¬ÕâĞ©×Ö·û¿ÉÒÔ±»ºöÂÔ£¬ËüÃÇ¶ÔÓÚº¯Êı²»Ó¦¸ÃÔì³ÉÓ°Ïì¡£
+        ×¢Òâ£º¼ÙÈç¸Ã×Ö·û´®ÖĞµÄµÚÒ»¸ö·Ç¿Õ¸ñ×Ö·û²»ÊÇÒ»¸öÓĞĞ§ÕûÊı×Ö·û¡¢×Ö·û´®Îª¿Õ»ò×Ö·û´®½ö°üº¬¿Õ°××Ö·ûÊ±£¬ÔòÄãµÄº¯Êı²»ĞèÒª½øĞĞ×ª»»¡£
+        ÔÚÈÎºÎÇé¿öÏÂ£¬Èôº¯Êı²»ÄÜ½øĞĞÓĞĞ§µÄ×ª»»Ê±£¬Çë·µ»Ø 0¡£
     */
-    vector<vector<int> > updateMatrix(vector<vector<int> >& matrix)
+    int myAtoi(string s)
     {
-        int row = matrix.size();
-        int col = matrix[0].size();
-        vector<vector<int> > ans(row);
-        for (int i = 0; i < row; i++)
+        int len = s.size();
+        for (int i = 0; i < len; i++)
         {
-            ans[i].resize(col);
-        }
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
+            if (s[i] != ' ')
             {
-                if (matrix[i][j] == 0)
+                if (s[i] == '+' || s[i] == '-' || (s[i] >= '0' && s[i] <= '9'))
                 {
-                    ans[i][j] = 0;
-                    continue;
-                }
-                bool getAns = false;
-                for (int k = 1; !getAns; k++)
-                {
-                    for (int x = 0; x <= k && !getAns; x++)
+                    int index = i, sign = 1;
+                    if (s[i] == '+')
                     {
-                        int y = k - x;
-                        int xx = i + x;
-                        int yy = j + y;
-                        if (xx >= 0 && yy >= 0 && xx < row && yy < col && matrix[xx][yy] == 0)
+                        index++;
+                    }
+                    else if (s[i] == '-')
+                    {
+                        index++;
+                        sign = -1;
+                    }
+                    long long ans = 0;
+                    while (index < len && s[index] >= '0' && s[index] <= '9')
+                    {
+                        ans = ans * 10 + s[index] - '0';
+                        if (ans > INT_MAX)
                         {
-                            ans[i][j] = k;
-                            getAns = true;
                             break;
                         }
-                        xx = i - x;
-                        yy = j + y;
-                        if (xx >= 0 && yy >= 0 && xx < row && yy < col && matrix[xx][yy] == 0)
+                        index++;
+                    }
+                    ans *= sign;
+                    if (ans > INT_MAX)
+                    {
+                        return INT_MAX;
+                    }
+                    if (ans < INT_MIN)
+                    {
+                        return INT_MIN;
+                    }
+                    return ans;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+        return 0;
+    }
+
+
+    // 6
+    // Z×ÖĞÎ±ä»»
+    /*
+        ½«Ò»¸ö¸ø¶¨×Ö·û´®¸ù¾İ¸ø¶¨µÄĞĞÊı£¬ÒÔ´ÓÉÏÍùÏÂ¡¢´Ó×óµ½ÓÒ½øĞĞ Z ×ÖĞÎÅÅÁĞ¡£
+        ±ÈÈçÊäÈë×Ö·û´®Îª "LEETCODEISHIRING" ĞĞÊıÎª 3 Ê±£¬ÅÅÁĞÈçÏÂ£º
+        L   C   I   R
+        E T O E S I I G
+        E   D   H   N
+    */
+    string convert(string s, int numRows)
+    {
+        if (numRows == 1)
+        {
+            return s;
+        }
+        int len = s.size(), index = 0, dir = 1;
+        vector<string> str(numRows);
+        for (int i = 0; i < len; i++)
+        {
+            str[index] += s[i];
+            index += dir;
+            if (index == numRows)
+            {
+                dir = -1;
+                index = numRows - 2;
+            }
+            else if (index == -1)
+            {
+                dir = 1;
+                index = 1;
+            }
+        }
+        string ans = "";
+        for (int i = 0; i < numRows; i++)
+        {
+            ans = ans + str[i];
+        }
+        return ans;
+    }
+
+
+    // 5
+    // ×î³¤»ØÎÄ×Ó´®
+    /*
+        ¸ø¶¨Ò»¸ö×Ö·û´® s£¬ÕÒµ½ s ÖĞ×î³¤µÄ»ØÎÄ×Ó´®¡£Äã¿ÉÒÔ¼ÙÉè s µÄ×î´ó³¤¶ÈÎª 1000¡£
+    */
+    string longestPalindrome(string s)
+    {
+        // O£¨n£©Ëã·¨
+        int len = s.size();
+        string str = "#";
+        for (int i = 0; i < len; i++)
+        {
+            str = str + s[i] + "#";
+        }
+        len = str.size();
+        vector<int> p(len);
+        p[0] = 1;
+        int mx = 1, id = 0;
+        for (int i = 1; i < len; i++)
+        {
+            if (i < mx)
+            {
+                p[i] = min(mx - i, p[id * 2 - i]);
+            }
+            else
+            {
+                p[i] = 1;
+            }
+            while (i + p[i] < len && i - p[i] >= 0 && str[i + p[i]] == str[i - p[i]])
+            {
+                p[i]++;
+            }
+            if (p[i] + i > mx)
+            {
+                mx = i + p[i];
+                id = i;
+            }
+        }
+        int ma = 0;
+        for (int i = 0; i < len; i++)
+        {
+            if (p[i] > ma)
+            {
+                ma = p[i];
+                id = i;
+            }
+        }
+        string ans = "";
+        for (int i = id - p[id] + 1; i < id + p[id]; i++)
+        {
+            if (str[i] != '#')
+            {
+                ans += str[i];
+            }
+        }
+        return ans;
+
+
+        // ±©Á¦Ëã·¨
+        /*
+        int len = s.size(), ans = 0;
+        string str;
+        for (int i = 0; i < len; i++)
+        {
+            if (len - i < ans)
+            {
+                break;
+            }
+            for (int j = len - 1; j >= i; j--)
+            {
+                if (s[i] == s[j])
+                {
+                    int L = i, R = j;
+                    while (L < R)
+                    {
+                        if (s[L] != s[R])
                         {
-                            ans[i][j] = k;
-                            getAns = true;
                             break;
                         }
-                        xx = i - x;
-                        yy = j - y;
-                        if (xx >= 0 && yy >= 0 && xx < row && yy < col && matrix[xx][yy] == 0)
+                        L++;
+                        R--;
+                    }
+                    if (L >= R && j - i + 1 > ans)
+                    {
+                        ans = j - i + 1;
+                        str = "";
+                        for (int r = i; r <= j; r++)
                         {
-                            ans[i][j] = k;
-                            getAns = true;
-                            break;
+                            str += s[r];
                         }
-                        xx = i + x;
-                        yy = j - y;
-                        if (xx >= 0 && yy >= 0 && xx < row && yy < col && matrix[xx][yy] == 0)
-                        {
-                            ans[i][j] = k;
-                            getAns = true;
-                            break;
-                        }
+                        break;
                     }
                 }
             }
         }
+        return str;
+        */
+    }
+
+
+    // 3
+    // ÎŞÖØ¸´×Ö·ûµÄ×î³¤×Ó´®
+    /*
+        ¸ø¶¨Ò»¸ö×Ö·û´®£¬ÇëÄãÕÒ³öÆäÖĞ²»º¬ÓĞÖØ¸´×Ö·ûµÄ ×î³¤×Ó´® µÄ³¤¶È¡£
+    */
+    // ÌáÊ¾£º×¢ÒâÅĞ¶Ï(c[s[i]] != -1 && c[s[i]] >= start)
+    int lengthOfLongestSubstring(string s)
+    {
+        int len = s.size();
+        int c[256], ans = 0, start = 0;
+        memset(c, -1, sizeof(c));
+        for (int i = 0; i < len; i++)
+        {
+            if (c[s[i]] != -1 && c[s[i]] >= start)
+            {
+                ans = max(ans, i - start);
+                start = c[s[i]] + 1;
+            }
+            c[s[i]] = i;
+        }
+        ans = max(ans, len - start);
         return ans;
     }
 
 
-    // 890
-    // æŸ¥æ‰¾å’Œæ›¿æ¢æ¨¡å¼
+    // 2
+    // Á½ÊıÏà¼Ó
     /*
-        ä½ æœ‰ä¸€ä¸ªå•è¯åˆ—è¡¨ words å’Œä¸€ä¸ªæ¨¡å¼  patternï¼Œä½ æƒ³çŸ¥é“ words ä¸­çš„å“ªäº›å•è¯ä¸æ¨¡å¼åŒ¹é…ã€‚
-        å¦‚æœå­˜åœ¨å­—æ¯çš„æ’åˆ— p ï¼Œä½¿å¾—å°†æ¨¡å¼ä¸­çš„æ¯ä¸ªå­—æ¯ x æ›¿æ¢ä¸º p(x) ä¹‹åï¼Œæˆ‘ä»¬å°±å¾—åˆ°äº†æ‰€éœ€çš„å•è¯ï¼Œé‚£ä¹ˆå•è¯ä¸æ¨¡å¼æ˜¯åŒ¹é…çš„ã€‚
-        ï¼ˆå›æƒ³ä¸€ä¸‹ï¼Œå­—æ¯çš„æ’åˆ—æ˜¯ä»å­—æ¯åˆ°å­—æ¯çš„åŒå°„ï¼šæ¯ä¸ªå­—æ¯æ˜ å°„åˆ°å¦ä¸€ä¸ªå­—æ¯ï¼Œæ²¡æœ‰ä¸¤ä¸ªå­—æ¯æ˜ å°„åˆ°åŒä¸€ä¸ªå­—æ¯ã€‚ï¼‰
-        è¿”å› words ä¸­ä¸ç»™å®šæ¨¡å¼åŒ¹é…çš„å•è¯åˆ—è¡¨ã€‚
-        ä½ å¯ä»¥æŒ‰ä»»ä½•é¡ºåºè¿”å›ç­”æ¡ˆã€‚
+        ¸ø³öÁ½¸ö ·Ç¿Õ µÄÁ´±íÓÃÀ´±íÊ¾Á½¸ö·Ç¸ºµÄÕûÊı¡£ÆäÖĞ£¬ËüÃÇ¸÷×ÔµÄÎ»ÊıÊÇ°´ÕÕ ÄæĞò µÄ·½Ê½´æ´¢µÄ£¬²¢ÇÒËüÃÇµÄÃ¿¸ö½ÚµãÖ»ÄÜ´æ´¢ Ò»Î» Êı×Ö¡£
+        Èç¹û£¬ÎÒÃÇ½«ÕâÁ½¸öÊıÏà¼ÓÆğÀ´£¬Ôò»á·µ»ØÒ»¸öĞÂµÄÁ´±íÀ´±íÊ¾ËüÃÇµÄºÍ¡£
+        Äú¿ÉÒÔ¼ÙÉè³ıÁËÊı×Ö 0 Ö®Íâ£¬ÕâÁ½¸öÊı¶¼²»»áÒÔ 0 ¿ªÍ·¡£
     */
-    vector<string> findAndReplacePattern(vector<string>& words, string pattern)
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
     {
-        vector<string> ans;
-        int si = words.size();
-        int len = pattern.size();
-        for (int i = 0; i < si; i++)
+        int r = 0, a, b, sum;
+        ListNode *cur1 = l1, *cur2 = l2, *head = NULL, *cur;
+        while (cur1 != NULL || cur2 != NULL)
         {
-            int len1 = words[i].size();
-            if (len1 != len)
+            if (cur1 == NULL)
             {
-                continue;
-            }
-            map<char, char> m;
-            for (int j = 0; j < len1; j++)
-            {
-                m[words[i][j]] = 0;
-            }
-            bool yes = true;
-            for (int j = 0; j < len1; j++)
-            {
-                if (!m[words[i][j]])
-                {
-                    m[words[i][j]] = pattern[j];
-                }
-                else if (m[words[i][j]] != pattern[j])
-                {
-                    yes = false;
-                    break;
-                }
-            }
-            if (yes)
-            {
-                ans.push_back(words[i]);
-            }
-        }
-        return ans;
-    }
-
-
-    // 216
-    // ç»„åˆæ€»å’ŒIII
-    /*
-        æ‰¾å‡ºæ‰€æœ‰ç›¸åŠ ä¹‹å’Œä¸º n çš„ k ä¸ªæ•°çš„ç»„åˆã€‚ç»„åˆä¸­åªå…è®¸å«æœ‰ 1 - 9 çš„æ­£æ•´æ•°ï¼Œå¹¶ä¸”æ¯ç§ç»„åˆä¸­ä¸å­˜åœ¨é‡å¤çš„æ•°å­—ã€‚
-    */
-    bool v_combinationSum3[10];
-    vector<int> a_combinationSum3;
-    vector<vector<int> > combinationSum3(int k, int n)
-    {
-        memset(v_combinationSum3, false, sizeof(v_combinationSum3));
-        a_combinationSum3.resize(10);
-        vector<vector<int> > ans;
-        do_combinationSum3(ans, n, k, 0, 0);
-        return ans;
-    }
-    void do_combinationSum3(vector<vector<int> > &ans, int n, int k, int stp, int sum)
-    {
-        if (sum > n || k > 9)
-        {
-            return;
-        }
-        if (k == stp)
-        {
-            if (sum == n)
-            {
-                vector<int> result(k);
-                for(int i = 0; i < k; i++)
-                {
-                    result[i] = a_combinationSum3[i];
-                }
-                ans.push_back(result);
-            }
-            return;
-        }
-        for (int i = stp == 0 ? 0 : a_combinationSum3[stp - 1]; i < 9; i++)
-        {
-            if (!v_combinationSum3[i])
-            {
-                v_combinationSum3[i] = true;
-                a_combinationSum3[stp] = i + 1;
-                do_combinationSum3(ans, n, k, stp + 1, sum + i + 1);
-                v_combinationSum3[i] = false;
-            }
-        }
-    }
-
-    // 77
-    // ç»„åˆ
-    /*
-        ç»™å®šä¸¤ä¸ªæ•´æ•° n å’Œ kï¼Œè¿”å› 1 ... n ä¸­æ‰€æœ‰å¯èƒ½çš„ k ä¸ªæ•°çš„ç»„åˆã€‚
-    */
-    vector<bool> v_combine;
-    vector<int> a_combine;
-    vector<vector<int> > combine(int n, int k)
-    {
-        v_combine.resize(n);
-        a_combine.resize(k);
-        for (int i = 0; i < n; i++)
-        {
-            v_combine[i] = false;
-        }
-        vector<vector<int> > ans;
-        do_combine(ans, n, k, 0);
-        return ans;
-    }
-    void do_combine(vector<vector<int> > &ans, int n, int k, int stp)
-    {
-        if (k == stp)
-        {
-            vector<int> result(k);
-            for (int i = 0; i < k; i++)
-            {
-                result[i] = a_combine[i];
-            }
-            ans.push_back(result);
-            return;
-        }
-        for (int i = stp == 0 ? 0 : a_combine[stp - 1]; i < n; i++)
-        {
-            if (!v_combine[i])
-            {
-                v_combine[i] = true;
-                a_combine[stp] = i + 1;
-                do_combine(ans, n, k, stp + 1);
-                v_combine[i] = false;
-            }
-        }
-    }
-
-    // 894
-    // æ‰€æœ‰å¯èƒ½çš„æ»¡äºŒå‰æ ‘
-    /*
-        æ»¡äºŒå‰æ ‘æ˜¯ä¸€ç±»äºŒå‰æ ‘ï¼Œå…¶ä¸­æ¯ä¸ªç»“ç‚¹æ°å¥½æœ‰ 0 æˆ– 2 ä¸ªå­ç»“ç‚¹ã€‚
-        è¿”å›åŒ…å« N ä¸ªç»“ç‚¹çš„æ‰€æœ‰å¯èƒ½æ»¡äºŒå‰æ ‘çš„åˆ—è¡¨ã€‚ ç­”æ¡ˆçš„æ¯ä¸ªå…ƒç´ éƒ½æ˜¯ä¸€ä¸ªå¯èƒ½æ ‘çš„æ ¹ç»“ç‚¹ã€‚
-        ç­”æ¡ˆä¸­æ¯ä¸ªæ ‘çš„æ¯ä¸ªç»“ç‚¹éƒ½å¿…é¡»æœ‰ node.val=0ã€‚
-        ä½ å¯ä»¥æŒ‰ä»»ä½•é¡ºåºè¿”å›æ ‘çš„æœ€ç»ˆåˆ—è¡¨ã€‚
-    */
-    vector<TreeNode*> allPossibleFBT(int N)
-    {
-        vector<TreeNode*> ans;
-        if (N & 1)
-        {
-            do_allPossibleFBT(N, ans, 0, 0, 0);
-        }
-        return ans;
-    }
-    void do_allPossibleFBT(int N, vector<TreeNode*> ans, int step, TreeNode *node, TreeNode *root)
-    {
-        if (N < step)
-        {
-            return;
-        }
-        if (N == step)
-        {
-            ans.push_back(root);
-            return;
-        }
-        if (node == 0)
-        {
-            node = new TreeNode(0);
-            node->left = 0;
-            node->right = 0;
-            do_allPossibleFBT(N, ans, step + 1, node, node);
-            return;
-        }
-
-        TreeNode *left = new TreeNode(0);
-        left->left = 0;
-        left->right = 0;
-        TreeNode *right = new TreeNode(0);
-        right->left = 0;
-        right->right = 0;
-        node->left = left;
-        node->right = right;
-
-        do_allPossibleFBT(N, ans, step + 2, left, root);
-        do_allPossibleFBT(N, ans, step + 2, right, root);
-
-        node->left = 0;
-        node->right = 0;
-    }
-
-
-    // 46
-    // å…¨æ’åˆ—
-    bool v_permute[20];
-    int result_permute[20];
-    vector<vector<int> > permute(vector<int>& nums)
-    {
-        memset(v_permute, false, sizeof(v_permute));
-        vector<vector<int> > ans;
-        do_permute(nums, nums.size(), 0, ans);
-        return ans;
-    }
-    void do_permute(vector<int>& nums, int length, int step, vector<vector<int> >& ans)
-    {
-        if (step == length)
-        {
-            vector<int> result(step);
-            for (int i = 0; i < step; i++)
-            {
-                result[i] = result_permute[i];
-            }
-            ans.push_back(result);
-            return;
-        }
-        for (int i = 0; i < length; i++)
-        {
-            if (!v_permute[i])
-            {
-                v_permute[i] = true;
-                result_permute[step] = nums[i];
-                do_permute(nums, length, step + 1, ans);
-                v_permute[i] = false;
-            }
-        }
-    }
-
-
-    // 814
-    // äºŒå‰æ ‘å‰ªæ
-    /*
-        ç»™å®šäºŒå‰æ ‘æ ¹ç»“ç‚¹ root ï¼Œæ­¤å¤–æ ‘çš„æ¯ä¸ªç»“ç‚¹çš„å€¼è¦ä¹ˆæ˜¯ 0ï¼Œè¦ä¹ˆæ˜¯ 1ã€‚
-        è¿”å›ç§»é™¤äº†æ‰€æœ‰ä¸åŒ…å« 1 çš„å­æ ‘çš„åŸäºŒå‰æ ‘ã€‚
-    */
-    TreeNode* pruneTree(TreeNode* root)
-    {
-        do_pruneTree(root);
-        return root;
-    }
-    bool do_pruneTree(TreeNode* node)
-    {
-        if (node == 0)
-        {
-            return false;
-        }
-        bool left = do_pruneTree(node->left);
-        bool right = do_pruneTree(node->right);
-        if (!left)
-        {
-            node->left = 0;
-        }
-        if (!right)
-        {
-            node->right = 0;
-        }
-        if (node->val == 1 || left || right)
-        {
-            return true;
-        }
-        return false;
-    }
-
-
-    // 861
-    // ç¿»è½¬çŸ©é˜µåçš„å¾—åˆ†
-    /*
-        æœ‰ä¸€ä¸ªäºŒç»´çŸ©é˜µ A å…¶ä¸­æ¯ä¸ªå…ƒç´ çš„å€¼ä¸º 0 æˆ– 1 ã€‚
-        ç§»åŠ¨æ˜¯æŒ‡é€‰æ‹©ä»»ä¸€è¡Œæˆ–åˆ—ï¼Œå¹¶è½¬æ¢è¯¥è¡Œæˆ–åˆ—ä¸­çš„æ¯ä¸€ä¸ªå€¼ï¼šå°†æ‰€æœ‰ 0 éƒ½æ›´æ”¹ä¸º 1ï¼Œå°†æ‰€æœ‰ 1 éƒ½æ›´æ”¹ä¸º 0ã€‚
-        åœ¨åšå‡ºä»»æ„æ¬¡æ•°çš„ç§»åŠ¨åï¼Œå°†è¯¥çŸ©é˜µçš„æ¯ä¸€è¡Œéƒ½æŒ‰ç…§äºŒè¿›åˆ¶æ•°æ¥è§£é‡Šï¼ŒçŸ©é˜µçš„å¾—åˆ†å°±æ˜¯è¿™äº›æ•°å­—çš„æ€»å’Œã€‚
-        è¿”å›å°½å¯èƒ½é«˜çš„åˆ†æ•°ã€‚
-    */
-    int matrixScore(vector<vector<int> >& A)
-    {
-        int f[25];
-        f[0] = 1;
-        for (int i = 1; i < 25; i++)
-        {
-            f[i] = f[i - 1] << 1;
-        }
-        int row = A.size();
-        int col = A[0].size();
-        for (int i = 0; i < row; i++)
-        {
-            if (A[i][0] == 0)
-            {
-                for (int j = 0; j < col; j++)
-                {
-                    A[i][j] = 1 - A[i][j];
-                }
-            }
-        }
-        int ans = 0;
-        for (int i = 0; i < col; i++)
-        {
-            int cnt = 0;
-            for (int j = 0; j < row; j++)
-            {
-                cnt += A[j][i];
-            }
-            if (cnt < row - cnt)
-            {
-                cnt = row - cnt;
-            }
-            ans = ans + cnt * f[col - 1 - i];
-        }
-        return ans;
-    }
-
-
-    // 866
-    // å›æ–‡ç´ æ•°
-    /*
-        æ±‚å‡ºå¤§äºæˆ–ç­‰äº N çš„æœ€å°å›æ–‡ç´ æ•°ã€‚
-    */
-    // ä¼˜åŒ–ï¼šé™¤äº†11ï¼Œå¶æ•°ä½çš„å›æ–‡ä¸²éƒ½èƒ½è¢«11æ•´é™¤
-    bool a_primePalindrome[20000];
-    int p_primePalindrome[20000], total_primePalindrome;
-    int f[10] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
-    int primePalindrome(int N)
-    {
-        if (N == 1)
-        {
-            return 2;
-        }
-
-        total_primePalindrome = 0;
-        memset(a_primePalindrome, false, sizeof(a_primePalindrome));
-        for (int i = 2; i < 20000; i++)
-        {
-            if (!a_primePalindrome[i])
-            {
-                p_primePalindrome[total_primePalindrome++] = i;
-                for (int j = i * i; j < 20000; j += i)
-                {
-                    a_primePalindrome[j] = true;
-                }
-            }
-        }
-
-        if (N <= 100)
-        {
-            for (int i = N; ; i++)
-            {
-                if (do_primePalindrome1(i) && do_primePalindrome2(i))
-                {
-                    return i;
-                }
-            }
-        }
-        if ((N & 1) == 0)
-        {
-            N++;
-        }
-        int last = 0;
-        for (int i = 0; i < 9; i++)
-        {
-            if (f[i] > N)
-            {
-                break;
-            }
-            last = i;
-        }
-        for (int i = N; ; i += 2)
-        {
-            if (f[last] < i)
-            {
-                last++;
-                if (!(last & 1))
-                {
-                    i = f[last] - 1;
-                    last++;
-                    continue;
-                }
-            }
-            if (do_primePalindrome2(i) && do_primePalindrome1(i))
-            {
-                return i;
-            }
-        }
-    }
-    bool do_primePalindrome1(int n)
-    {
-        int a[10], cnt=0;
-        while (n != 0)
-        {
-            a[cnt++] = n % 10;
-            n /= 10;
-        }
-        int L = 0, R = cnt -1;
-        while (L < R)
-        {
-            if (a[L] != a[R])
-            {
-                return false;
-            }
-            L++;
-            R--;
-        }
-        return true;
-    }
-    bool do_primePalindrome2(int n)
-    {
-        for (int i = 0; i < total_primePalindrome; i++)
-        {
-            if (p_primePalindrome[i] >= n)
-            {
-                return true;
-            }
-            if (n % p_primePalindrome[i] == 0)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // 22
-    // æ‹¬å·ç”Ÿæˆ
-    /*
-        ç»™å‡º n ä»£è¡¨ç”Ÿæˆæ‹¬å·çš„å¯¹æ•°ï¼Œè¯·ä½ å†™å‡ºä¸€ä¸ªå‡½æ•°ï¼Œä½¿å…¶èƒ½å¤Ÿç”Ÿæˆæ‰€æœ‰å¯èƒ½çš„å¹¶ä¸”æœ‰æ•ˆçš„æ‹¬å·ç»„åˆã€‚
-    */
-    vector<string> generateParenthesis(int n)
-    {
-        vector<string> ans;
-        do_generateParenthesis(ans, "", 0, 0, n);
-        return ans;
-
-    }
-    void do_generateParenthesis(vector<string>& ans, string s, int left, int length, int n)
-    {
-        if (length == n * 2)
-        {
-            if (left == 0)
-            {
-                ans.push_back(s);
-            }
-            return;
-        }
-        if (left > n || left < 0)
-        {
-            return;
-        }
-        do_generateParenthesis(ans, s + "(", left + 1, length + 1, n);
-        do_generateParenthesis(ans, s + ")", left - 1, length + 1, n);
-    }
-
-    // 1008
-    // å…ˆåºéå†æ„é€ äºŒå‰æœç´¢æ ‘
-    /*
-        è¿”å›ä¸ç»™å®šå…ˆåºéå† preorder ç›¸åŒ¹é…çš„äºŒå‰æœç´¢æ ‘ï¼ˆbinary search treeï¼‰çš„æ ¹ç»“ç‚¹ã€‚
-    */
-    TreeNode* bstFromPreorder(vector<int>& preorder)
-    {
-        return do_bstFromPreorder(preorder, 0, preorder.size() - 1);
-    }
-    TreeNode* do_bstFromPreorder(vector<int>& preorder, int L, int R)
-    {
-        if (L > R)
-        {
-            return 0;
-        }
-        if (L == R)
-        {
-            TreeNode* node = new TreeNode(preorder[L]);
-            node->left = 0;
-            node->right = 0;
-            return node;
-        }
-        int index = L;
-        for (int i = L + 1; i <= R; i++)
-        {
-            if (preorder[i] > preorder[L])
-            {
-                break;
-            }
-            index = i;
-        }
-        TreeNode* node = new TreeNode(preorder[L]);
-        node->left = do_bstFromPreorder(preorder, L + 1, index);
-        node->right = do_bstFromPreorder(preorder, index + 1, R);
-        return node;
-    }
-
-
-    // 338
-    // æ¯”ç‰¹ä½è®¡æ•°
-    /*
-        ç»™å®šä¸€ä¸ªéè´Ÿæ•´æ•° numã€‚å¯¹äº 0 â‰¤ i â‰¤ num èŒƒå›´ä¸­çš„æ¯ä¸ªæ•°å­— i ï¼Œè®¡ç®—å…¶äºŒè¿›åˆ¶æ•°ä¸­çš„ 1 çš„æ•°ç›®å¹¶å°†å®ƒä»¬ä½œä¸ºæ•°ç»„è¿”å›ã€‚
-    */
-    vector<int> countBits(int num)
-    {
-        vector<int> ans(num + 1);
-        ans[0] = 0;
-        for (int i = 1; i <= num; i++)
-        {
-            ans[i] = ans[i & (i - 1)] + 1;
-//            if ((i & 1) == 0)
-//            {
-//                ans[i] = ans[i >> 1];
-//            }
-//            else
-//            {
-//                ans[i] = ans[i - 1] + 1;
-//            }
-        }
-        return ans;
-    }
-
-
-    // 59
-    // èºæ—‹çŸ©é˜µ2
-    /*
-        ç»™å®šä¸€ä¸ªæ­£æ•´æ•° nï¼Œç”Ÿæˆä¸€ä¸ªåŒ…å« 1 åˆ° n2 æ‰€æœ‰å…ƒç´ ï¼Œä¸”å…ƒç´ æŒ‰é¡ºæ—¶é’ˆé¡ºåºèºæ—‹æ’åˆ—çš„æ­£æ–¹å½¢çŸ©é˜µã€‚
-    */
-    vector<vector<int> > generateMatrix(int n)
-    {
-        vector<vector<int> > ans(n);
-        for (int i = 0; i < n; i++)
-        {
-            vector<int> result(n);
-            for (int j = 0; j < n; j++)
-            {
-                result[j] = 0;
-            }
-            ans[i] = result;
-        }
-        int row = 0, col = 0, dir = 0;
-        for (int i = 0; i < n * n; i++)
-        {
-            ans[row][col] = i + 1;
-            if (dir == 0)
-            {
-                if (col + 1 >= n || ans[row][col + 1] != 0)
-                {
-                    dir = 1;
-                    row++;
-                }
-                else
-                {
-                    col++;
-                }
-            }
-            else if (dir == 1)
-            {
-                if (row + 1 >= n || ans[row + 1][col] != 0)
-                {
-                    dir = 2;
-                    col--;
-                }
-                else
-                {
-                    row++;
-                }
-            }
-            else if (dir == 2)
-            {
-                if (col - 1 < 0 || ans[row][col - 1] != 0)
-                {
-                    dir = 3;
-                    row--;
-                }
-                else
-                {
-                    col--;
-                }
+                a = 0;
             }
             else
             {
-                if (row - 1 < 0 || ans[row - 1][col] != 0)
-                {
-                    dir = 0;
-                    col++;
-                }
-                else
-                {
-                    row--;
-                }
+                a = cur1->val;
+                cur1 = cur1->next;
             }
-        }
-        return ans;
-    }
-
-
-    // 78
-    // å­é›†
-    /*
-        ç»™å®šä¸€ç»„ä¸å«é‡å¤å…ƒç´ çš„æ•´æ•°æ•°ç»„ numsï¼Œè¿”å›è¯¥æ•°ç»„æ‰€æœ‰å¯èƒ½çš„å­é›†ï¼ˆå¹‚é›†ï¼‰ã€‚
-        è¯´æ˜ï¼šè§£é›†ä¸èƒ½åŒ…å«é‡å¤çš„å­é›†ã€‚
-    */
-    vector<vector<int> > subsets(vector<int>& nums)
-    {
-        vector<vector<int> > ans;
-        int len = 1 << nums.size();
-        for (int i = 0; i < len; i++)
-        {
-            vector<int> result;
-            int j = i, index = 0;
-            while (j != 0)
+            if (cur2 == NULL)
             {
-                if (j & 1)
-                {
-                    result.push_back(nums[index]);
-                }
-                j >>= 1;
-                index++;
+                b = 0;
             }
-            ans.push_back(result);
-        }
-        return ans;
-    }
-
-    // 654
-    // æœ€å¤§äºŒå‰æ ‘
-    /*
-        ç»™å®šä¸€ä¸ªä¸å«é‡å¤å…ƒç´ çš„æ•´æ•°æ•°ç»„ã€‚ä¸€ä¸ªä»¥æ­¤æ•°ç»„æ„å»ºçš„æœ€å¤§äºŒå‰æ ‘å®šä¹‰å¦‚ä¸‹ï¼š
-        äºŒå‰æ ‘çš„æ ¹æ˜¯æ•°ç»„ä¸­çš„æœ€å¤§å…ƒç´ ã€‚
-        å·¦å­æ ‘æ˜¯é€šè¿‡æ•°ç»„ä¸­æœ€å¤§å€¼å·¦è¾¹éƒ¨åˆ†æ„é€ å‡ºçš„æœ€å¤§äºŒå‰æ ‘ã€‚
-        å³å­æ ‘æ˜¯é€šè¿‡æ•°ç»„ä¸­æœ€å¤§å€¼å³è¾¹éƒ¨åˆ†æ„é€ å‡ºçš„æœ€å¤§äºŒå‰æ ‘ã€‚
-        é€šè¿‡ç»™å®šçš„æ•°ç»„æ„å»ºæœ€å¤§äºŒå‰æ ‘ï¼Œå¹¶ä¸”è¾“å‡ºè¿™ä¸ªæ ‘çš„æ ¹èŠ‚ç‚¹ã€‚
-    */
-    TreeNode* constructMaximumBinaryTree(vector<int>& nums)
-    {
-        return do_constructMaximumBinaryTree(nums, 0, nums.size() - 1);
-    }
-    TreeNode* do_constructMaximumBinaryTree(vector<int>& nums, int L, int R)
-    {
-        if (L > R)
-        {
-            return 0;
-        }
-        if (L == R)
-        {
-            TreeNode *node = new TreeNode(nums[L]);
-            node->left = 0;
-            node->right = 0;
-            return node;
-        }
-        int index = L;
-        for (int i = L; i <= R; i++)
-        {
-            if (nums[index] < nums[i])
+            else
             {
-                index = i;
+                b = cur2->val;
+                cur2 = cur2->next;
             }
-        }
-        TreeNode *node = new TreeNode(nums[index]);
-        node->left = do_constructMaximumBinaryTree(nums, L, index - 1);
-        node->right = do_constructMaximumBinaryTree(nums, index + 1, R);
-        return node;
-    }
-
-    // 938
-    // äºŒå‰æœç´¢æ ‘çš„èŒƒå›´å’Œ
-    /*
-        ç»™å®šäºŒå‰æœç´¢æ ‘çš„æ ¹ç»“ç‚¹ rootï¼Œè¿”å› L å’Œ Rï¼ˆå«ï¼‰ä¹‹é—´çš„æ‰€æœ‰ç»“ç‚¹çš„å€¼çš„å’Œã€‚äºŒå‰æœç´¢æ ‘ä¿è¯å…·æœ‰å”¯ä¸€çš„å€¼
-    */
-    bool findL_rangeSumBST, findR_rangeSumBST;
-    int sum_rangeSumBST;
-    int rangeSumBST(TreeNode* root, int L, int R)
-    {
-        if (L == R)
-        {
-            return L;
-        }
-
-        findL_rangeSumBST = false;
-        findR_rangeSumBST = false;
-        sum_rangeSumBST = 0;
-        do_rangeSumBST(root, L, R);
-        return sum_rangeSumBST;
-    }
-    void do_rangeSumBST(TreeNode *root, int L, int R)
-    {
-        if (findL_rangeSumBST && findR_rangeSumBST)
-        {
-            return;
-        }
-        if (root == 0)
-        {
-            return;
-        }
-        do_rangeSumBST(root->left, L, R);
-        if (root->val == L)
-        {
-            findL_rangeSumBST = true;
-        }
-        if (!findR_rangeSumBST && findL_rangeSumBST)
-        {
-            sum_rangeSumBST += root->val;
-        }
-        if (root->val == R)
-        {
-            findR_rangeSumBST = true;
-        }
-        do_rangeSumBST(root->right, L, R);
-    }
-
-    // 807
-    // ä¿æŒåŸå¸‚å¤©é™…çº¿
-    /*
-        åœ¨äºŒç»´æ•°ç»„gridä¸­ï¼Œgrid[i][j]ä»£è¡¨ä½äºæŸå¤„çš„å»ºç­‘ç‰©çš„é«˜åº¦ã€‚ æˆ‘ä»¬è¢«å…è®¸å¢åŠ ä»»ä½•æ•°é‡ï¼ˆä¸åŒå»ºç­‘ç‰©çš„æ•°é‡å¯èƒ½ä¸åŒï¼‰çš„å»ºç­‘ç‰©çš„é«˜åº¦ã€‚ é«˜åº¦ 0 ä¹Ÿè¢«è®¤ä¸ºæ˜¯å»ºç­‘ç‰©ã€‚
-        æœ€åï¼Œä»æ–°æ•°ç»„çš„æ‰€æœ‰å››ä¸ªæ–¹å‘ï¼ˆå³é¡¶éƒ¨ï¼Œåº•éƒ¨ï¼Œå·¦ä¾§å’Œå³ä¾§ï¼‰è§‚çœ‹çš„â€œå¤©é™…çº¿â€å¿…é¡»ä¸åŸå§‹æ•°ç»„çš„å¤©é™…çº¿ç›¸åŒã€‚ åŸå¸‚çš„å¤©é™…çº¿æ˜¯ä»è¿œå¤„è§‚çœ‹æ—¶ï¼Œç”±æ‰€æœ‰å»ºç­‘ç‰©å½¢æˆçš„çŸ©å½¢çš„å¤–éƒ¨è½®å»“ã€‚ è¯·çœ‹ä¸‹é¢çš„ä¾‹å­ã€‚
-        å»ºç­‘ç‰©é«˜åº¦å¯ä»¥å¢åŠ çš„æœ€å¤§æ€»å’Œæ˜¯å¤šå°‘ï¼Ÿ
-    */
-    int maxIncreaseKeepingSkyline(vector<vector<int> >& grid)
-    {
-        int row = grid.size();
-        int col = grid[0].size();
-        vector<int> ma(row);
-        for (int i = 0; i < row; i++)
-        {
-            int x = grid[i][0];
-            for (int j = 0; j < col; j++)
+            sum = a + b + r;
+            r = sum / 10;
+            sum %= 10;
+            if (head == NULL)
             {
-                if (grid[i][j] > x)
-                {
-                    x = grid[i][j];
-                }
+                head = new ListNode(sum);
+                cur = head;
             }
-            ma[i] = x;
+            else
+            {
+                cur->next = new ListNode(sum);
+                cur = cur->next;
+            }
         }
-        int ans = 0;
-        for (int i = 0; i < col; i++)
+        if (r != 0)
         {
-            int x = grid[0][i];
-            for (int j = 0; j < row; j++)
-            {
-                if (x < grid[j][i])
-                {
-                    x = grid[j][i];
-                }
-            }
-            for (int j = 0; j < row; j++)
-            {
-                int mi = x > ma[j] ? ma[j] : x;
-                ans = ans + mi - grid[j][i];
-            }
+            cur->next = new ListNode(r);
+            cur = cur->next;
         }
-        return ans;
-    }
-
-    // 950
-    // æŒ‰é€’å¢é¡ºåºæ˜¾ç¤ºå¡ç‰Œ
-    /*
-        ç‰Œç»„ä¸­çš„æ¯å¼ å¡ç‰Œéƒ½å¯¹åº”æœ‰ä¸€ä¸ªå”¯ä¸€çš„æ•´æ•°ã€‚ä½ å¯ä»¥æŒ‰ä½ æƒ³è¦çš„é¡ºåºå¯¹è¿™å¥—å¡ç‰‡è¿›è¡Œæ’åºã€‚
-        æœ€åˆï¼Œè¿™äº›å¡ç‰Œåœ¨ç‰Œç»„é‡Œæ˜¯æ­£é¢æœä¸‹çš„ï¼ˆå³ï¼Œæœªæ˜¾ç¤ºçŠ¶æ€ï¼‰ã€‚
-        ç°åœ¨ï¼Œé‡å¤æ‰§è¡Œä»¥ä¸‹æ­¥éª¤ï¼Œç›´åˆ°æ˜¾ç¤ºæ‰€æœ‰å¡ç‰Œä¸ºæ­¢ï¼š
-
-        ä»ç‰Œç»„é¡¶éƒ¨æŠ½ä¸€å¼ ç‰Œï¼Œæ˜¾ç¤ºå®ƒï¼Œç„¶åå°†å…¶ä»ç‰Œç»„ä¸­ç§»å‡ºã€‚
-        å¦‚æœç‰Œç»„ä¸­ä»æœ‰ç‰Œï¼Œåˆ™å°†ä¸‹ä¸€å¼ å¤„äºç‰Œç»„é¡¶éƒ¨çš„ç‰Œæ”¾åœ¨ç‰Œç»„çš„åº•éƒ¨ã€‚
-        å¦‚æœä»æœ‰æœªæ˜¾ç¤ºçš„ç‰Œï¼Œé‚£ä¹ˆè¿”å›æ­¥éª¤ 1ã€‚å¦åˆ™ï¼Œåœæ­¢è¡ŒåŠ¨ã€‚
-        è¿”å›èƒ½ä»¥é€’å¢é¡ºåºæ˜¾ç¤ºå¡ç‰Œçš„ç‰Œç»„é¡ºåºã€‚
-
-        ç­”æ¡ˆä¸­çš„ç¬¬ä¸€å¼ ç‰Œè¢«è®¤ä¸ºå¤„äºç‰Œå †é¡¶éƒ¨ã€‚
-    */
-    // æç¤ºï¼šé€†å‘æ€è€ƒï¼Œæ‰¾åˆ°è§„å¾‹
-    vector<int> deckRevealedIncreasing(vector<int>& deck)
-    {
-        int length = deck.size();
-        vector<int> ans(length);
-        sort(deck.begin(), deck.end());
-        for (int i = length - 1; i >= 0; i--)
-        {
-            ans[i] = deck[i];
-            int index = ans[length - 1];
-            for (int j = length - 1; j > i + 1; j--)
-            {
-                ans[j] = ans[j - 1];
-            }
-            if (i != length - 1)
-            {
-                ans[i + 1] = index;
-            }
-        }
-        return ans;
+        return head;
     }
 };
 int main()
 {
     Solution* solution = new Solution();
-    string s = "1*2-3/4+5*6-7*8+9/10";
-    cout << solution->calculate(s);
     return 0;
 }
