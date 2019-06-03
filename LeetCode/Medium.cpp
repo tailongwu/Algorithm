@@ -55,20 +55,129 @@ struct ListNode
 class Solution
 {
 public:
+    // 221
+    // 最大正方形
+    /*
+        在一个由 0 和 1 组成的二维矩阵内，找到只包含 1 的最大正方形，并返回其面积。
+    */
+    // 提示: 为1的时候dp[i][j] = 1 + min(dp[i - 1][j], min(dp[i - 1][j - 1], dp[i][j - 1]));为0的时候dp[i][j]为0
+    int maximalSquare(vector<vector<char> >& matrix)
+    {
+        int row = matrix.size();
+        if (row == 0)
+        {
+            return 0;
+        }
+        int col = matrix[0].size();
+        if (col == 0)
+        {
+            return 0;
+        }
+        vector<vector<int> > dp(row, vector<int>(col));
+        int ans = 0;
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (matrix[i][j] == '1')
+                {
+                    if (i == 0 || j == 0)
+                    {
+                        dp[i][j] = 1;
+                    }
+                    else
+                    {
+                        dp[i][j] = 1 + min(dp[i - 1][j], min(dp[i - 1][j - 1], dp[i][j - 1]));
+                    }
+                    ans = max(ans, dp[i][j]);
+                }
+            }
+        }
+        return ans * ans;
+    }
+
+
+    // 220
+    // 存在重复元素 III
+    /*
+        给定一个整数数组，判断数组中是否有两个不同的索引 i 和 j，使得 nums [i] 和 nums [j] 的差的绝对值最大为 t，并且 i 和 j 之间的差的绝对值最大为 ķ。
+    */
+    // 提示：可以维护一个长度为k的有序的数组，每次减一个加一个还是有序的。时间复杂度就会为nlogk
+    bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t)
+    {
+        int len = nums.size();
+        for (int i = 0; i < len; i++)
+        {
+            for (int j = i + 1; j < len && j <= i + k; j++)
+            {
+                long long diff = abs((long long)nums[i] - nums[j]);
+                if (diff <= t)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    // 216
+    // 组合总和III
+    /*
+        找出所有相加之和为 n 的 k 个数的组合。组合中只允许含有 1 - 9 的正整数，并且每种组合中不存在重复的数字。
+        说明：
+        所有数字都是正整数。
+        解集不能包含重复的组合。
+    */
+    vector<vector<int> > combinationSum3(int k, int n)
+    {
+        vector<vector<int> > ans;
+        vector<int> result(k);
+        DFS_combinationSum3(ans, n, k, result, 0, 0, 1);
+        return ans;
+    }
+    void DFS_combinationSum3(vector<vector<int> > &ans, int n, int k, vector<int> &result, int sum, int stp, int sta)
+    {
+        if (sum > n || stp > k)
+        {
+            return;
+        }
+        if (stp == k)
+        {
+            if (sum == n)
+            {
+                ans.push_back(result);
+            }
+            return;
+        }
+        for (int i = sta; i < 10; i++)
+        {
+            if (sum + i > n)
+            {
+                break;
+            }
+            result[stp] = i;
+            DFS_combinationSum3(ans, n, k, result, sum + i, stp + 1, i + 1);
+        }
+    }
+
+
     // 215
     // 数组中的第k个最大元素
     /*
         在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
     */
+    // 方法1： 快排
+    // 方法2： 维护topk（优先队列）
     int findKthLargest(vector<int>& nums, int k)
     {
         int ans = INT_MIN;
-        QuickSort_findKthLargest(nums, k, 0, nums.size() - 1, ans);
+        QuickSort_findKthLargest(nums, nums.size() - k, 0, nums.size() - 1, ans);
         return ans;
     }
     void QuickSort_findKthLargest(vector<int>& nums, int k, int L, int R, int &ans)
     {
-        if (ans != INT_MIN || L >= R)
+       if (ans != INT_MIN || L > R)
         {
             return;
         }
@@ -80,19 +189,29 @@ public:
             {
                 R--;
             }
+            if (L == R)
+            {
+                break;
+            }
             nums[L++] = nums[R];
             while (L < R && nums[L] <= key)
             {
                 L++;
             }
+            if (L == R)
+            {
+                break;
+            }
+            nums[R--] = nums[L];
         }
         nums[L] = key;
-        if (L == key - 1)
+        if (L == k)
         {
-            ans = key;
+            ans = nums[L];
+            return;
         }
         QuickSort_findKthLargest(nums, k, LL, L - 1, ans);
-        QuickSort_findKthLargest(nums, k, RR, R - 1, ans);
+        QuickSort_findKthLargest(nums, k, L + 1, RR, ans);
         return;
     }
 
@@ -114,12 +233,8 @@ public:
         {
             return nums[0];
         }
-        vector<vector<int> > dp(len);
+        vector<vector<int> > dp(len, vector<int>(2));
         int ans = 0;
-        for (int i = 0; i < len; i++)
-        {
-            dp[i].resize(2);
-        }
         dp[1][0] = 0;
         dp[1][1] = nums[1];
         for (int i = 2; i < len; i++)
@@ -2783,11 +2898,7 @@ public:
         {
             return 0;
         }
-        vector<vector<int> > dp(row);
-        for (int i = 0; i < row; i++)
-        {
-            dp[i].resize(col);
-        }
+        vector<vector<int> > dp(row, vector<int>(col));
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
@@ -2826,11 +2937,7 @@ public:
         {
             return 0;
         }
-        vector<vector<long long> > dp(row);
-        for (int i = 0; i < row; i++)
-        {
-            dp[i].resize(col);
-        }
+        vector<vector<long long> > dp(row, vector<long long>(col));
         dp[0][0] = 1;
         for (int i = 0; i < row; i++)
         {
@@ -2985,11 +3092,7 @@ public:
     */
     vector<vector<int> > generateMatrix(int n)
     {
-        vector<vector<int> > ans(n);
-        for (int i = 0; i < n; i++)
-        {
-            ans[i].resize(n);
-        }
+        vector<vector<int> > ans(n, vector<int>(n));
         int index = 0, total = n * n;
         for (int i = 0; i < n && index != total; i++)
         {
