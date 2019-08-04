@@ -56,7 +56,223 @@ struct ListNode
 class Solution
 {
 public:
-    //
+    // 397
+    // 整数替换
+    /*
+        给定一个正整数 n，你可以做如下操作：
+        1. 如果 n 是偶数，则用 n / 2替换 n。
+        2. 如果 n 是奇数，则可以用 n + 1或n - 1替换 n。
+        n 变为 1 所需的最小替换次数是多少？
+    */
+    // 提示：主要是应该+1还是-1.如果（n-1）能被4整数就n-1否则n+1。3单独判断
+    int integerReplacement(int n)
+    {
+        long long m = n;
+        int ans = 0;
+        while (m != 1)
+        {
+            if (m == 3)
+            {
+                ans += 2;
+                break;
+            }
+            if (!(m & 1))
+            {
+                m >>= 1;
+            }
+            else if ((m & 3) == 1)
+            {
+                m--;
+            }
+            else
+            {
+                m++;
+            }
+            ans++;
+        }
+        return ans;
+    }
+
+
+    // 396
+    // 旋转函数
+    /*
+        给定一个长度为 n 的整数数组 A 。
+        假设 Bk 是数组 A 顺时针旋转 k 个位置后的数组，我们定义 A 的“旋转函数” F 为：
+        F(k) = 0 * Bk[0] + 1 * Bk[1] + ... + (n-1) * Bk[n-1]。
+        计算F(0), F(1), ..., F(n-1)中的最大值。
+        注意:
+        可以认为 n 的值小于 100000
+    */
+    // 提示：Fk-F0可以公式求出
+    int maxRotateFunction(vector<int>& A)
+    {
+        int len = A.size();
+        long sum1 = 0, sum2 = 0, ans = 0, last = 0;
+        for (int i = 0; i < len; i++)
+        {
+            sum1 += A[i];
+            sum2 += i * A[i];
+        }
+        ans = sum2;
+        for (int i = 1; i < len; i++)
+        {
+            last += A[len - i];
+            ans = max(ans, sum1 * i - len * last + sum2);
+        }
+        return ans;
+    }
+
+
+    // 395
+    // 至少有k个重复字符的最长子串
+    /*
+        找到给定字符串（由小写字符组成）中的最长子串 T ， 要求 T 中的每一字符出现次数都不少于 k 。输出 T 的长度。
+    */
+    // 提示：分段计数有问题，比如"bbaaacbd"，3。分段后，继续用该算法。
+    int longestSubstring(string s, int k)
+    {
+        int len = s.size();
+        int num[26] = {0};
+        for (int i = 0; i < len; i++)
+        {
+            num[s[i] - 'a']++;
+        }
+        int ans = 0;
+        for (int i = 0; i < len; i++)
+        {
+            if (num[s[i] - 'a'] >= k)
+            {
+                int j = i;
+                string str = "";
+                while (j < len && num[s[j] - 'a'] >= k)
+                {
+                    str += s[j];
+                    j++;
+                }
+                if (i == 0 && j == len)
+                {
+                    ans = max(ans, j - i);
+                }
+                else
+                {
+                    ans = max (ans, longestSubstring(str, k));
+                }
+                i = j;
+            }
+        }
+        return ans;
+    }
+
+
+    // 394
+    // 字符串解码
+    /*
+        给定一个经过编码的字符串，返回它解码后的字符串。
+        编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
+        你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。
+        此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。
+        s = "3[a]2[bc]", 返回 "aaabcbc";s = "3[a2[c]]", 返回 "accaccacc"
+    */
+    string decodeString(string s)
+    {
+        int len = s.size();
+        return DFS_decodeString(s, 0);
+    }
+    string DFS_decodeString(string s, int sta)
+    {
+        if (sta == s.size())
+        {
+            return "";
+        }
+        if (s[sta] >= '0' && s[sta] <= '9')
+        {
+            int num = 0;
+            while (sta < s.size() && s[sta] >= '0' && s[sta] <= '9')
+            {
+                num = num * 10 + s[sta] - '0';
+                sta++;
+            }
+            string ans = "";
+            string str = "[";
+            int cnt = 1;
+            sta++;
+            while (sta < s.size() && cnt != 0)
+            {
+                if (s[sta] == '[')
+                {
+                    cnt++;
+                }
+                else if (s[sta] == ']')
+                {
+                    cnt--;
+                }
+                str += s[sta];
+                sta++;
+            }
+            string subs = DFS_decodeString(str, 0);
+            for (int i = 0; i < num; i++)
+            {
+                ans += subs;
+            }
+            str = "";
+            for (int i = sta; i < s.size(); i++)
+            {
+                str += s[i];
+            }
+            return ans + DFS_decodeString(str, 0);
+        }
+        if (s[sta] == '[' || s[sta] == ']')
+        {
+            sta++;
+            return DFS_decodeString(s, sta);
+        }
+        string str = "";
+        while (sta < s.size() && s[sta] != '[' && s[sta] != ']' && !(s[sta] >= '0' && s[sta] <= '9'))
+        {
+            str += s[sta];
+            sta++;
+        }
+        return str + DFS_decodeString(s, sta);
+    }
+
+
+    // 392
+    // 判断子序列
+    /*
+        给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
+        你可以认为 s 和 t 中仅包含英文小写字母。字符串 t 可能会很长（长度 ~= 500,000），而 s 是个短字符串（长度 <=100）。
+        字符串的一个子序列是原始字符串删除一些（也可以不删除）字符而不改变剩余字符相对位置形成的新字符串。（例如，"ace"是"abcde"的一个子序列，而"aec"不是）。
+    */
+    bool isSubsequence(string s, string t)
+    {
+        int len1 = s.size(), len2 = t.size(), index1 = 0, index2 = 0;
+        while (index1 < len1 && index2 < len2)
+        {
+            if (s[index1] == t[index2])
+            {
+                index1++;
+            }
+            index2++;
+        }
+        return index1 == len1;
+    }
+
+
+    // 390
+    // 消除游戏
+    /*
+        给定一个从1 到 n 排序的整数列表。
+        首先，从左到右，从第一个数字开始，每隔一个数字进行删除，直到列表的末尾。
+        第二步，在剩下的数字中，从右到左，从倒数第一个数字开始，每隔一个数字进行删除，直到列表开头。
+        我们不断重复这两步，从左到右和从右到左交替进行，直到只剩下一个数字。
+        返回长度为 n 的列表中，最后剩下的数字
+    */
+    // 提示：f[n]=2*(n/2+1-f[n/2]);
+    int lastRemaining(int n)
+    {
+        return n == 1 ? 1 : 2 * (n / 2 + 1 - lastRemaining(n / 2));
+    }
 
 
     // 386
@@ -98,7 +314,7 @@ public:
         请注意，它是排序后的第k小元素，而不是第k个元素。
     */
     // 提示：时间复杂度N*logN*logX，注意有重复元素
-    int kthSmallest(vector<vector<int>>& matrix, int k)
+    int kthSmallest(vector<vector<int> >& matrix, int k)
     {
         int row = matrix.size();
         if (row == 0)
