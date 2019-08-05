@@ -56,6 +56,490 @@ struct ListNode
 class Solution
 {
 public:
+    // 84
+    // 柱状图中最大的矩形
+    /*
+        给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
+        求在该柱状图中，能够勾勒出来的矩形的最大面积。
+    */
+    // 提示：单调栈（栈内是1，3，5，如果4要入栈，那么先弹出5，再4入栈。）。如果当前高度大于栈顶，入栈。如果当前高度小于栈顶A，栈顶A出栈，并以A为高度，最左边为当前栈顶元素，最右边为当前高度的左边。
+    // 比如：2,1,5,6,2,3. 2入栈；1会让2出栈同时2为高度的最左边可扩展到当前栈顶右边可扩展到当前1的前一个；5入栈；6入栈；2会让6出栈同时6的左边为5的下一个右边为2的上一个，2会让5出栈同时5的左边为5的前一个右边为2的上一个。
+    int largestRectangleArea(vector<int>& heights)
+    {
+        heights.push_back(0);
+        int len = heights.size(), ans = 0, top = 0;
+        stack<int> sta;
+        for (int i = 0; i < len; i++)
+        {
+            while (!sta.empty() && heights[i] < heights[sta.top()])
+            {
+                top = sta.top();
+                sta.pop();
+                ans = max(ans, heights[top] * (i - (sta.empty() ? 0 : sta.top() + 1)));
+            }
+            sta.push(i);
+        }
+        return ans;
+    }
+
+
+    // 76
+    // 最小覆盖子串
+    /*
+        给你一个字符串 S、一个字符串 T，请在字符串 S 里面找出：包含 T 所有字母的最小子串。
+        示例：
+            输入: S = "ADOBECODEBANC", T = "ABC"
+            输出: "BANC"
+        说明：
+            如果 S 中不存这样的子串，则返回空字符串 ""。
+            如果 S 中存在这样的子串，我们保证它是唯一的答案。
+    */
+    // 提示：滑动窗口，"a","aa"为false
+    string minWindow(string s, string t)
+    {
+        int sLen = s.size(), tLen = t.size(), posLen;
+        int left, ansL = -1, ansR = sLen, tDiffCount = 0, sDiffCount = 0;
+        string ans = "";
+        vector<int> tVis(256, 0);
+        vector<int> sVis(256, 0);
+        vector<int> pos;
+        for (int i = 0; i < tLen; i++)
+        {
+            if (tVis[t[i]] == 0)
+            {
+                tDiffCount++;
+            }
+            tVis[t[i]]++;
+        }
+        for (int i = 0; i < sLen; i++)
+        {
+            pos.push_back(i);
+        }
+        posLen = pos.size();
+        if (posLen == 0)
+        {
+            return ans;
+        }
+        left = 0;
+        for (int i = 0; i < posLen; i++)
+        {
+            sVis[s[pos[i]]]++;
+            if (sVis[s[pos[i]]] == tVis[s[pos[i]]])
+            {
+                sDiffCount++;
+            }
+            if (sDiffCount == tDiffCount)
+            {
+                if (pos[i] - pos[left] < ansR - ansL)
+                {
+                    ansR = pos[i];
+                    ansL = pos[left];
+                }
+                while (left < i)
+                {
+                    sVis[s[pos[left]]]--;
+                    if (sVis[s[pos[left]]] < tVis[s[pos[left]]])
+                    {
+                        sDiffCount--;
+                    }
+                    left++;
+                    if (sDiffCount != tDiffCount)
+                    {
+                        break;
+                    }
+                    if (pos[i] - pos[left] < ansR - ansL)
+                    {
+                        ansR = pos[i];
+                        ansL = pos[left];
+                    }
+                }
+            }
+        }
+        if (ansL != -1)
+        {
+            for (int i = ansL; i <= ansR; i++)
+            {
+                ans += s[i];
+            }
+        }
+        return ans;
+    }
+
+
+    // 72
+    // 编辑距离
+    /*
+        给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。
+        你可以对一个单词进行如下三种操作：
+            插入一个字符
+            删除一个字符
+            替换一个字符
+    */
+    // 提示：dp[i][j]表示从长度为i的字符变成长度为j需要的最小操作数。dp[i][j]=(words1[i] == words[j]) ? dp[i-1][j-1] : 1+min(dp[i-1][j-1],min(dp[i-1][j],dp[i][j-1]))
+    int minDistance(string word1, string word2)
+    {
+        int len1 = word1.size(), len2 = word2.size();
+        vector<vector<int> > dp(len1 + 1, vector<int> (len2 + 1));
+        for (int i = 0; i <= len2; i++)
+        {
+            dp[0][i] = i;
+        }
+        for (int i = 0; i <= len1; i++)
+        {
+            dp[i][0] = i;
+        }
+        for (int i = 1; i <= len1; i++)
+        {
+            for (int j = 1; j <= len2; j++)
+            {
+                if (word1[i - 1] == word2[j - 1])
+                {
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+                else
+                {
+                    dp[i][j] = 1 + min(dp[i - 1][j - 1], min(dp[i - 1][j], dp[i][j - 1]));
+                }
+            }
+        }
+        return dp[len1][len2];
+    }
+
+
+    // 68
+    // 文本左右对齐
+    /*
+        给定一个单词数组和一个长度 maxWidth，重新排版单词，使其成为每行恰好有 maxWidth 个字符，且左右两端对齐的文本。
+        你应该使用“贪心算法”来放置给定的单词；也就是说，尽可能多地往每行中放置单词。必要时可用空格 ' ' 填充，使得每行恰好有 maxWidth 个字符。
+        要求尽可能均匀分配单词间的空格数量。如果某一行单词间的空格不能均匀分配，则左侧放置的空格数要多于右侧的空格数。
+        文本的最后一行应为左对齐，且单词之间不插入额外的空格。
+        说明:
+            单词是指由非空格字符组成的字符序列。
+            每个单词的长度大于 0，小于等于 maxWidth。
+            输入单词数组 words 至少包含一个单词。
+    */
+    vector<string> fullJustify(vector<string>& words, int maxWidth)
+    {
+        vector<string> ans;
+        int len = words.size(), i = 0;
+        while (i < len)
+        {
+            int sum = 0, j = i, wordsSum = 0;
+            while (j < len)
+            {
+                sum += words[j].size();
+                wordsSum += words[j].size();
+                if (j != i)
+                {
+                    sum++;
+                }
+                if (sum > maxWidth)
+                {
+                    wordsSum -= words[j].size();
+                    j--;
+                    break;
+                }
+                j++;
+            }
+            if (j == len)
+            {
+                j--;
+            }
+            // [i,j]
+            int spaceCount = maxWidth - wordsSum;
+            if (i == j)
+            {
+                string result = words[i];
+                for (int k = 0; k < spaceCount; k++)
+                {
+                    result += ' ';
+                }
+                ans.push_back(result);
+                i = j + 1;
+                continue;
+            }
+            int r = spaceCount % (j - i);
+            int avg = spaceCount / (j - i);
+            string result = "";
+            for (int k = i; k < j; k++)
+            {
+                result += words[k];
+                for (int o = 0; o < avg; o++)
+                {
+                    result += ' ';
+                }
+                if (r > 0)
+                {
+                    result += ' ';
+                    r--;
+                }
+            }
+            result += words[j];
+            ans.push_back(result);
+            i = j + 1;
+        }
+        // 处理最后一行
+        len = ans.size();
+        string last = "";
+        int index = 0;
+        for (int i = 0; i < maxWidth; i++)
+        {
+            last += ' ';
+        }
+        for (int i = 0; i < maxWidth; i++)
+        {
+            if (ans[len - 1][i] == ' ')
+            {
+                if (last[index - 1] == ' ')
+                {
+                    continue;
+                }
+                index++;
+            }
+            else
+            {
+                last[index++] = (char)ans[len - 1][i];
+            }
+        }
+        ans[len - 1] = last;
+        return ans;
+    }
+
+
+    // 65
+    // 有效数字
+    /*
+        验证给定的字符串是否可以解释为十进制数字。
+
+        例如:
+        "0" => true
+        " 0.1 " => true
+        "abc" => false
+        "1 a" => false
+        "2e10" => true
+        " -90e3   " => true
+        " 1e" => false
+        "e3" => false
+        " 6e-1" => true
+        " 99e2.5 " => false
+        "53.5e93" => true
+        " --6 " => false
+        "-+3" => false
+        "95a54e53" => false
+        说明: 我们有意将问题陈述地比较模糊。在实现代码之前，你应当事先思考所有可能的情况。这里给出一份可能存在于有效十进制数字中的字符列表：
+        数字 0-9
+        指数 "e"
+        正/负号 "+"/"-"
+        小数点 "."
+        当然，在输入中，这些字符的上下文也很重要。
+    */
+    bool isNumber(string s)
+    {
+
+    }
+
+
+    // 57
+    // 插入区间
+    /*
+        给出一个无重叠的 ，按照区间起始端点排序的区间列表。
+        在列表中插入一个新的区间，你需要确保列表中的区间仍然有序且不重叠（如果有必要的话，可以合并区间）。
+    */
+    // 注意：各自为空数组，没有交集(在前在后在中间)
+    vector<vector<int> > insert(vector<vector<int> >& intervals, vector<int>& newInterval)
+    {
+        int len = intervals.size();
+        vector<vector<int> > ans;
+        if (len == 0)
+        {
+            ans.push_back(newInterval);
+            return ans;
+        }
+        if (len == 0)
+        {
+            return intervals;
+        }
+        for (int i = 0; i <= len; i++)
+        {
+            if ((i == 0 || intervals[i - 1][1] < newInterval[0]) && (i == len || intervals[i][0] > newInterval[1]))
+            {
+                ans.push_back(newInterval);
+            }
+            if (i == len)
+            {
+                continue;
+            }
+            if (intervals[i][1] < newInterval[0] || intervals[i][0] > newInterval[1])
+            {
+                ans.push_back(intervals[i]);
+            }
+            else
+            {
+                int sta = min(intervals[i][0], newInterval[0]);
+                while (i < len && intervals[i][0] <= newInterval[1])
+                {
+                    i++;
+                }
+                i--;
+                int en = max(intervals[i][1], newInterval[1]);
+                vector<int> p(2);
+                p[0] = sta;
+                p[1] = en;
+                ans.push_back(p);
+            }
+        }
+        return ans;
+    }
+
+
+    // 52
+    // N皇后 II
+    /*
+        n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
+        给定一个整数 n，返回 n 皇后不同的解决方案的数量。
+    */
+    // 提示：可换成二进制保存而不是字符串
+    int totalNQueens(int n)
+    {
+        int ans = 0;
+        string s = "";
+        for (int i = 0; i < n; i++)
+        {
+            s += '.';
+        }
+        vector<string> result(n, s);
+        DFS_solveNQueens(ans, result, n, 0);
+        return ans;
+    }
+    void DFS_solveNQueens(int &ans, vector<string> &result, int n, int row)
+    {
+        if (row == n)
+        {
+            ans++;
+            return;
+        }
+        for (int i = 0; i < n; i++)
+        {
+            bool exist = false;
+            // 检查列
+            for (int j = 0; j < row && !exist; j++)
+            {
+                if (result[j][i] == 'Q')
+                {
+                    exist = true;
+                    break;
+                }
+            }
+            // 检查左对角线
+            for (int j = row - 1; j >= 0 && !exist; j--)
+            {
+                if (i - (row - i - j) - 1 < 0)
+                {
+                    break;
+                }
+                if (result[j][i - (row - 1 - j) - 1] == 'Q')
+                {
+                    exist = true;
+                    break;
+                }
+            }
+            // 检查右对角线
+            for (int j = row - 1; j >= 0 && !exist; j--)
+            {
+                if (i + (row - 1 - j) + 1 >= n)
+                {
+                    break;
+                }
+                if (result[j][i + (row - 1 - j) + 1] == 'Q')
+                {
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist)
+            {
+                result[row][i] = 'Q';
+                DFS_solveNQueens(ans, result, n, row + 1);
+                result[row][i] = '.';
+            }
+        }
+    }
+
+
+    // 51
+    // N皇后
+    /*
+        n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
+        给定一个整数 n，返回所有不同的 n 皇后问题的解决方案。
+        每一种解法包含一个明确的 n 皇后问题的棋子放置方案，该方案中 'Q' 和 '.' 分别代表了皇后和空位。
+    */
+    vector<vector<string> > solveNQueens(int n)
+    {
+        vector<vector<string> > ans;
+        string s = "";
+        for (int i = 0; i < n; i++)
+        {
+            s += '.';
+        }
+        vector<string> result(n, s);
+        DFS_solveNQueens(ans, result, n, 0);
+        return ans;
+    }
+    void DFS_solveNQueens(vector<vector<string> > &ans, vector<string> &result, int n, int row)
+    {
+        if (row == n)
+        {
+            ans.push_back(result);
+            return;
+        }
+        for (int i = 0; i < n; i++)
+        {
+            bool exist = false;
+            // 检查列
+            for (int j = 0; j < row && !exist; j++)
+            {
+                if (result[j][i] == 'Q')
+                {
+                    exist = true;
+                    break;
+                }
+            }
+            // 检查左对角线
+            for (int j = row - 1; j >= 0 && !exist; j--)
+            {
+                if (i - (row - i - j) - 1 < 0)
+                {
+                    break;
+                }
+                if (result[j][i - (row - 1 - j) - 1] == 'Q')
+                {
+                    exist = true;
+                    break;
+                }
+            }
+            // 检查右对角线
+            for (int j = row - 1; j >= 0 && !exist; j--)
+            {
+                if (i + (row - 1 - j) + 1 >= n)
+                {
+                    break;
+                }
+                if (result[j][i + (row - 1 - j) + 1] == 'Q')
+                {
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist)
+            {
+                result[row][i] = 'Q';
+                DFS_solveNQueens(ans, result, n, row + 1);
+                result[row][i] = '.';
+            }
+        }
+    }
+
+
     // 45
     // 跳跃游戏II
     /*
@@ -65,26 +549,25 @@ public:
         说明：
             假设你总是可以到达数组的最后一个位置。
     */
+    // 提示：只有超过之前的最大值才step加一
     int jump(vector<int>& nums)
     {
         int len = nums.size();
-        int ans = 0, ma = 0;
+        int ans = 0, maxpos = 0, curpos = 0;
         for (int i = 0; i < len; i++)
         {
-            if (i + nums[i] > ma)
-            {
-                ma = i + nums[i];
-                ans++;
-                if (ma >= len)
-                {
-                    return ans;
-                }
-            }
-            if (i > ma)
+            if (i > maxpos)
             {
                 return -1;
             }
+            if (i > curpos)
+            {
+                curpos = maxpos;
+                ans++;
+            }
+            maxpos = max(maxpos, i + nums[i]);
         }
+        return ans;
     }
 
 
