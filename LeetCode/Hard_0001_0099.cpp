@@ -56,6 +56,42 @@ struct ListNode
 class Solution
 {
 public:
+    // 85
+    // 最大矩形
+    /*
+        给定一个仅包含 0 和 1 的二维二进制矩阵，找出只包含 1 的最大矩形，并返回其面积。
+    */
+    int maximalRectangle(vector<vector<char> >& matrix)
+    {
+        int ans = 0;
+        int row = matrix.size();
+        if (row == 0)
+        {
+            return 0;
+        }
+        int col = matrix[0].size();
+        if (col == 0)
+        {
+            return 0;
+        }
+        vector<vector<int> > width(row + 1, vector<int> (col + 1, 0));
+        vector<vector<int> > height(row + 1, vector<int> (col + 1, 0));
+        for (int i = 1; i <= row; i++)
+        {
+            for (int j = 1; j <= col; j++)
+            {
+                if (matrix[i - 1][j - 1] == '1')
+                {
+                    int w = min(width[i][j - 1] + 1, min())
+                    ans = max(ans, width[i][j] * height[i][j]);
+                }
+                cout << i << " " << j << "  "<< width[i][j] << " " << height[i][j]<<endl;
+            }
+        }
+        return ans;
+    }
+
+
     // 84
     // 柱状图中最大的矩形
     /*
@@ -64,6 +100,16 @@ public:
     */
     // 提示：单调栈（栈内是1，3，5，如果4要入栈，那么先弹出5，再4入栈。）。如果当前高度大于栈顶，入栈。如果当前高度小于栈顶A，栈顶A出栈，并以A为高度，最左边为当前栈顶元素，最右边为当前高度的左边。
     // 比如：2,1,5,6,2,3. 2入栈；1会让2出栈同时2为高度的最左边可扩展到当前栈顶右边可扩展到当前1的前一个；5入栈；6入栈；2会让6出栈同时6的左边为5的下一个右边为2的上一个，2会让5出栈同时5的左边为5的前一个右边为2的上一个。
+    /*
+        单调队列题目
+        输入一个长度为n的整数序列，从中找出一段不超过M的连续子序列，使得整个序列的和最大。
+        设sum[i]为前i个数的和，要求j>i&&j-i<m&&sum[j]-sum[i]最大值。
+        假设当前遍历到第i个，之前有sum[j]和sum[k]并且j<k并且sum[j]>sum[k]，肯定选择sum[k]更优。
+        while(!Q.empty()&&Q.front()<i-m)Q.pop_front();
+		ans=max(ans,s[i]-s[Q.front()]);
+		while(!Q.empty()&&s[Q.back()]>=s[i])Q.pop_back();
+		Q.push_back(i)
+     */
     int largestRectangleArea(vector<int>& heights)
     {
         heights.push_back(0);
