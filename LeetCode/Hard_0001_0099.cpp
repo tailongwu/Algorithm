@@ -82,7 +82,46 @@ public:
             {
                 if (matrix[i - 1][j - 1] == '1')
                 {
-                    int w = min(width[i][j - 1] + 1, min())
+                    int w, h;
+                    if (width[i][j - 1] - 1 >= width[i - 1][j])
+                    {
+                        if (height[i][j - 1] - 1 >= height[i - 1][j])
+                        {
+                            w = width[i][j - 1] + 1;
+                            h = height[i - 1][j] + 1;
+                        }
+                        else
+                        {
+                            int w1, w2, h1, h2;
+                            w1 = width[i][j - 1] + 1;
+                            h1 = height[i][j - 1];
+                            w2 = width[i - 1][j];
+                            h2 = htight[i - 1][j] + 1;
+                            if (w1 * h1 > w2 * h2)
+                            {
+                                w = w1;
+                                h = h1;
+                            }
+                            else
+                            {
+                                w = w2;
+                                h = h2;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (height[i][j - 1] - 1 >= height[i - 1][j])
+                        {
+                            w = width[i][j - 1] + 1;
+                            h = height[i - 1][j] + 1;
+                        }
+                        else
+                        {
+                            w = width[i][j - 1] + 1;
+
+                        }
+                    }
                     ans = max(ans, width[i][j] * height[i][j]);
                 }
                 cout << i << " " << j << "  "<< width[i][j] << " " << height[i][j]<<endl;
@@ -617,6 +656,47 @@ public:
     }
 
 
+    // 44
+    // 通配符匹配
+    /*
+        给定一个字符串 (s) 和一个字符模式 (p) ，实现一个支持 '?' 和 '*' 的通配符匹配。
+        '?' 可以匹配任何单个字符。
+        '*' 可以匹配任意字符串（包括空字符串）。
+        两个字符串完全匹配才算匹配成功。
+        说明:
+            s 可能为空，且只包含从 a-z 的小写字母。
+            p 可能为空，且只包含从 a-z 的小写字母，以及字符 ? 和 *。
+    */
+    bool isMatchII(string s, string p)
+    {
+        int len1 = s.size(), len2 = p.size();
+        vector<vector<bool> > dp(len1 + 1, vector<bool> (len2, false));
+        dp[0][0] = true;
+        for (int i = 1; i <= len2; i++)
+        {
+            // 有其它字符就是false
+            if (p[j] == '*')
+            {
+                dp[0][j] = dp[0][j - 1];
+            }
+        }
+        for (int i = 1; i <= len1; i++)
+        {
+            for (int j = 1; j <= len2; j++)
+            {
+                if (s[i - 1] == p[j - 1] || p[j - 1] == '?')
+                {
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+                else if (p[j - 1] == '*')
+                {
+                    dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
+                }
+            }
+        }
+    }
+
+
     // 42
     // 接雨水
     /*
@@ -968,13 +1048,48 @@ public:
         '*' 匹配零个或多个前面的那一个元素
         所谓匹配，是要涵盖 整个 字符串 s的，而不是部分字符串。
         说明:
-        s 可能为空，且只包含从 a-z 的小写字母。
-        p 可能为空，且只包含从 a-z 的小写字母，以及字符 . 和 *。
+            s 可能为空，且只包含从 a-z 的小写字母。
+            p 可能为空，且只包含从 a-z 的小写字母，以及字符 . 和 *。
     */
+    // 提示：如果没有*，直接比较；如果有*，那么肯定在第二位，如果第一位匹配，那么可以i+1,j；如果第一位不匹配，那么可以i,j+2。
+    // 记忆化搜索：因为前一个Do_isMatch会做很多，后一个Do_isMatch会重复
+    // 注意：s="abc",p="abcd"为false
+    // 注意：不能if (i >= s.size())  ans = (j >= p.size()); 因为s= "aaa",p="a*"，实际上可能j一直在0.
+    vector<vector<int> > Dp_isMatch;
     bool isMatch(string s, string p)
     {
-        int len1 = s.size(), len2 = p.size();
-
+        Dp_isMatch.resize(s.size() + 1);
+        for (int i = 0; i <= s.size(); i++)
+        {
+            Dp_isMatch[i].resize(p.size() + 1, -1);
+        }
+        return Do_isMatch(0, 0, s, p);
+    }
+    bool Do_isMatch(int i, int j, string s, string p)
+    {
+        if (Dp_isMatch[i][j] != -1)
+        {
+            return Dp_isMatch[i][j] == 1;
+        }
+        bool ans = false;
+        if (j >= p.size())
+        {
+            ans = (i >= s.size());
+        }
+        else
+        {
+            bool firstMatch = i < s.size() && (s[i] == p[j] || p[j] == '.');
+            if (j + 1 < p.size() && p[j + 1] == '*')
+            {
+                ans = Do_isMatch(i, j + 2, s, p) || (firstMatch && Do_isMatch(i + 1, j, s, p));
+            }
+            else
+            {
+                ans = firstMatch && Do_isMatch(i + 1, j + 1, s, p);
+            }
+        }
+        Dp_isMatch[i][j] = ans ? 1 : 0;
+        return ans;
     }
 
 

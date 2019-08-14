@@ -861,18 +861,11 @@ public:
     bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t)
     {
         int len = nums.size();
+        set<long> s;
         for (int i = 0; i < len; i++)
         {
-            for (int j = i + 1; j < len && j <= i + k; j++)
-            {
-                long long diff = abs((long long)nums[i] - nums[j]);
-                if (diff <= t)
-                {
-                    return true;
-                }
-            }
+            long
         }
-        return false;
     }
 
 

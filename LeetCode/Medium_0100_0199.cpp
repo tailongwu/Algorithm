@@ -210,14 +210,84 @@ public:
         给定两个整数，分别表示分数的分子 numerator 和分母 denominator，以字符串形式返回小数。
         如果小数部分为循环小数，则将循环的部分括在括号内。
     */
+    // 注意：正负号；最小的负数；除数为0；
     string fractionToDecimal(int numerator, int denominator)
     {
         string ans = "";
+        long long a = numerator, b = denominator;
+        int sign = 1;
+        if (numerator < 0)
+        {
+            a = (long long)numerator * -1;
+            sign *= -1;
+        }
+        if (denominator < 0)
+        {
+            b = (long long)denominator * -1;
+            sign *= -1;
+        }
+        if (b == 0)
+        {
+            return "NaN";
+        }
+        if (a == 0)
+        {
+            return "0";
+        }
+        if (sign == -1)
+        {
+            ans += '-';
+        }
+        ans += IntToString_fractionToDecimal(a / b);
+        a = a % b;
+        if (a == 0)
+        {
+            return ans;
+        }
+        ans += '.';
+        a = a * 10;
         map<int, int> m;
+        m[a] = ans.size();
         while (true)
         {
-           // if (numerator)
+            ans += IntToString_fractionToDecimal(a / b);
+            a = a % b;
+            if (a == 0)
+            {
+                break;
+            }
+            a = a * 10;
+            if (m[a] != 0)
+            {
+                ans.insert(m[a], "(");
+                ans += ')';
+                break;
+            }
+            else
+            {
+                m[a] = ans.size();
+            }
         }
+        return ans;
+    }
+    string IntToString_fractionToDecimal(long num)
+    {
+        if (num == 0)
+        {
+            return "0";
+        }
+        string ans = "";
+        while (num != 0)
+        {
+            ans = ans + (char)(num % 10 + '0');
+            num /= 10;
+        }
+        int L = 0, R = ans.size() - 1;
+        while (L < R)
+        {
+            swap(ans[L++], ans[R--]);
+        }
+        return ans;
     }
 
 
@@ -645,6 +715,28 @@ public:
             }
         }
         return newHead;
+    }
+
+    // 146
+    // LRU缓存机制
+    /*
+        运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制。它应该支持以下操作： 获取数据 get 和 写入数据 put 。
+        获取数据 get(key) - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。
+        写入数据 put(key, value) - 如果密钥不存在，则写入其数据值。当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。
+        进阶:
+            你是否可以在 O(1) 时间复杂度内完成这两种操作？
+    */
+    LRUCache(int capacity)
+    {
+
+    }
+    int get(int key)
+    {
+
+    }
+    void put(int key, int value)
+    {
+
     }
 
 
@@ -1268,7 +1360,9 @@ public:
         填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
         初始状态下，所有 next 指针都被设置为 NULL。
     */
-    // 注意：未通过case#34
+    // 注意：1. 先确保右边全部连接；2. root->next的子节点可能为空，但是root->next->next子节点可能不为空
+    // 注意：关于情况1，比如1,2,3,4,-1,5,6,7,-1,-1,-1,-1,-1,8,9。root->next没有子节点，但是未连接的root->next->next可能有子节点
+    // 方法2：队列实现层次遍历
     Node* connect(Node* root)
     {
         if (root == 0)
@@ -1277,15 +1371,59 @@ public:
         }
         if (root->left != 0)
         {
-            root->left->next = root->right;
-        }
-        if (root->next != 0)
-        {
-            Node *left = (root->right != 0 ? root->right : (root->left != 0 ? left : 0));
-            Node *right = (root->next->left != 0 ? root->next->left : (root->next->right != 0 ? root->next->right : 0));
-            if (left != 0)
+            if (root->right != 0)
             {
-                left->next = right;
+                root->left->next = root->right;
+            }
+            else
+            {
+                Node *next = root->next;
+                bool findNext = false;
+                while (next != 0)
+                {
+                    if (next->left != 0)
+                    {
+                        findNext = true;
+                        root->left->next = next->left;
+                        break;
+                    }
+                    if (next->right != 0)
+                    {
+                        findNext = true;
+                        root->left->next = next->right;
+                        break;
+                    }
+                    next = next->next;
+                }
+                if (!findNext)
+                {
+                    root->left->next = 0;
+                }
+            }
+        }
+        if (root->right != 0)
+        {
+            Node *next = root->next;
+            bool findNext = false;
+            while (next != 0)
+            {
+                if (next->left != 0)
+                {
+                    findNext = true;
+                    root->right->next = next->left;
+                    break;
+                }
+                if (next->right != 0)
+                {
+                    findNext = true;
+                    root->right->next = next->right;
+                    break;
+                }
+                next = next->next;
+            }
+            if (!findNext)
+            {
+                root->right->next = 0;
             }
         }
         connect(root->left);
