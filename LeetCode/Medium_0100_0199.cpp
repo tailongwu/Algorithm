@@ -1,20 +1,12 @@
-#include<map>
-#include<cmath>
-#include<queue>
-#include<stack>
-#include<cstdio>
-#include<cstring>
-#include<vector>
-#include<iostream>
-#include<algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 struct Node3
 {
     int val;
-    Node3* next;
-    Node3* random;
+    Node3 *next;
+    Node3 *random;
     Node3() {}
-    Node3(int _val, Node3* _next, Node3* _random)
+    Node3(int _val, Node3 *_next, Node3 *_random)
     {
         val = _val;
         next = _next;
@@ -24,9 +16,9 @@ struct Node3
 struct Node2
 {
     int val;
-    vector<Node2*> neighbors;
+    vector<Node2 *> neighbors;
     Node2() {}
-    Node2(int _val, vector<Node2*> _neighbors)
+    Node2(int _val, vector<Node2 *> _neighbors)
     {
         val = _val;
         neighbors = _neighbors;
@@ -34,11 +26,11 @@ struct Node2
 };
 struct Node
 {
-  int val;
-  Node *left;
-  Node *right;
-  Node *next;
-  Node(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
+    int val;
+    Node *left;
+    Node *right;
+    Node *next;
+    Node(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
 };
 struct TreeNode
 {
@@ -61,7 +53,7 @@ public:
     /*
         给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
     */
-    vector<int> rightSideView(TreeNode* root)
+    vector<int> rightSideView(TreeNode *root)
     {
         vector<int> ans;
         DFS_levelOrder(root, ans, 0);
@@ -84,7 +76,6 @@ public:
         DFS_levelOrder(node->left, ans, step + 1);
         DFS_levelOrder(node->right, ans, step + 1);
     }
-
 
     // 187
     // 重复的DNA序列
@@ -113,7 +104,6 @@ public:
         return ans;
     }
 
-
     // 179
     // 最大数
     /*
@@ -124,7 +114,7 @@ public:
     {
         return s1 + s2 > s2 + s1;
     }
-    string largestNumber(vector<int>& nums)
+    string largestNumber(vector<int> &nums)
     {
         int len = nums.size();
         vector<string> num(len);
@@ -166,7 +156,6 @@ public:
         return ans;
     }
 
-
     // 173
     // 二叉搜索树地带其
     /*
@@ -174,8 +163,8 @@ public:
         调用 next() 将返回二叉搜索树中的下一个最小的数。
     */
     // 提示：将所有当前根节点的左节点入栈
-    stack<TreeNode*> sta_BSTIterator;
-    void BSTIterator(TreeNode* root)
+    stack<TreeNode *> sta_BSTIterator;
+    void BSTIterator(TreeNode *root)
     {
         TreeNode *node = root;
         while (node != 0)
@@ -202,7 +191,6 @@ public:
     {
         return !sta_BSTIterator.empty();
     }
-
 
     // 166
     // 分数到小数
@@ -290,7 +278,6 @@ public:
         return ans;
     }
 
-
     // 165
     // 比较版本号
     /*
@@ -354,7 +341,6 @@ public:
         return 0;
     }
 
-
     // 162
     // 寻找峰值
     /*
@@ -367,7 +353,7 @@ public:
     */
     // 提示：二分，比较mid和mid+1，如果nums[mid]<nums[mid+1]，右边一定存在
     // 注意：num可能为int最小值
-    int findPeakElement(vector<int>& nums)
+    int findPeakElement(vector<int> &nums)
     {
         int L = 0, R = nums.size() - 1, len = nums.size();
         long long mi = -10e15;
@@ -392,7 +378,6 @@ public:
         return 0;
     }
 
-
     // 153
     // 寻找旋转排序数组中的最小值
     /*
@@ -402,7 +387,7 @@ public:
         你可以假设数组中不存在重复元素。
     */
     // 提示：有四种情况
-    int findMin(vector<int>& nums)
+    int findMin(vector<int> &nums)
     {
         int L = 0, R = nums.size() - 1;
         int ans = nums[L], mid;
@@ -436,14 +421,13 @@ public:
         return ans;
     }
 
-
     // 152
     // 乘积最大子序列
     /*
         给定一个整数数组 nums ，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。
     */
     // 提示：不能用min(nums[i],mi)，会出现断裂
-    int maxProduct(vector<int>& nums)
+    int maxProduct(vector<int> &nums)
     {
         int len = nums.size();
         int mi = 1, ma = 1, x, y, ans = INT_MIN;
@@ -458,7 +442,6 @@ public:
         }
         return ans;
     }
-
 
     // 151
     // 翻转字符串里的单词
@@ -502,34 +485,33 @@ public:
         }
         return ans;
 
-//        stack<string> sta;
-//        int len = s.size();
-//        for (int i = 0; i < len; i++)
-//        {
-//            if (s[i] != ' ')
-//            {
-//                string str = "";
-//                while (i < len && s[i] != ' ')
-//                {
-//                    str += s[i];
-//                    i++;
-//                }
-//                sta.push(str);
-//            }
-//        }
-//        string ans = "";
-//        while (!sta.empty())
-//        {
-//            ans = ans + sta.top();
-//            sta.pop();
-//            if (!sta.empty())
-//            {
-//                ans += " ";
-//            }
-//        }
-//        return ans;
+        //        stack<string> sta;
+        //        int len = s.size();
+        //        for (int i = 0; i < len; i++)
+        //        {
+        //            if (s[i] != ' ')
+        //            {
+        //                string str = "";
+        //                while (i < len && s[i] != ' ')
+        //                {
+        //                    str += s[i];
+        //                    i++;
+        //                }
+        //                sta.push(str);
+        //            }
+        //        }
+        //        string ans = "";
+        //        while (!sta.empty())
+        //        {
+        //            ans = ans + sta.top();
+        //            sta.pop();
+        //            if (!sta.empty())
+        //            {
+        //                ans += " ";
+        //            }
+        //        }
+        //        return ans;
     }
-
 
     // 150
     // 逆波兰表达式求值
@@ -548,7 +530,7 @@ public:
         　　　　　　3.乘号、除号，优先级最高，所以只需将栈中的乘除号出栈到表达式结果栈，再将此次的乘除号入栈。
         　　　　　　4.右括号：将栈中左括号之后入栈的运算符全部出栈到表达式结果栈，左括号出栈。
     */
-    int evalRPN(vector<string>& tokens)
+    int evalRPN(vector<string> &tokens)
     {
         int len = tokens.size();
         stack<int> nums;
@@ -604,13 +586,12 @@ public:
         return 0;
     }
 
-
     // 148
     // 排序链表
     /*
         在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。
     */
-    ListNode* sortList(ListNode* head)
+    ListNode *sortList(ListNode *head)
     {
         // 归并排序
         return Merge_sortList(head);
@@ -672,14 +653,13 @@ public:
         return newHead;
     }
 
-
     // 147
     // 对链表进行插入排序
     /*
         对链表进行插入排序。
     */
     // 注意：相等情况[1,1]
-    ListNode* insertionSortList(ListNode* head)
+    ListNode *insertionSortList(ListNode *head)
     {
         ListNode *newHead = 0, *node = head, *newNode, *last, *next;
         while (node != 0)
@@ -726,26 +706,56 @@ public:
         进阶:
             你是否可以在 O(1) 时间复杂度内完成这两种操作？
     */
+    // 提示：用hash+双端链表实现。
+    /*
+    unordered_map<int, list<pair<int, int> >::iterator> LRUCach_Map;
+    list<pair<int, int> > LRUCach_List;
+    int LRUCach_Size, LRUCach_Capacity;
     LRUCache(int capacity)
     {
-
+        LRUCach_Capacity = capacity;
+        LRUCach_Size = 0;
     }
     int get(int key)
     {
-
+        auto node = LRUCach_Map.find(key);
+        if (node == LRUCach_Map.end())
+        {
+            return -1;
+        }
+        int val = node->second->second;
+        LRUCach_List.erase(node->second);
+        LRUCach_List.push_front(make_pair(key, val));
+        LRUCach_Map[key] = LRUCach_List.begin();
+        return val;
     }
     void put(int key, int value)
     {
-
+        auto node = LRUCach_Map.find(key);
+        if (node != LRUCach_Map.end())
+        {
+            LRUCach_List.erase(node->second);
+            LRUCach_Size--;
+        }
+        if (LRUCach_Size >= LRUCach_Capacity)
+        {
+            int last = LRUCach_List.back().first;
+            LRUCach_Map.erase(last);
+            LRUCach_List.pop_back();
+            LRUCach_Size--;
+        }
+        LRUCach_List.push_front(make_pair(key, value));
+        LRUCach_Map[key] = LRUCach_List.begin();
+        LRUCach_Size++;
     }
-
+    */
 
     // 144
     // 二叉树的前序遍历
     /*
         给定一个二叉树，返回它的 前序 遍历。
     */
-    vector<int> preorderTraversal(TreeNode* root)
+    vector<int> preorderTraversal(TreeNode *root)
     {
         vector<int> ans;
         DFS_preorderTraversal(root, ans);
@@ -762,7 +772,6 @@ public:
         DFS_preorderTraversal(root->right, ans);
     }
 
-
     // 143
     // 重排链表
     /*
@@ -771,7 +780,7 @@ public:
         你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
     */
     // 提示：分割，反转，合并
-    void reorderList(ListNode* head)
+    void reorderList(ListNode *head)
     {
         if (head == 0)
         {
@@ -827,7 +836,6 @@ public:
         }
     }
 
-
     // 142
     // 环形链表 II
     /*
@@ -864,7 +872,6 @@ public:
         return node1;
     }
 
-
     // 139
     // 单词拆分
     /*
@@ -874,7 +881,7 @@ public:
         你可以假设字典中没有重复的单词
     */
     // 提示：动态规划或dfs
-    bool wordBreak(string s, vector<string>& wordDict)
+    bool wordBreak(string s, vector<string> &wordDict)
     {
         int len = s.size();
         int wordSize = wordDict.size();
@@ -909,14 +916,13 @@ public:
         return dp[len];
     }
 
-
     // 138
     // 复制带随机指针的链表
     /*
         给定一个链表，每个节点包含一个额外增加的随机指针，该指针可以指向链表中的任何节点或空节点。
         要求返回这个链表的深拷贝。
     */
-    Node3* copyRandomList(Node3* head)
+    Node3 *copyRandomList(Node3 *head)
     {
         Node3 *node = head, *newNode, *next, *newNext, *newHead = 0;
         while (node != 0)
@@ -952,7 +958,6 @@ public:
         return newHead;
     }
 
-
     // 137
     // 只出现一次的数字 II
     /*
@@ -962,7 +967,7 @@ public:
     */
     // 方法1：每位为1的个数，个数如果模3为1，该数的该位则为1。
     // 方法2：想办法出现3次会抵消为0。
-    int singleNumberII(vector<int>& nums)
+    int singleNumberII(vector<int> &nums)
     {
         int len = nums.size(), ans = 0;
         for (int i = 0; i < 32; i++)
@@ -980,7 +985,6 @@ public:
         return ans;
     }
 
-
     // 134
     // 加油站
     /*
@@ -993,7 +997,7 @@ public:
         输入数组中的元素均为非负数。
     */
     // 提示：复制长度，和一直大于等于0
-    int canCompleteCircuit(vector<int>& gas, vector<int>& cost)
+    int canCompleteCircuit(vector<int> &gas, vector<int> &cost)
     {
         int len = gas.size();
         vector<int> gas2(len << 1);
@@ -1028,7 +1032,6 @@ public:
         return sta;
     }
 
-
     // 133
     // 克隆图
     /*
@@ -1039,14 +1042,14 @@ public:
         由于图是无向的，如果节点 p 是节点 q 的邻居，那么节点 q 也必须是节点 p 的邻居。
         必须将给定节点的拷贝作为对克隆图的引用返回。
     */
-    map<int, Node2*> map_cloneGraph;
-    Node2* cloneGraph(Node2* node)
+    map<int, Node2 *> map_cloneGraph;
+    Node2 *cloneGraph(Node2 *node)
     {
         if (node == 0)
         {
             return node;
         }
-        vector<Node2*> neighbors;
+        vector<Node2 *> neighbors;
         Node2 *copiedNode = new Node2(node->val, neighbors);
         map_cloneGraph[node->val] = copiedNode;
         for (int i = 0; i < node->neighbors.size(); i++)
@@ -1061,7 +1064,6 @@ public:
         return copiedNode;
     }
 
-
     // 131
     // 分割回文串
     /*
@@ -1069,15 +1071,15 @@ public:
         返回 s 所有可能的分割方案。
     */
     // 注意：字符串可能很长；可以用map优化判断是否未回文串
-    vector<vector<string> > partition(string s)
+    vector<vector<string>> partition(string s)
     {
         int len = s.size();
-        vector<vector<string> > ans;
+        vector<vector<string>> ans;
         vector<string> result(len);
         DFS_partition(ans, result, s, len, 0, 0);
         return ans;
     }
-    void DFS_partition(vector<vector<string> > &ans, vector<string> &result, string &s, int len, int sta, int stp)
+    void DFS_partition(vector<vector<string>> &ans, vector<string> &result, string &s, int len, int sta, int stp)
     {
         if (sta == len)
         {
@@ -1110,7 +1112,6 @@ public:
         }
     }
 
-
     // 130
     // 被围绕的区域
     /*
@@ -1118,7 +1119,7 @@ public:
         找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
         被围绕的区间不会存在于边界上。
     */
-    void solve(vector<vector<char> >& board)
+    void solve(vector<vector<char>> &board)
     {
         int row = board.size();
         if (row == 0)
@@ -1149,14 +1150,14 @@ public:
         {
             for (int j = 0; j < col; j++)
             {
-                if (board[i][j] =='P')
+                if (board[i][j] == 'P')
                 {
                     board[i][j] = 'O';
                 }
             }
         }
     }
-    void DFS_solve(vector<vector<char> >& board, int row, int col, int x, int y, bool &around, char s, char d)
+    void DFS_solve(vector<vector<char>> &board, int row, int col, int x, int y, bool &around, char s, char d)
     {
         if (x >= 0 && x < row && y >= 0 && y < col)
         {
@@ -1186,7 +1187,6 @@ public:
         }
     }
 
-
     // 129
     // 求根到叶子节点数字之和
     /*
@@ -1195,7 +1195,7 @@ public:
         计算从根到叶子节点生成的所有数字之和。
         说明: 叶子节点是指没有子节点的节点。
     */
-    int sumNumbers(TreeNode* root)
+    int sumNumbers(TreeNode *root)
     {
         int sum = 0;
         vector<int> path;
@@ -1232,7 +1232,6 @@ public:
         DFS_sumNumbers(node->right, path, stp, sum);
     }
 
-
     // 127
     // 单词接龙
     /*
@@ -1252,7 +1251,7 @@ public:
         string word;
         int stp;
     };
-    int ladderLength(string beginWord, string endWord, vector<string>& wordList)
+    int ladderLength(string beginWord, string endWord, vector<string> &wordList)
     {
         int wordListSize = wordList.size();
         int wordSize = beginWord.size();
@@ -1316,13 +1315,12 @@ public:
         return 0;
     }
 
-
     // 120
     // 三角形最小路径和
     /*
         给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。
     */
-    int minimumTotal(vector<vector<int> >& triangle)
+    int minimumTotal(vector<vector<int>> &triangle)
     {
         int row = triangle.size();
         if (row == 0)
@@ -1346,7 +1344,6 @@ public:
         return ans;
     }
 
-
     // 117
     // 填充每个节点的下一个右侧节点指针 II
     /*
@@ -1363,7 +1360,7 @@ public:
     // 注意：1. 先确保右边全部连接；2. root->next的子节点可能为空，但是root->next->next子节点可能不为空
     // 注意：关于情况1，比如1,2,3,4,-1,5,6,7,-1,-1,-1,-1,-1,8,9。root->next没有子节点，但是未连接的root->next->next可能有子节点
     // 方法2：队列实现层次遍历
-    Node* connect(Node* root)
+    Node *connect(Node *root)
     {
         if (root == 0)
         {
@@ -1431,7 +1428,6 @@ public:
         return root;
     }
 
-
     // 116
     // 填充每个节点的下一个右侧节点指针
     /*
@@ -1445,7 +1441,7 @@ public:
         填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
         初始状态下，所有 next 指针都被设置为 NULL。
     */
-    Node* connect116(Node* root)
+    Node *connect116(Node *root)
     {
         if (root == 0)
         {
@@ -1464,14 +1460,13 @@ public:
         return root;
     }
 
-
     // 114
     // 二叉树展开为链表
     /*
         给定一个二叉树，原地将它展开为链表。
     */
     // 后序遍历
-    void flatten(TreeNode* root)
+    void flatten(TreeNode *root)
     {
         if (root == 0)
         {
@@ -1489,7 +1484,6 @@ public:
         root->right = right;
     }
 
-
     // 113
     // 路径总和
     /*
@@ -1497,14 +1491,14 @@ public:
         说明: 叶子节点是指没有子节点的节点。
     */
     // 注意：有负数
-    vector<vector<int> > pathSum(TreeNode* root, int sum)
+    vector<vector<int>> pathSum(TreeNode *root, int sum)
     {
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         vector<int> result;
         DFS_pathSum(ans, result, root, sum, 0, 0);
         return ans;
     }
-    void DFS_pathSum(vector<vector<int> > &ans, vector<int> &result, TreeNode *node, int sum, int curSum, int stp)
+    void DFS_pathSum(vector<vector<int>> &ans, vector<int> &result, TreeNode *node, int sum, int curSum, int stp)
     {
         if (node == 0)
         {
@@ -1533,14 +1527,13 @@ public:
         DFS_pathSum(ans, result, node->right, sum, curSum + node->val, stp);
     }
 
-
     // 109
     // 有序链表转换二叉搜索树
     /*
         给定一个单链表，其中的元素按升序排序，将其转换为高度平衡的二叉搜索树。
         本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。
     */
-    TreeNode* sortedListToBST(ListNode* head)
+    TreeNode *sortedListToBST(ListNode *head)
     {
         vector<int> nodes;
         while (head != 0)
@@ -1550,7 +1543,7 @@ public:
         }
         return DFS_sortedListToBST(nodes, 0, nodes.size() - 1);
     }
-    TreeNode* DFS_sortedListToBST(vector<int> &nodes, int sta, int en)
+    TreeNode *DFS_sortedListToBST(vector<int> &nodes, int sta, int en)
     {
         if (sta > en)
         {
@@ -1563,7 +1556,6 @@ public:
         return root;
     }
 
-
     // 106
     // 从中序与后序遍历序列构造二叉树
     /*
@@ -1572,12 +1564,12 @@ public:
         你可以假设树中没有重复的元素。
     */
     // 注意：先算右子树
-    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder)
+    TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder)
     {
         int stp = postorder.size() - 1;
         return DFS_buildTree(inorder, postorder, stp, 0, inorder.size() - 1);
     }
-    TreeNode* DFS_buildTree(vector<int>& inorder, vector<int>& postorder, int &stp, int sta, int en)
+    TreeNode *DFS_buildTree(vector<int> &inorder, vector<int> &postorder, int &stp, int sta, int en)
     {
         if (sta > en || stp >= postorder.size())
         {
@@ -1599,7 +1591,6 @@ public:
         return root;
     }
 
-
     // 105
     // 从前序与中序遍历序列构造二叉树
     /*
@@ -1608,12 +1599,12 @@ public:
         你可以假设树中没有重复的元素。
     */
     // 注意：stp
-    TreeNode* buildTree105(vector<int>& preorder, vector<int>& inorder)
+    TreeNode *buildTree105(vector<int> &preorder, vector<int> &inorder)
     {
         int stp = 0;
         return DFS_buildTree105(preorder, inorder, stp, 0, inorder.size() - 1);
     }
-    TreeNode* DFS_buildTree105(vector<int>& preorder, vector<int>& inorder, int &stp, int sta, int en)
+    TreeNode *DFS_buildTree105(vector<int> &preorder, vector<int> &inorder, int &stp, int sta, int en)
     {
         if (sta > en)
         {
@@ -1635,15 +1626,14 @@ public:
         return root;
     }
 
-
     // 103
     // 二叉树的锯齿形层次遍历
     /*
         给定一个二叉树，返回其节点值的锯齿形层次遍历。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
     */
-    vector<vector<int> > zigzagLevelOrder(TreeNode* root)
+    vector<vector<int>> zigzagLevelOrder(TreeNode *root)
     {
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         DFS_zigzagLevelOrder(root, ans, 0);
         int len = ans.size();
         for (int i = 1; i < len; i += 2)
@@ -1656,7 +1646,7 @@ public:
         }
         return ans;
     }
-    void DFS_zigzagLevelOrder(TreeNode *node, vector<vector<int> > &ans, int step)
+    void DFS_zigzagLevelOrder(TreeNode *node, vector<vector<int>> &ans, int step)
     {
         if (node == 0)
         {
@@ -1672,19 +1662,18 @@ public:
         DFS_zigzagLevelOrder(node->right, ans, step + 1);
     }
 
-
     // 102
     // 二叉树的层次遍历
     /*
         给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。
     */
-    vector<vector<int> > levelOrder(TreeNode* root)
+    vector<vector<int>> levelOrder(TreeNode *root)
     {
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         DFS_levelOrder(root, ans, 0);
         return ans;
     }
-    void DFS_levelOrder(TreeNode *node, vector<vector<int> > &ans, int step)
+    void DFS_levelOrder(TreeNode *node, vector<vector<int>> &ans, int step)
     {
         if (node == 0)
         {
@@ -1702,6 +1691,6 @@ public:
 };
 int main()
 {
-    Solution* solution = new Solution();
+    Solution *solution = new Solution();
     return 0;
 }

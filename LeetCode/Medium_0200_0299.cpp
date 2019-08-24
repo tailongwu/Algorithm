@@ -1,20 +1,26 @@
-#include<map>
-#include<cmath>
-#include<queue>
-#include<stack>
-#include<cstdio>
-#include<cstring>
-#include<vector>
-#include<iostream>
-#include<algorithm>
+#include <map>
+#include <set>
+#include <cmath>
+#include <queue>
+#include <stack>
+#include <cstdio>
+#include <cstring>
+#include <vector>
+#include <iostream>
+#include <algorithm>
 using namespace std;
+struct TrieNode
+{
+    TrieNode *child[26];
+    bool isWord;
+};
 struct Node3
 {
     int val;
-    Node3* next;
-    Node3* random;
+    Node3 *next;
+    Node3 *random;
     Node3() {}
-    Node3(int _val, Node3* _next, Node3* _random)
+    Node3(int _val, Node3 *_next, Node3 *_random)
     {
         val = _val;
         next = _next;
@@ -24,9 +30,9 @@ struct Node3
 struct Node2
 {
     int val;
-    vector<Node2*> neighbors;
+    vector<Node2 *> neighbors;
     Node2() {}
-    Node2(int _val, vector<Node2*> _neighbors)
+    Node2(int _val, vector<Node2 *> _neighbors)
     {
         val = _val;
         neighbors = _neighbors;
@@ -34,11 +40,11 @@ struct Node2
 };
 struct Node
 {
-  int val;
-  Node *left;
-  Node *right;
-  Node *next;
-  Node(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
+    int val;
+    Node *left;
+    Node *right;
+    Node *next;
+    Node(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
 };
 struct TreeNode
 {
@@ -81,7 +87,7 @@ public:
                 v2[guess[i] - '0']++;
             }
         }
-        for (int i = 0; i< 10; i++)
+        for (int i = 0; i < 10; i++)
         {
             numB += min(v1[i], v2[i]);
         }
@@ -115,7 +121,6 @@ public:
         return A + "A" + B + "B";
     }
 
-
     // 289
     // 生命游戏
     /*
@@ -130,7 +135,7 @@ public:
             你可以使用原地算法解决本题吗？请注意，面板上所有格子需要同时被更新：你不能先更新某些格子，然后使用它们的更新后的值再更新其他格子。
             本题中，我们使用二维数组来表示面板。原则上，面板是无限的，但当活细胞侵占了面板边界时会造成问题。你将如何解决这些问题？
     */
-    void gameOfLife(vector<vector<int> >& board)
+    void gameOfLife(vector<vector<int>> &board)
     {
         int row = board.size();
         if (row == 0)
@@ -175,18 +180,17 @@ public:
         }
         for (int i = 0; i < row; i++)
             for (int j = 0; j < col; j++)
-        {
-            if (board[i][j] == 2)
             {
-                board[i][j] = 0;
+                if (board[i][j] == 2)
+                {
+                    board[i][j] = 0;
+                }
+                else if (board[i][j] == -1)
+                {
+                    board[i][j] = 1;
+                }
             }
-            else if (board[i][j] == -1)
-            {
-                board[i][j] = 1;
-            }
-        }
     }
-
 
     // 287
     // 寻找重复数
@@ -199,7 +203,7 @@ public:
             数组中只有一个重复的数字，但它可能不止重复出现一次。
     */
     // 提示：排序，map，二分（小于mid的个数大于mid在左边，否则在右边.有bug），循环链表入口？
-    int findDuplicate(vector<int>& nums)
+    int findDuplicate(vector<int> &nums)
     {
         int len = nums.size();
         int L = 1, R = len - 1;
@@ -238,6 +242,45 @@ public:
         return L;
     }
 
+    // 284
+    // 顶端迭代器
+    /*
+        给定一个迭代器类的接口，接口包含两个方法： next() 和 hasNext()。设计并实现一个支持 peek() 操作的顶端迭代器 -- 其本质就是把原本应由 next() 方法返回的元素 peek() 出来。
+        进阶：你将如何拓展你的设计？使之变得通用化，从而适应所有的类型，而不只是整数型
+    */
+    // 提示：抄袭的
+    int PeekingIterator_IsPeek;
+    int PeekingIterator_Value;
+    PeekingIterator(const vector<int> &nums) : Iterator(nums)
+    {
+        this->PeekingIterator_IsPeek = false;
+    }
+    int peek()
+    {
+        if (this->PeekingIterator_IsPeek)
+        {
+            return this->PeekingIterator_Value;
+        }
+        this->PeekingIterator_IsPeek = true;
+        return this->PeekingIterator_Value = Iterator::next();
+    }
+    int next()
+    {
+        if (this->isPeek_)
+        {
+            this->PeekingIterator_IsPeek = false;
+            return this->PeekingIterator_Value;
+        }
+        return Iterator::next();
+    }
+    bool hashNext() const
+    {
+        if (this->PeekingIterator_IsPeek)
+        {
+            return true;
+        }
+        return Iterator::hasNext();
+    }
 
     // 279
     // 完全平方数
@@ -259,7 +302,6 @@ public:
         return dp[n];
     }
 
-
     // 275
     // H指数II
     /*
@@ -271,28 +313,27 @@ public:
             这是 H指数 的延伸题目，本题中的 citations 数组是保证有序的。
             你可以优化你的算法到对数时间复杂度吗？
     */
-    int hIndexII(vector<int>& citations)
+    int hIndexII(vector<int> &citations)
     {
-        if(citations.size() == 0)
+        if (citations.size() == 0)
         {
             return 0;
         }
         int h = 1;
-        for(int i = citations.size() - 1; i >= 0; i--)
+        for (int i = citations.size() - 1; i >= 0; i--)
         {
-            if(h == citations[i])
+            if (h == citations[i])
             {
                 return h;
             }
-            if(h > citations[i])
+            if (h > citations[i])
             {
-                return h-1;
+                return h - 1;
             }
             h++;
         }
-        return h-1;
+        return h - 1;
     }
-
 
     // 274
     // H指数
@@ -301,7 +342,7 @@ public:
         h 指数的定义: “h 代表“高引用次数”（high citations），一名科研人员的 h 指数是指他（她）的 （N 篇论文中）至多有 h 篇论文分别被引用了至少 h 次。（其余的 N - h 篇论文每篇被引用次数不多于 h 次。）”
         说明: 如果 h 有多种可能的值，h 指数是其中最大的那个。
     */
-    int hIndex(vector<int>& citations)
+    int hIndex(vector<int> &citations)
     {
         sort(citations.begin(), citations.end(), greater<int>()); // 倒叙排列
         int len = citations.size();
@@ -316,7 +357,6 @@ public:
         }
         return 0;
     }
-
 
     // 264
     // 丑数II
@@ -355,7 +395,6 @@ public:
         return ans[n];
     }
 
-
     // 260
     // 只出现一次的数字III
     /*
@@ -364,7 +403,7 @@ public:
             结果输出的顺序并不重要，对于上面的例子， [5, 3] 也是正确答案。
             你的算法应该具有线性时间复杂度。你能否仅使用常数空间复杂度来实现？
     */
-    vector<int> singleNumber(vector<int>& nums)
+    vector<int> singleNumber(vector<int> &nums)
     {
         vector<int> ans(2);
         int len = nums.size(), m = 0;
@@ -394,7 +433,6 @@ public:
         return ans;
     }
 
-
     // 241
     // 为运算表达式设计优先级
     /*
@@ -423,15 +461,21 @@ public:
                 vector<int> num2 = DFS_diffWaysToCompute(input, len, i + 1, R);
                 for (int j = 0; j < num1.size(); j++)
                     for (int k = 0; k < num2.size(); k++)
-                {
-                    switch (input[i])
                     {
-                        case '+': num = num1[j] + num2[k]; break;
-                        case '-': num = num1[j] - num2[k]; break;
-                        case '*': num = num1[j] * num2[k]; break;
+                        switch (input[i])
+                        {
+                        case '+':
+                            num = num1[j] + num2[k];
+                            break;
+                        case '-':
+                            num = num1[j] - num2[k];
+                            break;
+                        case '*':
+                            num = num1[j] * num2[k];
+                            break;
+                        }
+                        ans.push_back(num);
                     }
-                    ans.push_back(num);
-                }
             }
             else
             {
@@ -445,7 +489,6 @@ public:
         return ans;
     }
 
-
     // 240
     // 搜索二维矩阵 II
     /*
@@ -453,7 +496,7 @@ public:
         每行的元素从左到右升序排列。
         每列的元素从上到下升序排列。
     */
-    bool searchMatrixII(vector<vector<int> >& matrix, int target)
+    bool searchMatrixII(vector<vector<int>> &matrix, int target)
     {
         int row = matrix.size();
         if (row == 0)
@@ -484,7 +527,6 @@ public:
         return false;
     }
 
-
     // 238
     /*
         除自身以外数组的乘积
@@ -495,7 +537,7 @@ public:
             你可以在常数空间复杂度内完成这个题目吗？（ 出于对空间复杂度分析的目的，输出数组不被视为额外空间。）
     */
     // 提示：左右各扫描一次
-    vector<int> productExceptSelf(vector<int>& nums)
+    vector<int> productExceptSelf(vector<int> &nums)
     {
         int len = nums.size();
         vector<int> ans(len);
@@ -522,7 +564,6 @@ public:
         return ans;
     }
 
-
     // 236
     // 二叉树的最近公共祖先
     /*
@@ -531,7 +572,7 @@ public:
             所有节点的值都是唯一的。
             p、q 为不同节点且均存在于给定的二叉树中。
     */
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+    TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
     {
         if (root == 0 || root == p || root == q)
         {
@@ -546,7 +587,6 @@ public:
         return left != 0 ? left : right;
     }
 
-
     // 230
     // 二叉搜索树中第k小的元素
     /*
@@ -554,7 +594,7 @@ public:
         说明：
         你可以假设 k 总是有效的，1 ≤ k ≤ 二叉搜索树元素个数。
     */
-    int kthSmallest(TreeNode* root, int k)
+    int kthSmallest(TreeNode *root, int k)
     {
         int cnt = 0;
         stack<TreeNode *> sta;
@@ -580,14 +620,13 @@ public:
         }
     }
 
-
     // 229
     // 求众数
     /*
         给定一个大小为 n 的数组，找出其中所有出现超过 ⌊ n/3 ⌋ 次的元素。
         说明: 要求算法的时间复杂度为 O(n)，空间复杂度为 O(1)。
     */
-    vector<int> majorityElement(vector<int>& nums)
+    vector<int> majorityElement(vector<int> &nums)
     {
         int len = nums.size();
         vector<int> ans;
@@ -629,7 +668,6 @@ public:
         return ans;
     }
 
-
     // 228
     // 汇总区间
     /*
@@ -638,7 +676,7 @@ public:
         输出: ["0->2","4->5","7"]
     */
     // 注意：有负数，注意越界
-    vector<string> summaryRanges(vector<int>& nums)
+    vector<string> summaryRanges(vector<int> &nums)
     {
         int len = nums.size();
         vector<string> ans;
@@ -693,7 +731,6 @@ public:
         }
         return ans;
     }
-
 
     // 227
     // 基本计算器II
@@ -762,16 +799,19 @@ public:
     }
     int Cal_calculate(int num1, int num2, char op)
     {
-        switch(op)
+        switch (op)
         {
-            case '+': return num1 + num2;
-            case '-': return num1 - num2;
-            case '*': return num1 * num2;
-            case '/': return num1 / num2;
+        case '+':
+            return num1 + num2;
+        case '-':
+            return num1 - num2;
+        case '*':
+            return num1 * num2;
+        case '/':
+            return num1 / num2;
         }
         return 0;
     }
-
 
     // 223
     // 矩形面积
@@ -794,13 +834,12 @@ public:
         return ans;
     }
 
-
     // 222
     // 完全二叉树的节点个数
     /*
         给出一个完全二叉树，求出该树的节点个数。
     */
-    int countNodes(TreeNode* root)
+    int countNodes(TreeNode *root)
     {
         if (root == 0)
         {
@@ -809,14 +848,13 @@ public:
         return 1 + countNodes(root->left) + countNodes(root->right);
     }
 
-
     // 221
     // 最大正方形
     /*
         在一个由 0 和 1 组成的二维矩阵内，找到只包含 1 的最大正方形，并返回其面积。
     */
     // 提示: 为1的时候dp[i][j] = 1 + min(dp[i - 1][j], min(dp[i - 1][j - 1], dp[i][j - 1]));为0的时候dp[i][j]为0
-    int maximalSquare(vector<vector<char> >& matrix)
+    int maximalSquare(vector<vector<char>> &matrix)
     {
         int row = matrix.size();
         if (row == 0)
@@ -828,7 +866,7 @@ public:
         {
             return 0;
         }
-        vector<vector<int> > dp(row, vector<int>(col));
+        vector<vector<int>> dp(row, vector<int>(col));
         int ans = 0;
         for (int i = 0; i < row; i++)
         {
@@ -851,23 +889,32 @@ public:
         return ans * ans;
     }
 
-
     // 220
     // 存在重复元素 III
     /*
         给定一个整数数组，判断数组中是否有两个不同的索引 i 和 j，使得 nums [i] 和 nums [j] 的差的绝对值最大为 t，并且 i 和 j 之间的差的绝对值最大为 ķ。
     */
     // 提示：可以维护一个长度为k的有序的数组，每次减一个加一个还是有序的。时间复杂度就会为nlogk
-    bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t)
+    // 当遍历到nums[i]时，找到该数组中第一个大于等于nums[i]-t的数。如果满足要求返回true。
+    bool containsNearbyAlmostDuplicate(vector<int> &nums, int k, int t)
     {
         int len = nums.size();
-        set<long> s;
+        set<long> Set;
         for (int i = 0; i < len; i++)
         {
-            long
+            auto it = Set.lower_bound(nums[i] - (long)t);
+            if (it != Set.end() && *it - (long)nums[i] <= t)
+            {
+                return true;
+            }
+            Set.insert(nums[i]);
+            if (Set.size() > k)
+            {
+                Set.erase(nums[i - k]);
+            }
         }
+        return false;
     }
-
 
     // 216
     // 组合总和III
@@ -877,14 +924,14 @@ public:
         所有数字都是正整数。
         解集不能包含重复的组合。
     */
-    vector<vector<int> > combinationSum3(int k, int n)
+    vector<vector<int>> combinationSum3(int k, int n)
     {
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         vector<int> result(k);
         DFS_combinationSum3(ans, n, k, result, 0, 0, 1);
         return ans;
     }
-    void DFS_combinationSum3(vector<vector<int> > &ans, int n, int k, vector<int> &result, int sum, int stp, int sta)
+    void DFS_combinationSum3(vector<vector<int>> &ans, int n, int k, vector<int> &result, int sum, int stp, int sta)
     {
         if (sum > n || stp > k)
         {
@@ -909,7 +956,6 @@ public:
         }
     }
 
-
     // 215
     // 数组中的第k个最大元素
     /*
@@ -917,15 +963,15 @@ public:
     */
     // 方法1： 快排
     // 方法2： 维护topk（优先队列）
-    int findKthLargest(vector<int>& nums, int k)
+    int findKthLargest(vector<int> &nums, int k)
     {
         int ans = INT_MIN;
         QuickSort_findKthLargest(nums, nums.size() - k, 0, nums.size() - 1, ans);
         return ans;
     }
-    void QuickSort_findKthLargest(vector<int>& nums, int k, int L, int R, int &ans)
+    void QuickSort_findKthLargest(vector<int> &nums, int k, int L, int R, int &ans)
     {
-       if (ans != INT_MIN || L > R)
+        if (ans != INT_MIN || L > R)
         {
             return;
         }
@@ -963,14 +1009,13 @@ public:
         return;
     }
 
-
     // 213
     // 打家劫舍 II
     /*
         你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都围成一圈，这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
         给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。
     */
-    int rob(vector<int>& nums)
+    int rob(vector<int> &nums)
     {
         int len = nums.size();
         if (len == 0)
@@ -981,7 +1026,7 @@ public:
         {
             return nums[0];
         }
-        vector<vector<int> > dp(len, vector<int>(2));
+        vector<vector<int>> dp(len, vector<int>(2));
         int ans = 0;
         dp[1][0] = 0;
         dp[1][1] = nums[1];
@@ -1002,7 +1047,6 @@ public:
         return ans;
     }
 
-
     // 211
     // 添加与搜索单词 - 数据结构设计
     /*
@@ -1011,7 +1055,39 @@ public:
             bool search(word)
         search(word) 可以搜索文字或正则表达式字符串，字符串只包含字母 . 或 a-z 。 . 可以表示任何一个字母。
     */
-
+    // 提示：用hash保存长度一样的字符串集
+    map<int, vector<string>> WordDictionary_Map;
+    WordDictionary()
+    {
+    }
+    void addWord(string word)
+    {
+        int len = word.size();
+        WordDictionary_Map[len].push_back(word);
+    }
+    bool search(string word)
+    {
+        int len = word.size();
+        vector<string> words = WordDictionary_Map[len];
+        int total = words.size();
+        for (int i = 0; i < total; i++)
+        {
+            bool eq = true;
+            for (int j = 0; j < len; j++)
+            {
+                if (!(word[j] == words[i][j] || word[j] == '.'))
+                {
+                    eq = false;
+                    break;
+                }
+            }
+            if (eq)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     // 210
     // 课程表II
@@ -1021,7 +1097,7 @@ public:
         给定课程总量以及它们的先决条件，返回你为了学完所有课程所安排的学习顺序。
         可能会有多个正确的顺序，你只要返回一种就可以了。如果不可能完成所有课程，返回一个空数组。
     */
-    vector<int> findOrder(int numCourses, vector<vector<int> >& prerequisites)
+    vector<int> findOrder(int numCourses, vector<vector<int>> &prerequisites)
     {
         vector<int> ans(numCourses);
         vector<int> num(numCourses, 0);
@@ -1076,16 +1152,15 @@ public:
         return ans;
     }
 
-
     // 209
     // 长度最小的子数组
     /*
         给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。
     */
-    int minSubArrayLen(int s, vector<int>& nums)
+    int minSubArrayLen(int s, vector<int> &nums)
     {
         int len = nums.size();
-        int mi =  len + 1;
+        int mi = len + 1;
         int last = 0, sum = 0;
         for (int i = 0; i < len; i++)
         {
@@ -1100,14 +1175,67 @@ public:
         return mi == len + 1 ? 0 : mi;
     }
 
-
     // 208
     // 实现 Trie (前缀树)
     /*
         实现一个 Trie (前缀树)，包含 insert, search, 和 startsWith 这三个操作。
     */
-
-
+    // 注意：app，apple这种单词，所以需要isWord
+    /*
+    TrieNode()
+    {
+        for (int i = 0; i < 26; i++)
+        {
+            child[i] = nullptr;
+        }
+        isWord = false;
+    }
+    void insert(string word)
+    {
+        TrieNode *node = this;
+        int index;
+        for (int i = 0; i < word.size(); i++)
+        {
+            index = word[i] - 'a';
+            if (node->child[index] == 0)
+            {
+                node->child[index] = new TrieNode();
+            }
+            node = node->child[index];
+        }
+        node->isWord = true;
+    }
+    bool search(string word)
+    {
+        TrieNode *node = this;
+        int index;
+        for (int i = 0; i < word.size(); i++)
+        {
+            index = word[i] - 'a';
+            if (node->child[index] == 0)
+            {
+                return false;
+            }
+            node = node->child[index];
+        }
+        return node->isWord;
+    }
+    bool startsWith(string prefix)
+    {
+        TrieNode *node = this;
+        int index;
+        for (int i = 0; i < prefix.size(); i++)
+        {
+            index = prefix[i] - 'a';
+            if (node->child[index] == 0)
+            {
+                return false;
+            }
+            node = node->child[index];
+        }
+        return true;
+    }
+    */
 
     // 207
     // 课程表
@@ -1117,7 +1245,7 @@ public:
         给定课程总量以及它们的先决条件，判断是否可能完成所有课程的学习？
     */
     // 方法2： DFS检查是否有环，有环则不行
-    bool canFinish(int numCourses, vector<vector<int> >& prerequisites)
+    bool canFinish(int numCourses, vector<vector<int>> &prerequisites)
     {
         vector<int> num(numCourses, 0);
         queue<int> Q;
@@ -1163,21 +1291,18 @@ public:
         return finished == numCourses;
     }
 
-
     // 201
     // 数字范围按位与
     /*
         给定范围 [m, n]，其中 0 <= m <= n <= 2147483647，返回此范围内所有数字的按位与（包含 m, n 两端点）。
     */
 
-
-
     // 200
     // 岛屿数量
     /*
         给定一个由 '1'（陆地）和 '0'（水）组成的的二维网格，计算岛屿的数量。一个岛被水包围，并且它是通过水平方向或垂直方向上相邻的陆地连接而成的。你可以假设网格的四个边均被水包围。
     */
-    int numIslands(vector<vector<char> >& grid)
+    int numIslands(vector<vector<char>> &grid)
     {
         int ans = 0;
         int row = grid.size();
@@ -1186,7 +1311,7 @@ public:
             return ans;
         }
         int col = grid[0].size();
-        if ( col == 0)
+        if (col == 0)
         {
             return ans;
         }
@@ -1203,7 +1328,7 @@ public:
         }
         return ans;
     }
-    void DFS_numIslands(vector<vector<char> >& grid, int row, int col, int x, int y)
+    void DFS_numIslands(vector<vector<char>> &grid, int row, int col, int x, int y)
     {
         if (x >= 0 && x < row && y >= 0 && y < col && grid[x][y] == '1')
         {
@@ -1220,6 +1345,6 @@ public:
 };
 int main()
 {
-    Solution* solution = new Solution();
+    Solution *solution = new Solution();
     return 0;
 }

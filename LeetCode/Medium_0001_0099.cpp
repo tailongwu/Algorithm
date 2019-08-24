@@ -1,20 +1,20 @@
-#include<map>
-#include<cmath>
-#include<queue>
-#include<stack>
-#include<cstdio>
-#include<cstring>
-#include<vector>
-#include<iostream>
-#include<algorithm>
+#include <map>
+#include <cmath>
+#include <queue>
+#include <stack>
+#include <cstdio>
+#include <cstring>
+#include <vector>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 struct Node3
 {
     int val;
-    Node3* next;
-    Node3* random;
+    Node3 *next;
+    Node3 *random;
     Node3() {}
-    Node3(int _val, Node3* _next, Node3* _random)
+    Node3(int _val, Node3 *_next, Node3 *_random)
     {
         val = _val;
         next = _next;
@@ -24,9 +24,9 @@ struct Node3
 struct Node2
 {
     int val;
-    vector<Node2*> neighbors;
+    vector<Node2 *> neighbors;
     Node2() {}
-    Node2(int _val, vector<Node2*> _neighbors)
+    Node2(int _val, vector<Node2 *> _neighbors)
     {
         val = _val;
         neighbors = _neighbors;
@@ -34,11 +34,11 @@ struct Node2
 };
 struct Node
 {
-  int val;
-  Node *left;
-  Node *right;
-  Node *next;
-  Node(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
+    int val;
+    Node *left;
+    Node *right;
+    Node *next;
+    Node(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
 };
 struct TreeNode
 {
@@ -66,7 +66,7 @@ public:
         所有左子树和右子树自身必须也是二叉搜索树。
     */
     // 提示：中序遍历是增序的
-    bool isValidBST(TreeNode* root)
+    bool isValidBST(TreeNode *root)
     {
         long long last = LONG_MIN;
         return DFS_isValidBST(root, last);
@@ -86,7 +86,6 @@ public:
         bool right = DFS_isValidBST(node->right, last);
         return left && right;
     }
-
 
     // 96
     // 不同的二叉搜索树
@@ -112,24 +111,23 @@ public:
         return dp[n];
     }
 
-
     // 95
     // 不同的二叉搜索树II
     /*
         给定一个整数 n，生成所有由 1 ... n 为节点所组成的二叉搜索树。
     */
-    vector<TreeNode*> generateTrees(int n)
+    vector<TreeNode *> generateTrees(int n)
     {
         if (n == 0)
         {
-            vector<TreeNode*> ans;
+            vector<TreeNode *> ans;
             return ans;
         }
         return DFS_generateTrees(1, n);
     }
-    vector<TreeNode*> DFS_generateTrees(int sta, int en)
+    vector<TreeNode *> DFS_generateTrees(int sta, int en)
     {
-        vector<TreeNode*> result;
+        vector<TreeNode *> result;
         if (sta > en)
         {
             result.push_back(0);
@@ -137,8 +135,8 @@ public:
         }
         for (int i = sta; i <= en; i++)
         {
-            vector<TreeNode*> left = DFS_generateTrees(sta, i - 1);
-            vector<TreeNode*> right = DFS_generateTrees(i + 1, en);
+            vector<TreeNode *> left = DFS_generateTrees(sta, i - 1);
+            vector<TreeNode *> right = DFS_generateTrees(i + 1, en);
             for (int j = 0; j < left.size(); j++)
             {
                 for (int k = 0; k < right.size(); k++)
@@ -153,13 +151,12 @@ public:
         return result;
     }
 
-
     // 94
     // 二叉树的中序遍历
     /*
         给定一个二叉树，返回它的中序 遍历。
     */
-    vector<int> inorderTraversal(TreeNode* root)
+    vector<int> inorderTraversal(TreeNode *root)
     {
         vector<int> ans;
         DFS_inorderTraversal(root, ans);
@@ -175,7 +172,6 @@ public:
         ans.push_back(root->val);
         DFS_inorderTraversal(root->right, ans);
     }
-
 
     // 93
     // 复原IP地址
@@ -246,7 +242,6 @@ public:
         }
     }
 
-
     // 92
     // 反转链表II
     /*
@@ -254,7 +249,7 @@ public:
         说明:
         1 ≤ m ≤ n ≤ 链表长度。
     */
-    ListNode* reverseBetween(ListNode* head, int m, int n)
+    ListNode *reverseBetween(ListNode *head, int m, int n)
     {
         ListNode *last = 0, *node = head;
         for (int i = 0; i < m - 1; i++)
@@ -263,7 +258,7 @@ public:
             node = node->next;
         }
         ListNode *newHead, *cur, *right = node;
-        for (int i = m;i <= n; i++)
+        for (int i = m; i <= n; i++)
         {
             cur = node->next;
             node->next = newHead;
@@ -284,7 +279,6 @@ public:
         }
         return head;
     }
-
 
     // 91
     // 解码方法
@@ -317,36 +311,35 @@ public:
             num = s[j] - '0';
             if (num > 0)
             {
-                dp[i] += dp[i-1];
+                dp[i] += dp[i - 1];
             }
         }
         return dp[len];
-//        int ans = 0;
-//        DFS_numDecodings(s, ans, s.size(), 0);
-//        return ans;
+        //        int ans = 0;
+        //        DFS_numDecodings(s, ans, s.size(), 0);
+        //        return ans;
     }
-//    void DFS_numDecodings(string &s, int &ans, int len, int sta)
-//    {
-//        if (sta == len)
-//        {
-//            ans++;
-//            return;
-//        }
-//        int num = 0;
-//        for (int i = sta; i < len; i++)
-//        {
-//            num = num * 10 + s[i] - '0';
-//            if (num > 26 || num == 0)
-//            {
-//                break;
-//            }
-//            if (num > 0)
-//            {
-//                DFS_numDecodings(s, ans, len, i + 1);
-//            }
-//        }
-//    }
-
+    //    void DFS_numDecodings(string &s, int &ans, int len, int sta)
+    //    {
+    //        if (sta == len)
+    //        {
+    //            ans++;
+    //            return;
+    //        }
+    //        int num = 0;
+    //        for (int i = sta; i < len; i++)
+    //        {
+    //            num = num * 10 + s[i] - '0';
+    //            if (num > 26 || num == 0)
+    //            {
+    //                break;
+    //            }
+    //            if (num > 0)
+    //            {
+    //                DFS_numDecodings(s, ans, len, i + 1);
+    //            }
+    //        }
+    //    }
 
     // 90
     // 子集II
@@ -354,15 +347,15 @@ public:
         给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
         说明：解集不能包含重复的子集。
     */
-    vector<vector<int> > subsetsWithDup(vector<int>& nums)
+    vector<vector<int>> subsetsWithDup(vector<int> &nums)
     {
         sort(nums.begin(), nums.end());
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         vector<int> result(nums.size());
         DFS_subsetsWithDup(nums, ans, result, nums.size(), 0, 0);
         return ans;
     }
-    void DFS_subsetsWithDup(vector<int> &nums, vector<vector<int> > &ans, vector<int> &result, int len, int sta, int stp)
+    void DFS_subsetsWithDup(vector<int> &nums, vector<vector<int>> &ans, vector<int> &result, int len, int sta, int stp)
     {
         vector<int> a(stp);
         for (int i = 0; i < stp; i++)
@@ -381,7 +374,6 @@ public:
         }
     }
 
-
     // 89
     // 格雷编码
     /*
@@ -398,49 +390,49 @@ public:
             ans[i] = i ^ (i >> 1);
         }
         return ans;
-//        int len = 1 << n;
-//        vector<int> ans(len);
-//        map<int, bool> m;
-//        string last = "";
-//        int lastNum = 0;
-//        for (int i = 0; i < n; i++)
-//        {
-//            last += '0';
-//        }
-//        m[lastNum] = true;
-//        ans[0] = lastNum;
-//        for (int i = 1; i < len; i++)
-//        {
-//            for (int j = 0; j < n; j++)
-//            {
-//                int newNum;
-//                if (last[j] == '0')
-//                {
-//                    newNum = lastNum + (1 << (n - 1 - j));
-//                    if (!m[newNum])
-//                    {
-//                        last[j] = '1';
-//                        ans[i] = newNum;
-//                        lastNum = newNum;
-//                        m[newNum] = true;
-//                        break;
-//                    }
-//                }
-//                else
-//                {
-//                    newNum = lastNum - (1 << (n - 1 - j));
-//                    if (!m[newNum])
-//                    {
-//                        last[j] = '0';
-//                        ans[i] = newNum;
-//                        lastNum = newNum;
-//                        m[newNum] = true;
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//        return ans;
+        //        int len = 1 << n;
+        //        vector<int> ans(len);
+        //        map<int, bool> m;
+        //        string last = "";
+        //        int lastNum = 0;
+        //        for (int i = 0; i < n; i++)
+        //        {
+        //            last += '0';
+        //        }
+        //        m[lastNum] = true;
+        //        ans[0] = lastNum;
+        //        for (int i = 1; i < len; i++)
+        //        {
+        //            for (int j = 0; j < n; j++)
+        //            {
+        //                int newNum;
+        //                if (last[j] == '0')
+        //                {
+        //                    newNum = lastNum + (1 << (n - 1 - j));
+        //                    if (!m[newNum])
+        //                    {
+        //                        last[j] = '1';
+        //                        ans[i] = newNum;
+        //                        lastNum = newNum;
+        //                        m[newNum] = true;
+        //                        break;
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    newNum = lastNum - (1 << (n - 1 - j));
+        //                    if (!m[newNum])
+        //                    {
+        //                        last[j] = '0';
+        //                        ans[i] = newNum;
+        //                        lastNum = newNum;
+        //                        m[newNum] = true;
+        //                        break;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        return ans;
     }
 
     // 86
@@ -449,7 +441,7 @@ public:
         给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前。
         你应当保留两个分区中每个节点的初始相对位置。
     */
-    ListNode* partition(ListNode* head, int x)
+    ListNode *partition(ListNode *head, int x)
     {
         ListNode *newHead = 0, *leftHead = 0, *rightHead = 0, *left = 0, *right = 0, *node = head;
         while (node != 0)
@@ -498,13 +490,12 @@ public:
         return newHead;
     }
 
-
     // 82
     // 删除排序链表中的重复元素 II
     /*
         给定一个排序链表，删除所有含有重复数字的节点，只保留原始链表中 没有重复出现 的数字。
     */
-    ListNode* deleteDuplicates(ListNode* head)
+    ListNode *deleteDuplicates(ListNode *head)
     {
         ListNode *newHead = 0, *newNode = 0, *node = head;
         while (node != 0)
@@ -539,7 +530,6 @@ public:
         return newHead;
     }
 
-
     // 81
     // 搜索旋转排序数组 II
     /*
@@ -547,7 +537,7 @@ public:
         ( 例如，数组 [0,0,1,2,2,5,6] 可能变为 [2,5,6,0,0,1,2] )。
         编写一个函数来判断给定的目标值是否存在于数组中。若存在返回 true，否则返回 false。
     */
-    bool searchII(vector<int>& nums, int target)
+    bool searchII(vector<int> &nums, int target)
     {
         int L = 0, R = nums.size() - 1;
         while (L <= R)
@@ -587,14 +577,13 @@ public:
         return false;
     }
 
-
     // 80
     // 删除排序数组中的重复项II
     /*
         给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素最多出现两次，返回移除后数组的新长度。
         不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
     */
-    int removeDuplicates(vector<int>& nums)
+    int removeDuplicates(vector<int> &nums)
     {
         int len = nums.size();
         int index = 0, cur = 0;
@@ -619,14 +608,13 @@ public:
         return index;
     }
 
-
     // 79
     // 单词搜索
     /*
         给定一个二维网格和一个单词，找出该单词是否存在于网格中。
         单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
     */
-    bool exist(vector<vector<char> >& board, string word)
+    bool exist(vector<vector<char>> &board, string word)
     {
         if (word.size() == 0)
         {
@@ -659,7 +647,7 @@ public:
         }
         return exist;
     }
-    void DFS_exist(vector<vector<char> >& board, string word, int row, int col, int len, int x, int y, int stp, bool &exist)
+    void DFS_exist(vector<vector<char>> &board, string word, int row, int col, int len, int x, int y, int stp, bool &exist)
     {
         if (exist)
         {
@@ -686,16 +674,15 @@ public:
         }
     }
 
-
     // 78
     // 子集
     /*
         给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
         说明：解集不能包含重复的子集。
     */
-    vector<vector<int> > subsets(vector<int>& nums)
+    vector<vector<int>> subsets(vector<int> &nums)
     {
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         int len = 1 << nums.size();
         for (int i = 0; i < len; i++)
         {
@@ -715,20 +702,19 @@ public:
         return ans;
     }
 
-
     // 77
     // 组合
     /*
         给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
     */
-    vector<vector<int> > combine(int n, int k)
+    vector<vector<int>> combine(int n, int k)
     {
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         vector<int> result(k);
         DFS_combine(ans, result, n, k, 1, 0);
         return ans;
     }
-    void DFS_combine(vector<vector<int> > &ans, vector<int> &result, int n, int k, int sta, int step)
+    void DFS_combine(vector<vector<int>> &ans, vector<int> &result, int n, int k, int sta, int step)
     {
         if (step == k)
         {
@@ -746,7 +732,6 @@ public:
         }
     }
 
-
     // 75
     // 颜色分类
     /*
@@ -760,7 +745,7 @@ public:
         你能想出一个仅使用常数空间的一趟扫描算法吗？
     */
     // 提示：三指针法
-    void sortColors(vector<int>& nums)
+    void sortColors(vector<int> &nums)
     {
         int p0 = 0, p1 = 0, p2 = nums.size() - 1;
         while (p0 <= p2 && p1 <= p2)
@@ -792,7 +777,6 @@ public:
         }
     }
 
-
     // 搜索二维矩阵
     // 74
     /*
@@ -801,7 +785,7 @@ public:
         每行的第一个整数大于前一行的最后一个整数。
     */
     // 提示：从右上角开始
-    bool searchMatrix(vector<vector<int> >& matrix, int target)
+    bool searchMatrix(vector<vector<int>> &matrix, int target)
     {
         int row = matrix.size();
         if (row == 0)
@@ -832,14 +816,13 @@ public:
         return false;
     }
 
-
     // 73
     // 矩阵置零
     /*
         给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法，使用常数空间。
     */
     // 提示：找到第一个为0的，那么其它的0分解成第一个0所在的行和列记录。最后再遍历。
-    void setZeroes(vector<vector<int> >& matrix)
+    void setZeroes(vector<vector<int>> &matrix)
     {
         int row = matrix.size();
         int col = matrix[0].size();
@@ -896,7 +879,6 @@ public:
         }
     }
 
-
     // 71
     // 简化路径
     /*
@@ -924,7 +906,7 @@ public:
                     folder += path[j];
                     j++;
                 }
-                i= j - 1;
+                i = j - 1;
                 if (folder == ".")
                 {
                     continue;
@@ -961,14 +943,13 @@ public:
         return ans;
     }
 
-
     // 64
     // 最小路径和
     /*
         给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
         说明：每次只能向下或者向右移动一步。
     */
-    int minPathSum(vector<vector<int> >& grid)
+    int minPathSum(vector<vector<int>> &grid)
     {
         int row = grid.size();
         int col = grid[0].size();
@@ -976,7 +957,7 @@ public:
         {
             return 0;
         }
-        vector<vector<int> > dp(row, vector<int>(col));
+        vector<vector<int>> dp(row, vector<int>(col));
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
@@ -999,7 +980,6 @@ public:
         return dp[row - 1][col - 1];
     }
 
-
     // 63
     // 不同路径II
     /*
@@ -1007,7 +987,7 @@ public:
         机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
         现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？
     */
-    int uniquePathsWithObstacles(vector<vector<int> >& obstacleGrid)
+    int uniquePathsWithObstacles(vector<vector<int>> &obstacleGrid)
     {
         int row = obstacleGrid.size();
         int col = obstacleGrid[0].size();
@@ -1015,7 +995,7 @@ public:
         {
             return 0;
         }
-        vector<vector<long long> > dp(row, vector<long long>(col));
+        vector<vector<long long>> dp(row, vector<long long>(col));
         dp[0][0] = 1;
         for (int i = 0; i < row; i++)
         {
@@ -1040,7 +1020,6 @@ public:
         }
         return dp[row - 1][col - 1];
     }
-
 
     // 62
     // 不同路径
@@ -1080,13 +1059,12 @@ public:
         return ans;
     }
 
-
     // 61
     // 旋转链表
     /*
         给定一个链表，旋转链表，将链表每个节点向右移动 k 个位置，其中 k 是非负数。
     */
-    ListNode* rotateRight(ListNode* head, int k)
+    ListNode *rotateRight(ListNode *head, int k)
     {
         if (head == 0 || k == 0)
         {
@@ -1122,7 +1100,6 @@ public:
         }
     }
 
-
     // 60
     // 第k个排列
     /*
@@ -1141,7 +1118,7 @@ public:
         for (int i = 0; i < n; i++)
         {
             int d = 0, cnt = 0;
-            while (k > f[n - 1 -i])
+            while (k > f[n - 1 - i])
             {
                 d++;
                 k -= f[n - 1 - i];
@@ -1162,15 +1139,14 @@ public:
         return ans;
     }
 
-
     // 59
     // 螺旋矩阵II
     /*
         给定一个正整数 n，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的正方形矩阵。
     */
-    vector<vector<int> > generateMatrix(int n)
+    vector<vector<int>> generateMatrix(int n)
     {
-        vector<vector<int> > ans(n, vector<int>(n));
+        vector<vector<int>> ans(n, vector<int>(n));
         int index = 0, total = n * n;
         for (int i = 0; i < n && index != total; i++)
         {
@@ -1198,16 +1174,15 @@ public:
         return ans;
     }
 
-
     // 56
     // 合并区间
     /*
         给出一个区间的集合，请合并所有重叠的区间。
     */
-    vector<vector<int> > merge(vector<vector<int> >& intervals)
+    vector<vector<int>> merge(vector<vector<int>> &intervals)
     {
         int len = intervals.size();
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         if (len == 0)
         {
             return ans;
@@ -1240,7 +1215,6 @@ public:
         return ans;
     }
 
-
     // 55
     // 跳跃游戏
     /*
@@ -1248,7 +1222,7 @@ public:
         数组中的每个元素代表你在该位置可以跳跃的最大长度。
         判断你是否能够到达最后一个位置。
     */
-    bool canJump(vector<int>& nums)
+    bool canJump(vector<int> &nums)
     {
         int len = nums.size(), maxIndex = 0;
         for (int i = 0; i < len; i++)
@@ -1261,22 +1235,21 @@ public:
         }
         return maxIndex >= len - 1;
 
-// 方法2
-//        int step = 1;
-//        for (int i = nums.size() - 2; i >= 0; i--)
-//        {
-//            if (nums[i] >= step)
-//            {
-//                step = 1;
-//            }
-//            else
-//            {
-//                step++;
-//            }
-//        }
-//        return step == 1;
+        // 方法2
+        //        int step = 1;
+        //        for (int i = nums.size() - 2; i >= 0; i--)
+        //        {
+        //            if (nums[i] >= step)
+        //            {
+        //                step = 1;
+        //            }
+        //            else
+        //            {
+        //                step++;
+        //            }
+        //        }
+        //        return step == 1;
     }
-
 
     // 54
     // 螺旋矩阵
@@ -1284,7 +1257,7 @@ public:
         给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。
     */
     // 提示：注意转角处包含在上次遍历
-    vector<int> spiralOrder(vector<vector<int> >& matrix)
+    vector<int> spiralOrder(vector<vector<int>> &matrix)
     {
         vector<int> ans;
         int row = matrix.size();
@@ -1322,7 +1295,6 @@ public:
         return ans;
     }
 
-
     // 50
     // Pow(x, n)
     /*
@@ -1355,16 +1327,15 @@ public:
         }
     }
 
-
     // 49
     // 字母异位词分组
     /*
         给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
     */
-    vector<vector<string> > groupAnagrams(vector<string>& strs)
+    vector<vector<string>> groupAnagrams(vector<string> &strs)
     {
         int len = strs.size();
-        vector<vector<string> > ans;
+        vector<vector<string>> ans;
         vector<long long> pri(26);
         int index = 0;
         for (int i = 2; i < 120; i++)
@@ -1410,7 +1381,6 @@ public:
         return ans;
     }
 
-
     // 48
     // 旋转图像
     /*
@@ -1422,7 +1392,7 @@ public:
     // 注意：最右边那个数不用旋转（即第二个循环的-1）
     // 方法2：先延副对角线对称，然后水平线对称。
     // 原坐标为(x,y)。旋转后坐标为(y,n-x)；对称后为(n-y,n-x)，水平对称后为(y,n-x)。
-    void rotate(vector<vector<int> >& matrix)
+    void rotate(vector<vector<int>> &matrix)
     {
         int n = matrix.size();
         for (int i = 0; i < (n >> 1); i++)
@@ -1438,23 +1408,22 @@ public:
         }
     }
 
-
     // 47
     // 全排列II
     /*
         给定一个可包含重复数字的序列，返回所有不重复的全排列。
     */
     // 提示：进行到第i位，如果大于i位且相等并使用过的，那么第i位就是重复的
-    vector<vector<int> > permuteUnique(vector<int>& nums)
+    vector<vector<int>> permuteUnique(vector<int> &nums)
     {
         sort(nums.begin(), nums.end());
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         vector<int> result(nums.size());
         vector<bool> vis(nums.size());
         DFS_permuteUnique(ans, nums, vis, result, 0);
         return ans;
     }
-    void DFS_permuteUnique(vector<vector<int> > &ans, vector<int> &nums, vector<bool> &vis, vector<int> &result, int step)
+    void DFS_permuteUnique(vector<vector<int>> &ans, vector<int> &nums, vector<bool> &vis, vector<int> &result, int step)
     {
         if (step == nums.size())
         {
@@ -1486,7 +1455,6 @@ public:
         }
     }
 
-
     // 46
     // 全排列
     /*
@@ -1494,14 +1462,14 @@ public:
     */
     bool v_permute[20];
     int result_permute[20];
-    vector<vector<int> > permute(vector<int>& nums)
+    vector<vector<int>> permute(vector<int> &nums)
     {
         memset(v_permute, false, sizeof(v_permute));
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         DFS_permute(nums, nums.size(), 0, ans);
         return ans;
     }
-    void DFS_permute(vector<int>& nums, int length, int step, vector<vector<int> >& ans)
+    void DFS_permute(vector<int> &nums, int length, int step, vector<vector<int>> &ans)
     {
         if (step == length)
         {
@@ -1524,7 +1492,6 @@ public:
             }
         }
     }
-
 
     // 43
     // 字符串相乘
@@ -1583,22 +1550,21 @@ public:
         return result;
     }
 
-
     // 40
     // 组合总和II
     /*
         给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
         candidates 中的每个数字在每个组合中只能使用一次。
     */
-    vector<vector<int> > combinationSum2(vector<int>& candidates, int target)
+    vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
     {
         sort(candidates.begin(), candidates.end());
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         vector<int> selections(target + 1);
         DFS_combinationSum2(ans, candidates, selections, target, 0, 0, 0);
         return ans;
     }
-    void DFS_combinationSum2(vector<vector<int> > &ans, vector<int> &candidates, vector<int> &selections, int target, int sum, int step, int sta)
+    void DFS_combinationSum2(vector<vector<int>> &ans, vector<int> &candidates, vector<int> &selections, int target, int sum, int step, int sta)
     {
         if (target < sum)
         {
@@ -1637,7 +1603,7 @@ public:
             }
             return;
         }
-        for (int i = sta; i< candidates.size(); i++)
+        for (int i = sta; i < candidates.size(); i++)
         {
             if (sum + candidates[i] > target)
             {
@@ -1648,7 +1614,6 @@ public:
         }
     }
 
-
     // 39
     // 组合总和
     /*
@@ -1658,15 +1623,15 @@ public:
         所有数字（包括 target）都是正整数。
         解集不能包含重复的组合。
     */
-    vector<vector<int> > combinationSum(vector<int>& candidates, int target)
+    vector<vector<int>> combinationSum(vector<int> &candidates, int target)
     {
         sort(candidates.begin(), candidates.end());
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         vector<int> selections(target + 1);
         DFS_combinationSum(ans, candidates, selections, target, 0, 0, 0);
         return ans;
     }
-    void DFS_combinationSum(vector<vector<int> > &ans, vector<int> &candidates, vector<int> &selections, int target, int sum, int step, int sta)
+    void DFS_combinationSum(vector<vector<int>> &ans, vector<int> &candidates, vector<int> &selections, int target, int sum, int step, int sta)
     {
         if (target < sum)
         {
@@ -1682,7 +1647,7 @@ public:
             ans.push_back(result);
             return;
         }
-        for (int i = sta; i< candidates.size(); i++)
+        for (int i = sta; i < candidates.size(); i++)
         {
             if (sum + candidates[i] > target)
             {
@@ -1693,7 +1658,6 @@ public:
         }
     }
 
-
     // 36
     // 有效的数独
     /*
@@ -1702,7 +1666,7 @@ public:
         数字 1-9 在每一列只能出现一次。
         数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
     */
-    bool isValidSudoku(vector<vector<char> >& board)
+    bool isValidSudoku(vector<vector<char>> &board)
     {
         bool isValid = true;
         for (int i = 0; i < 9 && isValid; i++)
@@ -1764,7 +1728,6 @@ public:
         return isValid;
     }
 
-
     // 34
     // 在排序数组中查找元素的第一个和最后一个位置
     /*
@@ -1772,7 +1735,7 @@ public:
         你的算法时间复杂度必须是 O(log n) 级别。
         如果数组中不存在目标值，返回 [-1, -1]。
     */
-    vector<int> searchRange(vector<int>& nums, int target)
+    vector<int> searchRange(vector<int> &nums, int target)
     {
         int L = 0, R = nums.size() - 1;
         vector<int> ans(2, -1);
@@ -1817,7 +1780,6 @@ public:
         return ans;
     }
 
-
     // 33
     // 搜索旋转排序数组
     /*
@@ -1829,7 +1791,7 @@ public:
     */
     // 提示：不存在重复元素，注意有序情况否则分左半区和右半区.
     // 如果中间的数小于最右边的数，则右半段是有序的，若中间数大于最右边数，则左半段是有序的
-    int search(vector<int>& nums, int target)
+    int search(vector<int> &nums, int target)
     {
         int L = 0, R = nums.size() - 1;
         while (L <= R)
@@ -1864,79 +1826,78 @@ public:
         }
         return -1;
 
-//        int len = nums.size();
-//        if (len == 0)
-//        {
-//            return -1;
-//        }
-//        int L = 0, R = len - 1;
-//        while (L <= R)
-//        {
-//            if (nums[R] > nums[L])
-//            {
-//                while (L <= R)
-//                {
-//                    int mid = (L + R) >> 1;
-//                    if (nums[mid] == target)
-//                    {
-//                        return mid;
-//                    }
-//                    if (nums[mid] > target)
-//                    {
-//                        R = mid - 1;
-//                    }
-//                    else
-//                    {
-//                        L = mid + 1;
-//                    }
-//                }
-//                return -1;
-//            }
-//            int mid = (L + R) >> 1;
-//            if (nums[mid] == target)
-//            {
-//                return mid;
-//            }
-//            if (nums[mid] > nums[R])
-//            {
-//                if (target < nums[mid])
-//                {
-//                    if (target > nums[R])
-//                    {
-//                        R = mid - 1;
-//                    }
-//                    else
-//                    {
-//                        L = mid + 1;
-//                    }
-//                }
-//                else
-//                {
-//                    L = mid + 1;
-//                }
-//            }
-//            else
-//            {
-//                if (target < nums[mid])
-//                {
-//                    R = mid - 1;
-//                }
-//                else
-//                {
-//                    if (target >= nums[L])
-//                    {
-//                        R = mid - 1;
-//                    }
-//                    else
-//                    {
-//                        L = mid + 1;
-//                    }
-//                }
-//            }
-//        }
-//        return -1;
+        //        int len = nums.size();
+        //        if (len == 0)
+        //        {
+        //            return -1;
+        //        }
+        //        int L = 0, R = len - 1;
+        //        while (L <= R)
+        //        {
+        //            if (nums[R] > nums[L])
+        //            {
+        //                while (L <= R)
+        //                {
+        //                    int mid = (L + R) >> 1;
+        //                    if (nums[mid] == target)
+        //                    {
+        //                        return mid;
+        //                    }
+        //                    if (nums[mid] > target)
+        //                    {
+        //                        R = mid - 1;
+        //                    }
+        //                    else
+        //                    {
+        //                        L = mid + 1;
+        //                    }
+        //                }
+        //                return -1;
+        //            }
+        //            int mid = (L + R) >> 1;
+        //            if (nums[mid] == target)
+        //            {
+        //                return mid;
+        //            }
+        //            if (nums[mid] > nums[R])
+        //            {
+        //                if (target < nums[mid])
+        //                {
+        //                    if (target > nums[R])
+        //                    {
+        //                        R = mid - 1;
+        //                    }
+        //                    else
+        //                    {
+        //                        L = mid + 1;
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    L = mid + 1;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                if (target < nums[mid])
+        //                {
+        //                    R = mid - 1;
+        //                }
+        //                else
+        //                {
+        //                    if (target >= nums[L])
+        //                    {
+        //                        R = mid - 1;
+        //                    }
+        //                    else
+        //                    {
+        //                        L = mid + 1;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        return -1;
     }
-
 
     // 31
     // 下一个排列
@@ -1945,7 +1906,7 @@ public:
         如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。
         必须原地修改，只允许使用额外常数空间。
     */
-    void nextPermutation(vector<int>& nums)
+    void nextPermutation(vector<int> &nums)
     {
         int len = nums.size();
         bool rev = true;
@@ -1988,7 +1949,6 @@ public:
         }
     }
 
-
     // 29
     // 两数相除
     /*
@@ -2026,7 +1986,6 @@ public:
         return (ans > INT_MAX || ans < INT_MIN) ? INT_MAX : ans;
     }
 
-
     // 24
     // 两两交换链表中的节点
     /*
@@ -2034,7 +1993,7 @@ public:
         你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
     */
     // 提示：注意[], [1], [1, 2, 3]
-    ListNode* swapPairs(ListNode* head)
+    ListNode *swapPairs(ListNode *head)
     {
         if (head == 0 || head->next == 0)
         {
@@ -2056,7 +2015,6 @@ public:
         return newHead;
     }
 
-
     // 22
     // 括号生成
     /*
@@ -2067,9 +2025,8 @@ public:
         vector<string> ans;
         DFS_generateParenthesis(ans, "", 0, 0, n);
         return ans;
-
     }
-    void DFS_generateParenthesis(vector<string>& ans, string s, int left, int length, int n)
+    void DFS_generateParenthesis(vector<string> &ans, string s, int left, int length, int n)
     {
         if (length == n * 2)
         {
@@ -2087,13 +2044,12 @@ public:
         DFS_generateParenthesis(ans, s + ")", left - 1, length + 1, n);
     }
 
-
     // 19
     // 删除链表的倒数第N个节点
     /*
         给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
     */
-    ListNode* removeNthFromEnd(ListNode* head, int n)
+    ListNode *removeNthFromEnd(ListNode *head, int n)
     {
         ListNode *node = head;
         int len = 0, k = 1;
@@ -2119,16 +2075,15 @@ public:
         }
     }
 
-
     // 18
     // 四数之和
     /*
         给定一个包含 n 个整数的数组 nums 和一个目标值 target，判断 nums 中是否存在四个元素 a，b，c 和 d ，使得 a + b + c + d 的值与 target 相等？找出所有满足条件且不重复的四元组。
     */
     // 提示：固定两个数，双指针找另外两个；保存两两之和，再双指针
-    vector<vector<int> > fourSum(vector<int>& nums, int target)
+    vector<vector<int>> fourSum(vector<int> &nums, int target)
     {
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         int len = nums.size();
         sort(nums.begin(), nums.end());
         for (int i = 0; i < len; i++)
@@ -2158,11 +2113,7 @@ public:
                     else
                     {
                         int ansSize = ans.size();
-                        if (!(ansSize > 0
-                            && ans[ansSize - 1][0] == nums[i]
-                            && ans[ansSize - 1][1] == nums[j]
-                            && ans[ansSize - 1][2] == nums[L]
-                            && ans[ansSize - 1][3] == nums[R]))
+                        if (!(ansSize > 0 && ans[ansSize - 1][0] == nums[i] && ans[ansSize - 1][1] == nums[j] && ans[ansSize - 1][2] == nums[L] && ans[ansSize - 1][3] == nums[R]))
                         {
                             vector<int> result(4);
                             result[0] = nums[i];
@@ -2179,7 +2130,6 @@ public:
         }
         return ans;
     }
-
 
     // 17
     // 电话号码的字母组合
@@ -2210,13 +2160,12 @@ public:
         }
     }
 
-
     // 16
     // 最接近的三数之和
     /*
         给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。
     */
-    int threeSumClosest(vector<int>& nums, int target)
+    int threeSumClosest(vector<int> &nums, int target)
     {
         int len = nums.size();
         int mi = -1, ans;
@@ -2254,15 +2203,14 @@ public:
         return ans;
     }
 
-
     // 15
     // 三数之和
     /*
         给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
     */
-    vector<vector<int> > threeSum(vector<int>& nums)
+    vector<vector<int>> threeSum(vector<int> &nums)
     {
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         int len = nums.size();
         sort(nums.begin(), nums.end());
         for (int i = 0; i < len; i++)
@@ -2289,10 +2237,7 @@ public:
                 if (s == sum)
                 {
                     int ansSize = ans.size();
-                    if (!(ansSize > 0
-                        && nums[i] == ans[ansSize - 1][0]
-                        && nums[L] == ans[ansSize - 1][1]
-                        && nums[R] == ans[ansSize - 1][2]))
+                    if (!(ansSize > 0 && nums[i] == ans[ansSize - 1][0] && nums[L] == ans[ansSize - 1][1] && nums[R] == ans[ansSize - 1][2]))
                     {
                         vector<int> result(3);
                         result[0] = nums[i];
@@ -2307,7 +2252,6 @@ public:
         }
         return ans;
     }
-
 
     // 12
     // 整数转罗马数字
@@ -2348,7 +2292,6 @@ public:
         return ans;
     }
 
-
     // 11
     // 盛最多水的容器
     /*
@@ -2356,7 +2299,7 @@ public:
         说明：你不能倾斜容器，且 n 的值至少为 2。
     */
     // 提示：双指针法，矮的一方移动
-    int maxArea(vector<int>& height)
+    int maxArea(vector<int> &height)
     {
         int L = 0, R = height.size() - 1;
         int ans = 0;
@@ -2374,7 +2317,6 @@ public:
         }
         return ans;
     }
-
 
     // 8
     // 字符串转整数
@@ -2433,7 +2375,6 @@ public:
         return 0;
     }
 
-
     // 6
     // Z字形变换
     /*
@@ -2473,7 +2414,6 @@ public:
         }
         return ans;
     }
-
 
     // 5
     // 最长回文子串
@@ -2532,7 +2472,6 @@ public:
         }
         return ans;
 
-
         // 暴力算法
         /*
         int len = s.size(), ans = 0;
@@ -2574,7 +2513,6 @@ public:
         */
     }
 
-
     // 3
     // 无重复字符的最长子串
     /*
@@ -2599,7 +2537,6 @@ public:
         return ans;
     }
 
-
     // 2
     // 两数相加
     /*
@@ -2607,7 +2544,7 @@ public:
         如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
         您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
     */
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
+    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
     {
         int r = 0, a, b, sum;
         ListNode *cur1 = l1, *cur2 = l2, *head = NULL, *cur;
@@ -2655,6 +2592,6 @@ public:
 };
 int main()
 {
-    Solution* solution = new Solution();
+    Solution *solution = new Solution();
     return 0;
 }

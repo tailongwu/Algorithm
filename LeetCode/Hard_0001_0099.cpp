@@ -1,20 +1,20 @@
-#include<map>
-#include<cmath>
-#include<queue>
-#include<stack>
-#include<cstdio>
-#include<cstring>
-#include<vector>
-#include<iostream>
-#include<algorithm>
+#include <map>
+#include <cmath>
+#include <queue>
+#include <stack>
+#include <cstdio>
+#include <cstring>
+#include <vector>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 struct Node3
 {
     int val;
-    Node3* next;
-    Node3* random;
+    Node3 *next;
+    Node3 *random;
     Node3() {}
-    Node3(int _val, Node3* _next, Node3* _random)
+    Node3(int _val, Node3 *_next, Node3 *_random)
     {
         val = _val;
         next = _next;
@@ -24,9 +24,9 @@ struct Node3
 struct Node2
 {
     int val;
-    vector<Node2*> neighbors;
+    vector<Node2 *> neighbors;
     Node2() {}
-    Node2(int _val, vector<Node2*> _neighbors)
+    Node2(int _val, vector<Node2 *> _neighbors)
     {
         val = _val;
         neighbors = _neighbors;
@@ -34,11 +34,11 @@ struct Node2
 };
 struct Node
 {
-  int val;
-  Node *left;
-  Node *right;
-  Node *next;
-  Node(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
+    int val;
+    Node *left;
+    Node *right;
+    Node *next;
+    Node(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
 };
 struct TreeNode
 {
@@ -56,12 +56,108 @@ struct ListNode
 class Solution
 {
 public:
+    // 99
+    // 恢复二叉搜索树
+    /*
+        二叉搜索树中的两个节点被错误地交换。
+        请在不改变其结构的情况下，恢复这棵树。
+    */
+    // 提示：先序遍历，如果出现两次降序情况，第一次是较大值有问题，第二次是较小值有问题。如果只出现一次，那么第一次的较大值和较小值有问题。
+    TreeNode *recoverTree_last;
+    void recoverTree(TreeNode *root)
+    {
+        vector<TreeNode *> nodes;
+        recoverTree_last = 0;
+        DFS_recoverTree(root, nodes);
+        if (nodes.size() == 3)
+        {
+            swap(nodes[0]->val, nodes[2]->val);
+        }
+        else
+        {
+            swap(nodes[0]->val, nodes[1]->val);
+        }
+        return;
+    }
+    void DFS_recoverTree(TreeNode *root, vector<TreeNode *> &nodes)
+    {
+        if (root == 0)
+        {
+            return;
+        }
+        DFS_recoverTree(root->left, nodes);
+        if (recoverTree_last != 0)
+        {
+            if (root->val < recoverTree_last->val)
+            {
+                if (nodes.size() == 0)
+                {
+                    nodes.push_back(recoverTree_last);
+                    nodes.push_back(root);
+                }
+                else
+                {
+                    nodes.push_back(root);
+                }
+            }
+        }
+        recoverTree_last = root;
+        DFS_recoverTree(root->right, nodes);
+    }
+
+    // 97
+    // 交错字符串
+    /*
+        给定三个字符串 s1, s2, s3, 验证 s3 是否是由 s1 和 s2 交错组成的。
+    */
+    // 提示：dp[i][j]表示，s1贡献i个，s2贡献前j个能否组成s2的前i+j个，能否组成前s3[i+j-1]
+    bool isInterleave(string s1, string s2, string s3)
+    {
+        int len1 = s1.size(), len2 = s2.size(), len3 = s3.size();
+        if (len1 + len2 != len3)
+        {
+            return false;
+        }
+        vector<vector<bool>> dp(len1 + 1, vector<bool>(len2 + 1, false));
+        dp[0][0] = true;
+        for (int i = 1; i <= len1; i++)
+        {
+            if (s1[i - 1] == s3[i - 1] && dp[i - 1][0])
+            {
+                dp[i][0] = true;
+            }
+        }
+        for (int i = 1; i <= len2; i++)
+        {
+            if (s2[i - 1] == s3[i - 1] && dp[0][i - 1])
+            {
+                dp[0][i] = true;
+            }
+        }
+        for (int i = 1; i <= len1; i++)
+        {
+            for (int j = 1; j <= len2; j++)
+            {
+                if ((s3[i + j - 1] == s1[i - 1] && dp[i - 1][j]) || (s3[i + j - 1] == s2[j - 1] && dp[i][j - 1]))
+                {
+                    dp[i][j] = true;
+                }
+                else
+                {
+                    dp[i][j] = false;
+                }
+            }
+        }
+        return dp[len1][len2];
+    }
+
     // 85
     // 最大矩形
     /*
         给定一个仅包含 0 和 1 的二维二进制矩阵，找出只包含 1 的最大矩形，并返回其面积。
     */
-    int maximalRectangle(vector<vector<char> >& matrix)
+    // 提示：先压缩，比如[010][111]，可以压缩成[010][121]，然后对每行求最大矩形面积（单调栈）
+    int maximalRectangle(vector<vector<char>> &matrix)
     {
         int ans = 0;
         int row = matrix.size();
@@ -74,62 +170,39 @@ public:
         {
             return 0;
         }
-        vector<vector<int> > width(row + 1, vector<int> (col + 1, 0));
-        vector<vector<int> > height(row + 1, vector<int> (col + 1, 0));
-        for (int i = 1; i <= row; i++)
+        vector<vector<int>> m(row, vector<int>(col, 0));
+        for (int i = 0; i < col; i++)
         {
-            for (int j = 1; j <= col; j++)
+            for (int j = 0; j < row; j++)
             {
-                if (matrix[i - 1][j - 1] == '1')
+                if (j == 0)
                 {
-                    int w, h;
-                    if (width[i][j - 1] - 1 >= width[i - 1][j])
+                    m[j][i] = matrix[j][i] - '0';
+                }
+                else
+                {
+                    if (matrix[i][j] == '0')
                     {
-                        if (height[i][j - 1] - 1 >= height[i - 1][j])
-                        {
-                            w = width[i][j - 1] + 1;
-                            h = height[i - 1][j] + 1;
-                        }
-                        else
-                        {
-                            int w1, w2, h1, h2;
-                            w1 = width[i][j - 1] + 1;
-                            h1 = height[i][j - 1];
-                            w2 = width[i - 1][j];
-                            h2 = htight[i - 1][j] + 1;
-                            if (w1 * h1 > w2 * h2)
-                            {
-                                w = w1;
-                                h = h1;
-                            }
-                            else
-                            {
-                                w = w2;
-                                h = h2;
-                            }
-                        }
+                        m[j][i] = 0;
                     }
                     else
                     {
-                        if (height[i][j - 1] - 1 >= height[i - 1][j])
-                        {
-                            w = width[i][j - 1] + 1;
-                            h = height[i - 1][j] + 1;
-                        }
-                        else
-                        {
-                            w = width[i][j - 1] + 1;
-
-                        }
+                        m[j][i] = m[j - 1][i] + 1;
                     }
-                    ans = max(ans, width[i][j] * height[i][j]);
                 }
-                cout << i << " " << j << "  "<< width[i][j] << " " << height[i][j]<<endl;
             }
+        }
+        for (int i = 0; i < row; i++)
+        {
+            vector<int> height(col);
+            for (int j = 0; j < col; j++)
+            {
+                height[j] = m[i][j];
+            }
+            ans = max(ans, largestRectangleArea(height));
         }
         return ans;
     }
-
 
     // 84
     // 柱状图中最大的矩形
@@ -149,7 +222,7 @@ public:
 		while(!Q.empty()&&s[Q.back()]>=s[i])Q.pop_back();
 		Q.push_back(i)
      */
-    int largestRectangleArea(vector<int>& heights)
+    int largestRectangleArea(vector<int> &heights)
     {
         heights.push_back(0);
         int len = heights.size(), ans = 0, top = 0;
@@ -166,7 +239,6 @@ public:
         }
         return ans;
     }
-
 
     // 76
     // 最小覆盖子串
@@ -250,7 +322,6 @@ public:
         return ans;
     }
 
-
     // 72
     // 编辑距离
     /*
@@ -264,7 +335,7 @@ public:
     int minDistance(string word1, string word2)
     {
         int len1 = word1.size(), len2 = word2.size();
-        vector<vector<int> > dp(len1 + 1, vector<int> (len2 + 1));
+        vector<vector<int>> dp(len1 + 1, vector<int>(len2 + 1));
         for (int i = 0; i <= len2; i++)
         {
             dp[0][i] = i;
@@ -290,7 +361,6 @@ public:
         return dp[len1][len2];
     }
 
-
     // 68
     // 文本左右对齐
     /*
@@ -303,7 +373,7 @@ public:
             每个单词的长度大于 0，小于等于 maxWidth。
             输入单词数组 words 至少包含一个单词。
     */
-    vector<string> fullJustify(vector<string>& words, int maxWidth)
+    vector<string> fullJustify(vector<string> &words, int maxWidth)
     {
         vector<string> ans;
         int len = words.size(), i = 0;
@@ -390,7 +460,6 @@ public:
         return ans;
     }
 
-
     // 65
     // 有效数字
     /*
@@ -418,11 +487,117 @@ public:
         小数点 "."
         当然，在输入中，这些字符的上下文也很重要。
     */
+    // 提示：用e把分成两部分，两部分都是合法数字
+    // 注意：空格只能前后有，中间不能有；.1这种算合法
     bool isNumber(string s)
     {
+        int len = s.size();
+        int e = -1;
+        int dot = 0;
+        int dotIndex = -1;
+        int start, end;
+        string newStr = "";
+        for (int i = 0; i < len; i++)
+        {
+            if (s[i] != ' ')
+            {
+                start = i;
+                break;
+            }
+        }
+        for (int i = len - 1; i >= 0; i--)
+        {
+            if (s[i] != ' ')
+            {
+                end = i;
+                break;
+            }
+        }
+        for (int i = start; i <= end; i++)
+        {
+            newStr += s[i];
+        }
+        len = newStr.size();
+        for (int i = 0; i < len; i++)
+        {
+            if (newStr[i] != '.' && newStr[i] != 'e' && newStr[i] != '-' && newStr[i] != '+' && (newStr[i] > '9' || newStr[i] < '0'))
+            {
+                return false;
+            }
+            if (newStr[i] == 'e')
+            {
+                if (e != -1)
+                {
+                    return false;
+                }
+                e = i;
+            }
+            if (newStr[i] == '.')
+            {
+                dotIndex = i;
+                dot++;
+            }
+        }
+        if (e == -1 && dot >= 2)
+        {
+            return false;
+        }
+        if (e != -1 && dot > 2)
+        {
+            return false;
+        }
+        if (e != -1 && dotIndex > e)
+        {
+            return false;
+        }
 
+        if (e == -1)
+        {
+            return Do_isNumber(newStr, 0, newStr.size() - 1);
+        }
+        else
+        {
+            return Do_isNumber(newStr, 0, e - 1) && Do_isNumber(newStr, e + 1, newStr.size() - 1);
+        }
     }
-
+    bool Do_isNumber(string &s, int start, int end)
+    {
+        if (start > end)
+        {
+            return false;
+        }
+        bool dot = false;
+        bool sign = false;
+        bool num = false;
+        for (int i = start; i <= end; i++)
+        {
+            if (s[i] == '.')
+            {
+                if (dot)
+                {
+                    return false;
+                }
+                dot = true;
+            }
+            else if (s[i] == '+' || s[i] == '-')
+            {
+                if (num || sign || dot)
+                {
+                    return false;
+                }
+                sign = true;
+            }
+            else
+            {
+                num = true;
+            }
+        }
+        if (!num)
+        {
+            return false;
+        }
+        return true;
+    }
 
     // 57
     // 插入区间
@@ -431,10 +606,10 @@ public:
         在列表中插入一个新的区间，你需要确保列表中的区间仍然有序且不重叠（如果有必要的话，可以合并区间）。
     */
     // 注意：各自为空数组，没有交集(在前在后在中间)
-    vector<vector<int> > insert(vector<vector<int> >& intervals, vector<int>& newInterval)
+    vector<vector<int>> insert(vector<vector<int>> &intervals, vector<int> &newInterval)
     {
         int len = intervals.size();
-        vector<vector<int> > ans;
+        vector<vector<int>> ans;
         if (len == 0)
         {
             ans.push_back(newInterval);
@@ -475,7 +650,6 @@ public:
         }
         return ans;
     }
-
 
     // 52
     // N皇后 II
@@ -550,7 +724,6 @@ public:
         }
     }
 
-
     // 51
     // N皇后
     /*
@@ -558,9 +731,9 @@ public:
         给定一个整数 n，返回所有不同的 n 皇后问题的解决方案。
         每一种解法包含一个明确的 n 皇后问题的棋子放置方案，该方案中 'Q' 和 '.' 分别代表了皇后和空位。
     */
-    vector<vector<string> > solveNQueens(int n)
+    vector<vector<string>> solveNQueens(int n)
     {
-        vector<vector<string> > ans;
+        vector<vector<string>> ans;
         string s = "";
         for (int i = 0; i < n; i++)
         {
@@ -570,7 +743,7 @@ public:
         DFS_solveNQueens(ans, result, n, 0);
         return ans;
     }
-    void DFS_solveNQueens(vector<vector<string> > &ans, vector<string> &result, int n, int row)
+    void DFS_solveNQueens(vector<vector<string>> &ans, vector<string> &result, int n, int row)
     {
         if (row == n)
         {
@@ -624,7 +797,6 @@ public:
         }
     }
 
-
     // 45
     // 跳跃游戏II
     /*
@@ -635,7 +807,7 @@ public:
             假设你总是可以到达数组的最后一个位置。
     */
     // 提示：只有超过之前的最大值才step加一
-    int jump(vector<int>& nums)
+    int jump(vector<int> &nums)
     {
         int len = nums.size();
         int ans = 0, maxpos = 0, curpos = 0;
@@ -655,7 +827,6 @@ public:
         return ans;
     }
 
-
     // 44
     // 通配符匹配
     /*
@@ -667,17 +838,23 @@ public:
             s 可能为空，且只包含从 a-z 的小写字母。
             p 可能为空，且只包含从 a-z 的小写字母，以及字符 ? 和 *。
     */
+    // 提示：dp[i][j]表示s的前i个和p的前j个是否匹配。
+    // 如果s[i-1]==p[j-1]||p[j-1]=='?'，那么dp[i][j]=dp[i-1][j-1];如果p[j]=='*'，那么dp[i][j]=dp[i-1][j]||dp[i][j-1];
     bool isMatchII(string s, string p)
     {
         int len1 = s.size(), len2 = p.size();
-        vector<vector<bool> > dp(len1 + 1, vector<bool> (len2, false));
+        vector<vector<bool>> dp(len1 + 1, vector<bool>(len2 + 1, false));
         dp[0][0] = true;
-        for (int i = 1; i <= len2; i++)
+        for (int j = 1; j <= len2; j++)
         {
             // 有其它字符就是false
-            if (p[j] == '*')
+            if (p[j - 1] == '*')
             {
                 dp[0][j] = dp[0][j - 1];
+            }
+            else
+            {
+                break;
             }
         }
         for (int i = 1; i <= len1; i++)
@@ -692,10 +869,14 @@ public:
                 {
                     dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
                 }
+                else
+                {
+                    dp[i][j] = false;
+                }
             }
         }
+        return dp[len1][len2];
     }
-
 
     // 42
     // 接雨水
@@ -703,7 +884,7 @@ public:
         给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
     */
     // 提示：找到最高点，然后最左向最高点遍历，最右向最高点遍历
-    int trap(vector<int>& height)
+    int trap(vector<int> &height)
     {
         int len = height.size();
         int ma = -1, index = -1;
@@ -742,7 +923,6 @@ public:
         return ans;
     }
 
-
     // 41
     // 缺失的第一个正数
     /*
@@ -751,7 +931,7 @@ public:
             你的算法的时间复杂度应为O(n)，并且只能使用常数级别的空间。
     */
     // 提示：桶排序思想，每个数应该放到对应的位置。比如3,4,-1,1->-1,4,3,1->-1,1,3,4。最后再扫描空缺部分。
-    int firstMissingPositive(vector<int>& nums)
+    int firstMissingPositive(vector<int> &nums)
     {
         int len = nums.size();
         for (int i = 0; i < len; i++)
@@ -772,7 +952,6 @@ public:
         return len + 1;
     }
 
-
     // 37
     // 解数独
     /*
@@ -788,7 +967,7 @@ public:
             给定数独永远是 9x9 形式的。
     */
     bool ans_solveSudoku = false;
-    void solveSudoku(vector<vector<char> >& board)
+    void solveSudoku(vector<vector<char>> &board)
     {
         if (ans_solveSudoku)
         {
@@ -841,7 +1020,6 @@ public:
         ans_solveSudoku = true;
         return;
     }
-
 
     // 32
     // 最长有效括号
@@ -898,28 +1076,53 @@ public:
         return max(ans1, ans2);
     }
 
-
     // 30
     // 串联所有单词的子串
     /*
         给定一个字符串 s 和一些长度相同的单词 words。找出 s 中恰好可以由 words 中所有单词串联形成的子串的起始位置。
         注意子串要与 words 中的单词完全匹配，中间不能有其他字符，但不需要考虑 words 中单词串联的顺序。
     */
-    vector<int> findSubstring(string s, vector<string>& words)
+    vector<int> findSubstring(string s, vector<string> &words)
     {
         vector<int> ans;
-        int len1 = s.size(), len2 = words.size(), len3 = words[0].size();
-        for (int i = 0; i + len2 * len3 < len1; i++)
+        map<string, int> w;
+        int len1 = s.size(), len2 = words.size();
+        int len3 = len2 == 0 ? 0 : words[0].size();
+        if (len1 == 0 || len2 == 0 || len3 == 0)
         {
-            map<int, int> m;
-            for (int j = 0; j < len2; j++)
+            return ans;
+        }
+        for (int i = 0; i < len2; i++)
+        {
+            w[words[i]]++;
+        }
+        for (int i = 0; i + len2 * len3 <= len1; i++)
+        {
+            map<string, int> m;
+            int j = 0;
+            for (; j < len2; j++)
             {
-
+                string str = s.substr(i + j * len3, len3);
+                if (w[str] == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    m[str]++;
+                    if (m[str] > w[str])
+                    {
+                        break;
+                    }
+                }
+            }
+            if (j == len2)
+            {
+                ans.push_back(i);
             }
         }
         return ans;
     }
-
 
     // 25
     // K 个一组翻转链表
@@ -932,7 +1135,7 @@ public:
         当 k = 2 时，应当返回: 2->1->4->3->5
         当 k = 3 时，应当返回: 3->2->1->4->5
     */
-    ListNode* reverseKGroup(ListNode* head, int k)
+    ListNode *reverseKGroup(ListNode *head, int k)
     {
         if (head == 0)
         {
@@ -965,7 +1168,8 @@ public:
         }
         if (first != 0)
         {
-            first->next = reverseKGroup(node, k);;
+            first->next = reverseKGroup(node, k);
+            ;
         }
         else
         {
@@ -974,14 +1178,13 @@ public:
         return newHead;
     }
 
-
     // 23
     // 合并K个排序链表
     /*
         合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。
     */
     // 提示：方法1：两两合并，归并思想；方法2：优先队列维护topk，每次弹出表示哪个链表最小
-    ListNode* mergeKLists(vector<ListNode*>& lists)
+    ListNode *mergeKLists(vector<ListNode *> &lists)
     {
         if (lists.size() == 0)
         {
@@ -990,7 +1193,7 @@ public:
         Do_mergeKLists(lists, 0, lists.size() - 1);
         return lists[0];
     }
-    void Do_mergeKLists(vector<ListNode*>& lists, int sta, int en)
+    void Do_mergeKLists(vector<ListNode *> &lists, int sta, int en)
     {
         if (sta >= en)
         {
@@ -1039,7 +1242,6 @@ public:
         }
     }
 
-
     // 10
     // 正则表达式
     /*
@@ -1055,7 +1257,7 @@ public:
     // 记忆化搜索：因为前一个Do_isMatch会做很多，后一个Do_isMatch会重复
     // 注意：s="abc",p="abcd"为false
     // 注意：不能if (i >= s.size())  ans = (j >= p.size()); 因为s= "aaa",p="a*"，实际上可能j一直在0.
-    vector<vector<int> > Dp_isMatch;
+    vector<vector<int>> Dp_isMatch;
     bool isMatch(string s, string p)
     {
         Dp_isMatch.resize(s.size() + 1);
@@ -1092,7 +1294,6 @@ public:
         return ans;
     }
 
-
     // 4
     // 寻找两个有序数组的中位数
     /*
@@ -1100,7 +1301,7 @@ public:
         请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。
         你可以假设 nums1 和 nums2 不会同时为空。
     */
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
+    double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2)
     {
         int len1 = nums1.size(), len2 = nums2.size();
         if (len1 == 0)
@@ -1148,7 +1349,7 @@ public:
             return (ans1 + ans2) * 0.5;
         }
     }
-    bool Do_findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2, int index, int &ans)
+    bool Do_findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2, int index, int &ans)
     {
         int len1 = nums1.size(), len2 = nums2.size();
         int L = 0, R = len1 - 1;
@@ -1201,6 +1402,6 @@ public:
 };
 int main()
 {
-    Solution* solution = new Solution();
+    Solution *solution = new Solution();
     return 0;
 }

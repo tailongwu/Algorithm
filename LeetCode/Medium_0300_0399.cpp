@@ -1,20 +1,20 @@
-#include<map>
-#include<cmath>
-#include<queue>
-#include<stack>
-#include<cstdio>
-#include<cstring>
-#include<vector>
-#include<iostream>
-#include<algorithm>
+#include <map>
+#include <cmath>
+#include <queue>
+#include <stack>
+#include <cstdio>
+#include <cstring>
+#include <vector>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 struct Node3
 {
     int val;
-    Node3* next;
-    Node3* random;
+    Node3 *next;
+    Node3 *random;
     Node3() {}
-    Node3(int _val, Node3* _next, Node3* _random)
+    Node3(int _val, Node3 *_next, Node3 *_random)
     {
         val = _val;
         next = _next;
@@ -24,9 +24,9 @@ struct Node3
 struct Node2
 {
     int val;
-    vector<Node2*> neighbors;
+    vector<Node2 *> neighbors;
     Node2() {}
-    Node2(int _val, vector<Node2*> _neighbors)
+    Node2(int _val, vector<Node2 *> _neighbors)
     {
         val = _val;
         neighbors = _neighbors;
@@ -34,11 +34,11 @@ struct Node2
 };
 struct Node
 {
-  int val;
-  Node *left;
-  Node *right;
-  Node *next;
-  Node(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
+    int val;
+    Node *left;
+    Node *right;
+    Node *next;
+    Node(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
 };
 struct TreeNode
 {
@@ -93,7 +93,6 @@ public:
         return ans;
     }
 
-
     // 396
     // 旋转函数
     /*
@@ -105,7 +104,7 @@ public:
         可以认为 n 的值小于 100000
     */
     // 提示：Fk-F0可以公式求出
-    int maxRotateFunction(vector<int>& A)
+    int maxRotateFunction(vector<int> &A)
     {
         int len = A.size();
         long sum1 = 0, sum2 = 0, ans = 0, last = 0;
@@ -122,7 +121,6 @@ public:
         }
         return ans;
     }
-
 
     // 395
     // 至少有k个重复字符的最长子串
@@ -156,14 +154,13 @@ public:
                 }
                 else
                 {
-                    ans = max (ans, longestSubstring(str, k));
+                    ans = max(ans, longestSubstring(str, k));
                 }
                 i = j;
             }
         }
         return ans;
     }
-
 
     // 394
     // 字符串解码
@@ -236,7 +233,6 @@ public:
         return str + DFS_decodeString(s, sta);
     }
 
-
     // 392
     // 判断子序列
     /*
@@ -258,7 +254,6 @@ public:
         return index1 == len1;
     }
 
-
     // 390
     // 消除游戏
     /*
@@ -273,7 +268,6 @@ public:
     {
         return n == 1 ? 1 : 2 * (n / 2 + 1 - lastRemaining(n / 2));
     }
-
 
     // 386
     // 字典序排数
@@ -306,7 +300,6 @@ public:
         }
     }
 
-
     // 378
     // 有序矩阵中第K小的元素
     /*
@@ -314,7 +307,7 @@ public:
         请注意，它是排序后的第k小元素，而不是第k个元素。
     */
     // 提示：时间复杂度N*logN*logX，注意有重复元素
-    int kthSmallest(vector<vector<int> >& matrix, int k)
+    int kthSmallest(vector<vector<int>> &matrix, int k)
     {
         int row = matrix.size();
         if (row == 0)
@@ -356,7 +349,6 @@ public:
         return L;
     }
 
-
     // 377
     // 组合总和IV
     /*
@@ -367,7 +359,7 @@ public:
             我们需要在题目中添加什么限制来允许负数的出现？
     */
     // 提示：dfs会超时
-    int combinationSum4(vector<int>& nums, int target)
+    int combinationSum4(vector<int> &nums, int target)
     {
         int len = nums.size();
         vector<unsigned int> dp(target + 1, 0);
@@ -389,7 +381,6 @@ public:
         return dp[target];
     }
 
-
     // 376
     // 摆动序列
     /*
@@ -397,7 +388,7 @@ public:
         给定一个整数序列，返回作为摆动序列的最长子序列的长度。 通过从原始序列中删除一些（也可以不删除）元素来获得子序列，剩下的元素保持其原始顺序。
         进阶：你能否用 O(n) 时间复杂度完成此题?
     */
-    int wiggleMaxLength(vector<int>& nums)
+    int wiggleMaxLength(vector<int> &nums)
     {
         int len = nums.size();
         vector<int> num;
@@ -437,7 +428,6 @@ public:
         return ans;
     }
 
-
     // 375
     // 猜数字大小II
     /*
@@ -453,7 +443,7 @@ public:
         {
             return n - 1;
         }
-        vector<vector<int> > dp(n + 1, vector<int>(n + 1));
+        vector<vector<int>> dp(n + 1, vector<int>(n + 1));
         for (int i = 1; i <= n; i++)
         {
             for (int j = i; j > 0; j--)
@@ -479,7 +469,6 @@ public:
         return dp[n][1];
     }
 
-
     // 373
     // 查找和最小的k对数字
     /*
@@ -495,11 +484,11 @@ public:
     {
         return x.sum < y.sum;
     }
-    vector<vector<int> > kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k)
+    vector<vector<int>> kSmallestPairs(vector<int> &nums1, vector<int> &nums2, int k)
     {
         int len1 = nums1.size(), len2 = nums2.size();
         k = min(k, len1 * len2);
-        vector<vector<int> > ans(k);
+        vector<vector<int>> ans(k);
         vector<P_kSmallestPairs> p;
         P_kSmallestPairs node;
         for (int i = 0; i < len1; i++)
@@ -523,13 +512,12 @@ public:
         return ans;
     }
 
-
     // 372
     // 超级次方
     /*
         你的任务是计算 ab 对 1337 取模，a 是一个正整数，b 是一个非常大的正整数且会以数组形式给出。
     */
-    int superPow(int a, vector<int>& b)
+    int superPow(int a, vector<int> &b)
     {
         int len = b.size(), last = a % 1337, ans = 1;
         for (int i = len - 1; i >= 0; i--)
@@ -554,14 +542,13 @@ public:
         return ans;
     }
 
-
     // 368
     // 最大整除子集
     /*
         给出一个由无重复的正整数组成的集合，找出其中最大的整除子集，子集中任意一对 (Si，Sj) 都要满足：Si % Sj = 0 或 Sj % Si = 0。
         如果有多个目标子集，返回其中任何一个均可。
     */
-    vector<int> largestDivisibleSubset(vector<int>& nums)
+    vector<int> largestDivisibleSubset(vector<int> &nums)
     {
         sort(nums.begin(), nums.end());
         int len = nums.size(), index = 0, mx = 1;
@@ -600,7 +587,6 @@ public:
         return ans;
     }
 
-
     // 365
     // 水壶问题
     /*
@@ -630,7 +616,6 @@ public:
         return z % x == 0;
     }
 
-
     // 357
     // 计算各个位数不同的数字个数
     /*
@@ -655,7 +640,6 @@ public:
         return ans;
     }
 
-
     // 347
     // 前 K 个高频元素
     /*
@@ -664,11 +648,9 @@ public:
             你可以假设给定的 k 总是合理的，且 1 ≤ k ≤ 数组中不相同的元素的个数。
             你的算法的时间复杂度必须优于 O(n log n) , n 是数组的大小。
     */
-    vector<int> topKFrequent(vector<int>& nums, int k)
+    vector<int> topKFrequent(vector<int> &nums, int k)
     {
-
     }
-
 
     // 343
     // 整数拆分
@@ -694,7 +676,6 @@ public:
         return dp[n];
     }
 
-
     // 338
     // 比特位计数
     /*
@@ -715,14 +696,13 @@ public:
         return ans;
     }
 
-
     // 337
     // 打家劫舍III
     /*
         在上次打劫完一条街道之后和一圈房屋后，小偷又发现了一个新的可行窃的地区。这个地区只有一个入口，我们称之为“根”。 除了“根”之外，每栋房子有且只有一个“父“房子与之相连。一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。 如果两个直接相连的房子在同一天晚上被打劫，房屋将自动报警。
         计算在不触动警报的情况下，小偷一晚能够盗取的最高金额。
     */
-    int rob(TreeNode* root)
+    int rob(TreeNode *root)
     {
         return DFS_rob(root, false);
     }
@@ -744,7 +724,6 @@ public:
         }
     }
 
-
     // 334
     // 递增的三元子序列
     /*
@@ -756,7 +735,7 @@ public:
             要求算法的时间复杂度为 O(n)，空间复杂度为 O(1) 。
     */
     // 提示：保存最小的和次小的，b被赋值过代表前面有比它小的数
-    bool increasingTriplet(vector<int>& nums)
+    bool increasingTriplet(vector<int> &nums)
     {
         int len = nums.size();
         if (len < 3)
@@ -784,7 +763,6 @@ public:
         }
         return false;
     }
-
 
     // 331
     // 验证二叉树的前序序列化
@@ -832,7 +810,6 @@ public:
         return cnt == 0;
     }
 
-
     // 328
     // 奇偶链表
     /*
@@ -842,7 +819,7 @@ public:
             应当保持奇数节点和偶数节点的相对顺序。
             链表的第一个节点视为奇数节点，第二个节点视为偶数节点，以此类推。
     */
-    ListNode* oddEvenList(ListNode* head)
+    ListNode *oddEvenList(ListNode *head)
     {
         if (head == 0)
         {
@@ -877,7 +854,6 @@ public:
         return newHead;
     }
 
-
     // 324
     // 摆动排序II
     /*
@@ -888,18 +864,16 @@ public:
             你能用 O(n) 时间复杂度和 / 或原地 O(1) 额外空间来实现吗？
     */
     // 提示：排序再穿插；用快排思想找到中位数，然后小的放在0，2，4...，大的放在1，3，5等；
-    void wiggleSort(vector<int>& nums)
+    void wiggleSort(vector<int> &nums)
     {
-
     }
-
 
     // 322
     // 零钱兑换
     /*
         给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。
     */
-    int coinChange(vector<int>& coins, int amount)
+    int coinChange(vector<int> &coins, int amount)
     {
         int len = coins.size();
         sort(coins.begin(), coins.end());
@@ -921,7 +895,6 @@ public:
         }
         return dp[amount];
     }
-
 
     // 319
     // 灯泡开关
@@ -947,13 +920,12 @@ public:
         return ans;
     }
 
-
     // 318
     // 最大单词长度乘积
     /*
         给定一个字符串数组 words，找到 length(word[i]) * length(word[j]) 的最大值，并且这两个单词不含有公共字母。你可以认为每个单词只包含小写字母。如果不存在这样的两个单词，返回 0。
     */
-    int maxProduct(vector<string>& words)
+    int maxProduct(vector<string> &words)
     {
         int len = words.size();
         vector<int> ha(len, 0);
@@ -979,14 +951,13 @@ public:
         return ma;
     }
 
-
     // 313
     // 超级丑数
     /*
         编写一段程序来查找第 n 个超级丑数。
         超级丑数是指其所有质因数都是长度为 k 的质数列表 primes 中的正整数。
     */
-    int nthSuperUglyNumber(int n, vector<int>& primes)
+    int nthSuperUglyNumber(int n, vector<int> &primes)
     {
         int len = primes.size();
         vector<int> num(len, 0);
@@ -1011,7 +982,6 @@ public:
         return ans[n - 1];
     }
 
-
     // 310
     // 最小高度树
     /*
@@ -1024,11 +994,9 @@ public:
             树的高度是指根节点和叶子节点之间最长向下路径上边的数量。
     */
     // 提示：每次删除叶子节点
-    vector<int> findMinHeightTrees(int n, vector<vector<int> >& edges)
+    vector<int> findMinHeightTrees(int n, vector<vector<int>> &edges)
     {
-
     }
-
 
     // 309
     // 最佳买卖股票时机含冷冻期
@@ -1038,11 +1006,13 @@ public:
         你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
         卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。
     */
-    int maxProfit(vector<int>& prices)
+    int maxProfit(vector<int> &prices)
     {
         int len = prices.size();
         if (len == 0)
-        {return 0;}
+        {
+            return 0;
+        }
         vector<int> buy(len);
         vector<int> sell(len);
         vector<int> cold(len);
@@ -1058,15 +1028,75 @@ public:
         return sell[len - 1];
     }
 
-
     // 307
     // 区域和检索 - 数组可修改
     /*
         给定一个整数数组  nums，求出数组从索引 i 到 j  (i ≤ j) 范围内元素的总和，包含 i,  j 两点。
         update(i, val) 函数可以通过将下标为 i 的数值更新为 val，从而对数列进行修改。
     */
-
-
+    // 提示：线段树
+    vector<int> NumArray_Tree;
+    int NumArray_Size;
+    NumArray(vector<int> &nums)
+    {
+        NumArray_Size = nums.size();
+        buidTree(nums);
+    }
+    void update(int i, int val)
+    {
+        i += NumArray_Size;
+        NumArray_Tree[i] = val;
+        while (i > 0)
+        {
+            int left = i;
+            int right = i;
+            if (i % 2 == 0)
+            {
+                right = i + 1;
+            }
+            else
+            {
+                left = i - 1;
+            }
+            i >>= 1;
+            NumArray_Tree[i] = NumArray_Tree[left] + NumArray_Tree[right];
+        }
+    }
+    int sumRange(int i, int j)
+    {
+        i += NumArray_Size;
+        j += NumArray_Size;
+        int sum = 0;
+        while (i <= j)
+        {
+            if (i % 2 == 1)
+            {
+                sum += NumArray_Tree[i];
+                i++;
+            }
+            if (j % 2 == 0)
+            {
+                sum += NumArray_Tree[j];
+                j--;
+            }
+            i >>= 1;
+            j >>= 1;
+        }
+        return sum;
+    }
+    void buidTree(vector<int> &nums)
+    {
+        int len = nums.size();
+        NumArray_Tree.resize(len * 2);
+        for (int i = 0; i < len; i++)
+        {
+            NumArray_Tree[i + len] = nums[i];
+        }
+        for (int i = len - 1; i >= 0; i--)
+        {
+            NumArray_Tree[i] = NumArray_Tree[i * 2] + NumArray_Tree[i * 2 + 1];
+        }
+    }
 
     // 306
     // 累加数
@@ -1181,7 +1211,6 @@ public:
         return ans;
     }
 
-
     // 304
     // 二维区域和检索 - 矩阵不可变
     /*
@@ -1191,8 +1220,8 @@ public:
             会多次调用 sumRegion 方法。
             你可以假设 row1 ≤ row2 且 col1 ≤ col2。
     */
-    vector<vector<int> > sumNumMatrix;
-    NumMatrix(vector<vector<int> >& matrix)
+    vector<vector<int>> sumNumMatrix;
+    NumMatrix(vector<vector<int>> &matrix)
     {
         int row = matrix.size(), col = 0;
         if (row > 0)
@@ -1229,7 +1258,6 @@ public:
         return sum;
     }
 
-
     // 300
     // 最长上升子序列
     /*
@@ -1241,7 +1269,7 @@ public:
             你能将算法的时间复杂度降低到 O(n log n) 吗?
     */
     // 提示：ans不是最长的序列，但是长度是最长的
-    int lengthOfLIS(vector<int>& nums)
+    int lengthOfLIS(vector<int> &nums)
     {
         int len = nums.size();
         vector<int> ans;
@@ -1276,6 +1304,6 @@ public:
 };
 int main()
 {
-    Solution* solution = new Solution();
+    Solution *solution = new Solution();
     return 0;
 }
