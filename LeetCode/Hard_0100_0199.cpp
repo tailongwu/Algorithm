@@ -56,6 +56,43 @@ struct ListNode
 class Solution
 {
 public:
+    // 214
+    // 最短回文串
+    /*
+        给定一个字符串 s，你可以通过在字符串前面添加字符将其转换为回文串。找到并返回可以用这种方式转换的最短回文串。
+    */
+    // 暴力求解：O(N^2)
+    // KMP:O(N)
+    string shortestPalindrome(string s)
+    {
+    }
+
+    // 188
+    // 买卖股票的最佳时机IV
+    /*
+        给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。
+        设计一个算法来计算你所能获取的最大利润。你最多可以完成 k 笔交易。
+        注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+    */
+    // 提示：dp[i][k][0/1]表示第i天最多交易k次没有/拥有股票的最大收益
+    // dp[i][k][0]=max(dp[i-1][k][0], dp[i-1][k][1]+prices[i]);
+    // dp[i][k][1]=max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i]);
+    // 注意：未测试
+    int maxProfit(int k, vector<int> &prices)
+    {
+        int len = prices.size();
+        vector<vector<vector<int>>> dp(len + 1, vector<int>(k + 1, vector<int>(2, 0)));
+        for (int i = 1; i <= len; i++)
+        {
+            for (int j = 0; j <= k; j++)
+            {
+                dp[i][j][0] = max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i]);
+                dp[i][j][1] = max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i]);
+            }
+        }
+        return max(dp[len][k][0], dp[len][k][1]);
+    }
+
     // 174
     // 地下城游戏
     /*
@@ -64,9 +101,37 @@ public:
         有些房间由恶魔守卫，因此骑士在进入这些房间时会失去健康点数（若房间里的值为负整数，则表示骑士将损失健康点数）；其他房间要么是空的（房间里的值为 0），要么包含增加骑士健康点数的魔法球（若房间里的值为正整数，则表示骑士将增加健康点数）。
         为了尽快到达公主，骑士决定每次只向右或向下移动一步。
     */
-    int calculateMinimumHP(vector<vector<int>>& dungeon)
+    // 方法：如果往右走，只要在当前位置加了血或者扣了血后，等于dp[i][j+1]即可。那么dp[i][j+1]-[i,j]>=1
+    int calculateMinimumHP(vector<vector<int>> &dungeon)
     {
-            
+        int row = dungeon.size();
+        if (row == 0)
+        {
+            return 0;
+        }
+        int col = dungeon[0].size();
+        if (col == 0)
+        {
+            return 0;
+        }
+        vector<vector<int>> dp(row + 1, vector<int>(col + 1, 0));
+        dp[row - 1][col - 1] = dungeon[row - 1][col - 1] < 0 ? 1 - dungeon[row - 1][col - 1] : 1;
+        for (int i = col - 2; i >= 0; i--)
+        {
+            dp[row - 1][i] = max(1, dp[row - 1][i + 1] - dungeon[row - 1][i]);
+        }
+        int ans = 0;
+        for (int i = row - 2; i >= 0; i--)
+        {
+            dp[i][col - 1] = max(1, dp[i + 1][col - 1] - dungeon[i][col - 1]);
+            for (int j = col - 2; j >= 0; j--)
+            {
+                int right = max(1, dp[i][j + 1] - dungeon[i][j]);
+                int down = max(1, dp[i + 1][j] - dungeon[i][j]);
+                dp[i][j] = min(right, down);
+            }
+        }
+        return dp[0][0];
     }
 
     // 164
