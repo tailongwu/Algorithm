@@ -56,6 +56,128 @@ struct ListNode
 class Solution
 {
 public:
+    // 174
+    // 地下城游戏
+    /*
+        一些恶魔抓住了公主（P）并将她关在了地下城的右下角。地下城是由 M x N 个房间组成的二维网格。我们英勇的骑士（K）最初被安置在左上角的房间里，他必须穿过地下城并通过对抗恶魔来拯救公主。
+        骑士的初始健康点数为一个正整数。如果他的健康点数在某一时刻降至 0 或以下，他会立即死亡。
+        有些房间由恶魔守卫，因此骑士在进入这些房间时会失去健康点数（若房间里的值为负整数，则表示骑士将损失健康点数）；其他房间要么是空的（房间里的值为 0），要么包含增加骑士健康点数的魔法球（若房间里的值为正整数，则表示骑士将增加健康点数）。
+        为了尽快到达公主，骑士决定每次只向右或向下移动一步。
+    */
+    int calculateMinimumHP(vector<vector<int>>& dungeon)
+    {
+            
+    }
+
+    // 164
+    // 最大间距
+    /*
+        给定一个无序的数组，找出数组在排序之后，相邻元素之间最大的差值。
+        如果数组元素个数小于 2，则返回 0。
+    */
+    // 提示：桶排序思想，分在不同的桶里，每个桶有最大值和最小值，各个桶之间的间隔
+    int maximumGap(vector<int> &nums)
+    {
+        sort(nums.begin(), nums.end());
+        int len = nums.size();
+        int ans = 0;
+        for (int i = 1; i < len; i++)
+        {
+            ans = max(ans, nums[i] - nums[i - 1]);
+        }
+        return ans;
+    }
+
+    // 154
+    // 寻找旋转排序数组中的最小值 II
+    /*
+        假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+        ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。
+        请找出其中最小的元素。
+        注意数组中可能存在重复的元素。
+        说明：
+            这道题是 寻找旋转排序数组中的最小值 的延伸题目。
+            允许重复会影响算法的时间复杂度吗？会如何影响，为什么？
+    */
+    // 提示：和最右边比较，如果大于最右边L=mid+1，如果小于最右边R=mid，否则R--
+    int findMin(vector<int> &nums)
+    {
+        int L = 0, R = nums.size() - 1;
+        while (L < R)
+        {
+            int mid = (L + R) >> 1;
+            if (nums[mid] > nums[R])
+            {
+                L = mid + 1;
+            }
+            else if (nums[mid] < nums[R])
+            {
+                R = mid;
+            }
+            else
+            {
+                R--;
+            }
+        }
+        return nums[L];
+    }
+
+    // 149
+    // 直线上最多的点数
+    /*
+        给定一个二维平面，平面上有 n 个点，求最多有多少个点在同一条直线上。
+    */
+    // 提示：算每个点和其他点的斜率，hash存储斜率->个数，个数=n*(n-1)/2；注意小于3的点个数；注意重复点
+    int maxPoints(vector<vector<int>> &points)
+    {
+        int len = points.size();
+        if (len < 3)
+        {
+            return len;
+        }
+        map<pair<int, int>, int> m;
+        int ans = 0;
+        for (int i = 0; i < len; i++)
+        {
+            m.clear();
+            int repeat = 0, result = 0;
+            for (int j = i + 1; j < len; j++)
+            {
+                int x = points[i][0] - points[j][0];
+                int y = points[i][1] - points[j][1];
+                if (x == 0 && y == 0)
+                {
+                    repeat++;
+                    continue;
+                }
+                int d = maxPoints_Gcd(x, y);
+                if (d == 0)
+                {
+                    m[{x, y}]++;
+                    result = max(result, m[{x, y}]);
+                }
+                else
+                {
+                    x /= d;
+                    y /= d;
+                    if (x < 0)
+                    {
+                        x = -x;
+                        y = -y;
+                    }
+                    m[{x, y}]++;
+                    result = max(result, m[{x, y}]);
+                }
+            }
+            ans = max(ans, result + 1 + repeat);
+        }
+        return ans;
+    }
+    int maxPoints_Gcd(int a, int b)
+    {
+        return b == 0 ? a : maxPoints_Gcd(b, a % b);
+    }
+
     // 145
     // 二叉树的后序遍历
     /*
@@ -140,6 +262,132 @@ public:
             node = sta2.top();
             sta2.pop();
             ans.push_back(node->val);
+        }
+        return ans;
+    }
+
+    // 140
+    // 单词拆分II
+    /*
+        给定一个非空字符串 s 和一个包含非空单词列表的字典 wordDict，在字符串中增加空格来构建一个句子，使得句子中所有的单词都在词典中。返回所有这些可能的句子。
+        说明：
+            分隔时可以重复使用字典中的单词。
+            你可以假设字典中没有重复的单词。
+    */
+    // 提示：先判断是否有答案，再计算。
+    vector<string> wordBreak(string s, vector<string> &wordDict)
+    {
+        int len = s.size();
+        int dicLen = wordDict.size();
+        vector<vector<string>> temp(len + 1);
+        if (!wordBreak2(s, wordDict))
+        {
+            return temp[0];
+        }
+        vector<bool> dp(len + 1, false);
+        dp[0] = true;
+        for (int i = 0; i < len; i++)
+        {
+            if (dp[i])
+            {
+                for (int j = 0; j < dicLen; j++)
+                {
+                    int wordLen = wordDict[j].size();
+                    if (i + wordLen > len)
+                    {
+                        continue;
+                    }
+                    string sub = s.substr(i, wordLen);
+                    if (sub == wordDict[j])
+                    {
+                        dp[i + wordLen] = true;
+                        for (int k = 0; k < temp[i].size(); k++)
+                        {
+                            string t = temp[i][k];
+                            if (t.size() != 0)
+                            {
+                                t += ' ';
+                            }
+                            temp[i + wordLen].push_back(t + wordDict[j]);
+                        }
+                        if (temp[i].size() == 0)
+                        {
+                            temp[i + wordLen].push_back(wordDict[j]);
+                        }
+                    }
+                }
+            }
+        }
+        return temp[len];
+    }
+    bool wordBreak2(string s, vector<string> &wordDict)
+    {
+        int len = s.size();
+        int wordSize = wordDict.size();
+        vector<bool> dp(len + 5, false);
+        dp[0] = true;
+        for (int i = 0; i < len; i++)
+        {
+            if (dp[i])
+            {
+                for (int j = 0; j < wordSize; j++)
+                {
+                    if (i + wordDict[j].size() > len)
+                    {
+                        continue;
+                    }
+                    int index = i;
+                    for (int k = 0; k < wordDict[j].size(); k++)
+                    {
+                        if (wordDict[j][k] != s[index])
+                        {
+                            break;
+                        }
+                        index++;
+                    }
+                    if (index - i == wordDict[j].size())
+                    {
+                        dp[index] = true;
+                    }
+                }
+            }
+        }
+        return dp[len];
+    }
+
+    // 135
+    // 分发糖果
+    /*
+        老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
+        你需要按照以下要求，帮助老师给这些孩子分发糖果：
+        每个孩子至少分配到 1 个糖果。
+        相邻的孩子中，评分高的孩子必须获得更多的糖果。
+        那么这样下来，老师至少需要准备多少颗糖果呢？
+    */
+    // 提示：从左往右一个数组left2right，从右往左一个数组right2left。最开始都是1，然后各自遍历，如果比前一个数大，那么就是left2right[i]=left2right[i-1]+1
+    int candy(vector<int> &ratings)
+    {
+        int len = ratings.size();
+        vector<int> left2right(len, 1);
+        vector<int> right2left(len, 1);
+        for (int i = 1; i < len; i++)
+        {
+            if (ratings[i] > ratings[i - 1])
+            {
+                left2right[i] = left2right[i - 1] + 1;
+            }
+        }
+        for (int i = len - 2; i >= 0; i--)
+        {
+            if (ratings[i] > ratings[i + 1])
+            {
+                right2left[i] = right2left[i + 1] + 1;
+            }
+        }
+        int ans = 0;
+        for (int i = 0; i < len; i++)
+        {
+            ans = ans + max(left2right[i], right2left[i]);
         }
         return ans;
     }

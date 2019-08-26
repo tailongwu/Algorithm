@@ -386,9 +386,26 @@ public:
         请找出其中最小的元素。
         你可以假设数组中不存在重复元素。
     */
-    // 提示：有四种情况
+    // 提示：
+    // 方法1：如果小于最右边，R=mid，如果大于等于最右边，L=mid+1
+    // 方法2：有四种情况
     int findMin(vector<int> &nums)
     {
+        int L = 0, R = nums.size() - 1;
+        while (L < R)
+        {
+            int mid = (L + R) >> 1;
+            if (nums[mid] < nums[R])         
+            {
+                R = mid;
+            }
+            else
+            {
+                L = mid + 1;
+            }            
+        }
+        return nums[L];
+        /*
         int L = 0, R = nums.size() - 1;
         int ans = nums[L], mid;
         while (L <= R)
@@ -419,6 +436,7 @@ public:
             ans = min(ans, nums[mid]);
         }
         return ans;
+        */
     }
 
     // 152
@@ -880,7 +898,7 @@ public:
         拆分时可以重复使用字典中的单词。
         你可以假设字典中没有重复的单词
     */
-    // 提示：动态规划或dfs
+    // 提示：动态规划或dfs。dp[i]表示前i个是否可以被分割，如果可以，看s[i+1...i+words.size()]是否可以
     bool wordBreak(string s, vector<string> &wordDict)
     {
         int len = s.size();
